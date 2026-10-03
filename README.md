@@ -1,5 +1,7 @@
-qdldl-fortran
-=============
+[![Language](https://img.shields.io/badge/-Fortran-734f96?logo=fortran&logoColor=white)](https://github.com/topics/fortran)
+[![Build Status](https://github.com/jacobwilliams/qdldl-fortran/actions/workflows/CI.yml/badge.svg)](https://github.com/jacobwilliams/qdldl-fortran/actions)
+[![last-commit](https://img.shields.io/github/last-commit/jacobwilliams/qdldl-fortran)](https://github.com/jacobwilliams/qdldl-fortran/commits/master)
+[![Docs](https://img.shields.io/badge/docs-api-blue)](https://jacobwilliams.github.io/qdldl-fortran)
 
 A modern Fortran port of [QDLDL](https://github.com/osqp/qdldl), the sparse
 $LDL^T$ solver for quasi-definite matrices used inside the OSQP solver. It
