@@ -156,7 +156,11 @@ and no duplicates:
 
 The orderings are also available on their own: `qdldl_amd_order` and
 `qdldl_rcm` (on the adjacency structure built by `qdldl_symmetric_pattern`),
-and the modernized SuiteSparse routine `amd` (module `qdldl_amd`).
+and the modernized SuiteSparse routine `amd` (module `qdldl_amd`). As in
+SuiteSparse's C AMD, `qdldl_amd_order` removes dense rows (more than
+$\max(16, 10\sqrt{n})$ entries) before ordering and places them last;
+otherwise a dense row, common in KKT matrices, can make AMD take $O(n^2)$
+time. The `amd` routine itself does not do this.
 
 ## Kinds
 

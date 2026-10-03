@@ -341,6 +341,11 @@
 !>
 !  The approximate minimum degree ordering, by [[amd]], with elbow room of 20% plus
 !  `n` in its work array (so that compressions are rare).
+!
+!  As in SuiteSparse's C AMD, dense nodes (more than \(\max(16, 10\sqrt{n})\)
+!  neighbours) are removed from the graph before ordering and placed last, in their
+!  original order. Otherwise a dense row and column (common in KKT matrices) can make
+!  the ordering take \(O(n^2)\) time.
 
     subroutine qdldl_amd_order(n, xadj, adj, perm, istat)
 
@@ -352,7 +357,8 @@
                                                  !! or `qdldl_error_overflow` (the work array's size)
 
     integer(ip),allocatable :: iw(:), pe(:), len(:), nv(:), next(:), head(:), elen(:), degree(:), w(:)
-    integer(ip) :: i, nadj, iwlen, pfree, ncmpa
+    integer(ip),allocatable :: last(:), newidx(:), oldidx(:)
+    integer(ip) :: i, j, p, k, nadj, iwlen, pfree, ncmpa, dense, nr, q
     integer :: stat
 
     istat = qdldl_success
@@ -370,22 +376,54 @@
         iwlen = nadj + nadj / 5_ip + n + 1
     end if
 
-    allocate(iw(iwlen), pe(n), len(n), nv(n), next(n), head(n), elen(n), degree(n), w(n), stat=stat)
+    allocate(iw(iwlen), pe(n), len(n), nv(n), next(n), head(n), elen(n), degree(n), w(n), &
+             last(n), newidx(n), oldidx(n), stat=stat)
     if (stat /= 0) then
         istat = qdldl_error_out_of_memory
         return
     end if
 
+    ! number the nodes that are not dense (newidx = 0 for a dense node)
+    dense = max(16_ip, int(10.0*sqrt(real(n)), ip))
+    nr = 0
     do i = 1, n
-        pe(i) = xadj(i)
-        len(i) = xadj(i+1) - xadj(i)
+        if (xadj(i+1) - xadj(i) > dense) then
+            newidx(i) = 0
+        else
+            nr = nr + 1
+            newidx(i) = nr
+            oldidx(nr) = i
+        end if
     end do
-    do i = 1, nadj
-        iw(i) = adj(i)
-    end do
-    pfree = nadj + 1
 
-    call amd(n, pe, iw, len, iwlen, pfree, nv, next, perm, head, elen, degree, ncmpa, w)
+    ! the graph without the dense nodes (it fits: it has at most nadj entries)
+    q = 0
+    do k = 1, nr
+        i = oldidx(k)
+        pe(k) = q + 1
+        do p = xadj(i), xadj(i+1) - 1
+            j = newidx(adj(p))
+            if (j /= 0) then
+                q = q + 1
+                iw(q) = j
+            end if
+        end do
+        len(k) = q + 1 - pe(k)
+    end do
+    pfree = q + 1
+
+    if (nr > 0) call amd(nr, pe, iw, len, iwlen, pfree, nv, next, last, head, elen, degree, ncmpa, w)
+
+    do k = 1, nr
+        perm(k) = oldidx(last(k))
+    end do
+    k = nr
+    do i = 1, n
+        if (newidx(i) == 0) then
+            k = k + 1
+            perm(k) = i
+        end if
+    end do
 
     end subroutine qdldl_amd_order
 !*****************************************************************************************

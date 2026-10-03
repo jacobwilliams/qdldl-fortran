@@ -179,8 +179,9 @@
     !*************************************************************************************
     !>
     !  Patterns that test the edges of the orderings: a diagonal matrix (no edges, `n`
-    !  components), a 1x1 matrix, an arrow matrix (one dense row and column), and two
-    !  disconnected blocks.
+    !  components), a 1x1 matrix, an arrow matrix (one dense row and column), two
+    !  disconnected blocks, and a matrix with two dense rows and columns first (which
+    !  AMD must remove and order last).
 
     subroutine test_special_patterns()
 
@@ -194,7 +195,7 @@
     character(len=:),allocatable :: name
 
     write(*,'(A)') ' special patterns'
-    do c = 1, 4
+    do c = 1, 5
         select case (c)
         case (1)  ! diagonal
             name = 'diagonal'
@@ -218,6 +219,12 @@
             irow = [(k, k = 1, n), (k, k = 1, 14), (k, k = 16, n-1)]
             icol = [(k, k = 1, n), (k+1, k = 1, 14), (k+1, k = 16, n-1)]
             val = [(3.0_wp, k = 1, n), (-1.0_wp, k = 1, 14), (-1.0_wp, k = 16, n-1)]
+        case (5)  ! rows 1 and 2 dense (degree n-1 > max(16, 10 sqrt(n))), the rest diagonal
+            name = 'dense rows'
+            n = 2000
+            irow = [(k, k = 1, n), 1_ip, (1_ip, k = 3, n), (2_ip, k = 3, n)]
+            icol = [(k, k = 1, n), 2_ip, (k, k = 3, n), (k, k = 3, n)]
+            val = [(real(3*n, wp), k = 1, 2), (4.0_wp, k = 3, n), 1.0_wp, (1.0_wp, k = 1, 2*(n-2))]
         end select
         allocate(b(n))
         b = 1.0_wp
@@ -232,6 +239,10 @@
             call check(istat == qdldl_success .and. residual_norm(irow, icol, val, x, b) < res_tol, &
                        name//': residual '//oname(o))
             if (c == 3 .and. o == 2) call check(ldl%nnz_l == n - 1, 'arrow: AMD gives no fill')
+            if (c == 5 .and. o == 2) then
+                call check(all(perm(n-1:n) == [1_ip, 2_ip]), 'dense rows: AMD orders them last')
+                call check(ldl%nnz_l == 2*n - 3, 'dense rows: AMD gives no fill')
+            end if
         end do
         deallocate(b)
     end do
