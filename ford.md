@@ -16,5 +16,6 @@ source: true
 graph: true
 externalize: true
 extra_mods: iso_fortran_env:https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fFORTRAN_005fENV.html
+mathjax_config: ./ford/mathjax-config.js
 
 {!README.md!}

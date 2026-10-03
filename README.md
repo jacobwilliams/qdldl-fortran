@@ -2,19 +2,21 @@ qdldl-fortran
 =============
 
 A modern Fortran port of [QDLDL](https://github.com/osqp/qdldl), the sparse
-\(LDL^T\) solver for quasi-definite matrices used inside the OSQP solver. It
+$LDL^T$ solver for quasi-definite matrices used inside the OSQP solver. It
 comes with fill-reducing orderings (AMD and reverse Cuthill–McKee) and an
 object-oriented interface. You only need [fpm](https://fpm.fortran-lang.org)
 to build it.
 
 ## What it is, and when to use it
 
-QDLDL factors a sparse symmetric matrix as \(PAP^T = LDL^T\) (\(L\) unit lower
-triangular, \(D\) diagonal) **without pivoting**. That makes it small and fast,
+QDLDL factors a sparse symmetric matrix as $PAP^T = LDL^T$ ($L$ unit lower
+triangular, $D$ diagonal) **without pivoting**. That makes it small and fast,
 and it is the reason for its main limitation. The factorization is guaranteed
 stable only for **quasi-definite** matrices,
 
-\[ \begin{bmatrix} H & B^T \\ B & -C \end{bmatrix}, \quad H \succ 0,\ C \succ 0, \]
+$$
+\begin{bmatrix} H & B^T \cr B & -C \end{bmatrix}, \quad H \succ 0,\ C \succ 0,
+$$
 
 which can be factored in *any* symmetric order (Vanderbei, 1995). The order can
 therefore be chosen for sparsity alone.
@@ -28,7 +30,7 @@ therefore be chosen for sparsity alone.
   It is single-threaded, not supernodal, and doesn't pivot. Use MUMPS, HSL,
   SPRAL, or Pardiso there.
 
-The signs of \(D\) give the **inertia** of the matrix for free (Sylvester's law).
+The signs of $D$ give the **inertia** of the matrix for free (Sylvester's law).
 This count is exact for a quasi-definite matrix, and only as reliable as the
 pivots otherwise.
 
@@ -67,19 +69,19 @@ qdldl-fortran = { git = "https://github.com/jacobwilliams/qdldl-fortran" }
 
 | Procedure | What it does |
 |---|---|
-| `analyze(n, irow, icol, istat [, perm] [, ordering])` | Analyzes the pattern, given in coordinate form. Computes the ordering, the elimination tree, and the nonzeros of \(L\), and allocates everything else. |
+| `analyze(n, irow, icol, istat [, perm] [, ordering])` | Analyzes the pattern, given in coordinate form. Computes the ordering, the elimination tree, and the nonzeros of $L$, and allocates everything else. |
 | `analyze_csc(n, Ap, Ai, istat [, perm] [, ordering])` | The same, for a matrix in compressed sparse column (CSC) form (1-based, `Ap(1) = 1`). |
-| `set_signs(signs, istat)` | The expected sign of each pivot (`+1` for the \(H\) block, `-1` for the \(-C\) block, `0` if unknown), used for regularization. |
+| `set_signs(signs, istat)` | The expected sign of each pivot (`+1` for the $H$ block, `-1` for the $-C$ block, `0` if unknown), used for regularization. |
 | `factor(val, istat)` | Factors the matrix with new values. Duplicates are added. Allocates nothing. |
-| `solve(b, istat [, refine])` | Solves \(Ax = b\) in place, with optional iterative refinement. Allocates nothing. |
-| `multiply(x, y [, istat])` | \(y = Ax\) with the last values (unregularized). |
+| `solve(b, istat [, refine])` | Solves $Ax = b$ in place, with optional iterative refinement. Allocates nothing. |
+| `multiply(x, y [, istat])` | $y = Ax$ with the last values (unregularized). |
 | `inertia(n_positive, n_negative, n_zero [, n_regularized])` | The inertia of the last factorization. |
-| `get_permutation(perm)` | The permutation: row `perm(k)` of \(A\) is row `k` of \(PAP^T\). |
+| `get_permutation(perm)` | The permutation: row `perm(k)` of $A$ is row `k` of $PAP^T$. |
 | `is_analyzed()`, `is_factored()` | The state. |
 | `destroy()` | Frees everything (the options are kept). |
 
-**Input.** An off-diagonal entry \((i,j)\) stands for both \((i,j)\) and
-\((j,i)\), and duplicates are added. If you give both triangles, give the values
+**Input.** An off-diagonal entry $(i,j)$ stands for both $(i,j)$ and
+$(j,i)$, and duplicates are added. If you give both triangles, give the values
 of only one of them (with zeros for the other), or the off-diagonal values are
 doubled. The permutation is applied internally: `b` and `x` are always in the
 original order.
@@ -92,14 +94,14 @@ makes an independent copy, including the factorization.
 | Option | Default | Meaning |
 |---|---|---|
 | `ordering` | `qdldl_order_default` (AMD) | `qdldl_order_natural`, `qdldl_order_rcm`, `qdldl_order_amd`, or `qdldl_order_user` (with `perm`) |
-| `zero_pivot_tol` | `0` | a pivot with \(\lvert d_k\rvert \le\) `zero_pivot_tol` \(\cdot \max_{ij}\lvert A_{ij}\rvert\) is zero (`0`: an exact zero only, as upstream) |
-| `regularize` | `.false.` | dynamic regularization: a zero pivot, or one with \(s_k d_k <\) `reg_eps`, is replaced by \(s_k\) `reg_delta` instead of stopping the factorization |
-| `reg_eps` | \(\epsilon^{0.8}\) (3e-13 in double precision) | threshold of dynamic regularization (absolute) |
-| `reg_delta` | \(\sqrt\epsilon\) (1.5e-8) | magnitude of a regularized pivot (absolute) |
+| `zero_pivot_tol` | `0` | a pivot with $\lvert d_k\rvert \le$ `zero_pivot_tol` $\cdot \max_{ij}\lvert A_{ij}\rvert$ is zero (`0`: an exact zero only, as upstream) |
+| `regularize` | `.false.` | dynamic regularization: a zero pivot, or one with $s_k d_k <$ `reg_eps`, is replaced by $s_k$ `reg_delta` instead of stopping the factorization |
+| `reg_eps` | $\epsilon^{0.8}$ (3e-13 in double precision) | threshold of dynamic regularization (absolute) |
+| `reg_delta` | $\sqrt\epsilon$ (1.5e-8) | magnitude of a regularized pivot (absolute) |
 | `static_reg` | `0` | added to each diagonal entry with its expected sign before factoring |
 | `max_refine` | `0` | maximum number of steps of iterative refinement in `solve`, against the unregularized matrix |
 
-\(s_k\) is the expected sign from `set_signs`. If it is unknown, the sign of
+$s_k$ is the expected sign from `set_signs`. If it is unknown, the sign of
 the pivot itself (dynamic regularization) or of the diagonal entry (static
 regularization) is used.
 
@@ -123,10 +125,10 @@ instead of crashing.
   zero pivot stops the factorization (`qdldl_error_zero_pivot`, with the row in
   `zero_pivot_column`).
 * **Static regularization** (`static_reg` > 0, with `set_signs`) makes a KKT
-  matrix \(\begin{bmatrix} H & J^T \\ J & 0 \end{bmatrix}\) with \(H \succ 0\)
+  matrix $\left[\matrix{H & J^T \cr J & 0}\right]$ with $H \succ 0$
   quasi-definite. Iterative refinement (`max_refine` > 0) then recovers the
   solution of the *unregularized* system. Choose `static_reg` well above the
-  round-off of the real kind (\(\sqrt\epsilon\) is a reasonable start).
+  round-off of the real kind ($\sqrt\epsilon$ is a reasonable start).
 * **Dynamic regularization** (`regularize`) always completes the factorization.
   `n_regularized` > 0 tells you that the matrix was not quasi-definite in that
   order, or was singular (an optimization solver would then increase its
@@ -160,8 +162,8 @@ and the modernized SuiteSparse routine `amd` (module `qdldl_amd`).
 
 The kinds are chosen by preprocessor macros: `-DREAL32`, `-DREAL64` (the
 default), or `-DREAL128` for the reals (`qdldl_wp`), and `-DINT64` for 64-bit
-indices (`qdldl_ip`). You need 64-bit indices when the nonzeros of \(L\) can
-exceed \(2^{31}-1\). Otherwise the analysis returns `qdldl_error_overflow`.
+indices (`qdldl_ip`). You need 64-bit indices when the nonzeros of $L$ can
+exceed $2^{31}-1$. Otherwise the analysis returns `qdldl_error_overflow`.
 
 ```bash
 fpm test --profile debug --flag "-DREAL32 -DINT64"
@@ -194,9 +196,9 @@ pixi run docs                     # the API documentation, with FORD
   zero pivots, and `test_kinds` the kind of the build. Tolerances scale with
   `epsilon(1.0_wp)`, and every test passes in each kind.
 * **Cross-check**: `tools/crosscheck` builds the C QDLDL and runs both
-  versions on the same random matrices (up to \(n = 2000\), 640,000 nonzeros
-  in \(L\)). Their elimination trees and the structure of \(L\) are identical,
-  and the values of \(L\), \(D\), and the solutions agree **bit for bit**.
+  versions on the same random matrices (up to $n = 2000$, 640,000 nonzeros
+  in $L$). Their elimination trees and the structure of $L$ are identical,
+  and the values of $L$, $D$, and the solutions agree **bit for bit**.
 * **No stack use that grows with the problem**: the library has no automatic
   arrays and no array temporaries (`tools/stack_check.sh`). The work arrays
   are kept in the type, and allocated in the analysis.
