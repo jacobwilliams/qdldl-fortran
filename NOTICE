@@ -1,0 +1,22 @@
+qdldl-fortran
+Copyright (c) 2026, Jacob Williams
+
+This product is a Fortran translation of QDLDL, and includes a modernized
+version of the Fortran AMD routine of SuiteSparse.
+
+QDLDL (https://github.com/osqp/qdldl)
+  Copyright 2018, Paul Goulart, Bartolomeo Stellato, Goran Banjac,
+  Ian McInerney, The OSQP developers.
+  Licensed under the Apache License, Version 2.0 (see LICENSE).
+  src/qdldl_core.f90 is a translation of src/qdldl.c, changed as described
+  in its header; the tests in test/test_core.f90 use the matrices of
+  QDLDL's tests.
+
+AMD (https://github.com/DrTimothyAldenDavis/SuiteSparse, AMD/Source/amd.f)
+  Copyright (c) 1996-2022, Timothy A. Davis, Patrick R. Amestoy, and
+  Iain S. Duff. All Rights Reserved.
+  Original Fortran version Copyright (C) 1995 by Timothy A. Davis,
+  Patrick Amestoy, Iain S. Duff, and John K. Reid.
+  Licensed under the BSD 3-clause license (the full text is in
+  src/qdldl_amd.f90). src/qdldl_amd.f90 is a modernized version of amd.f,
+  changed as described in its header.

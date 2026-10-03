@@ -1,0 +1,17 @@
+name = "qdldl-fortran"
+author = "Jacob Williams"
+copyright  = "Copyright (c) 2026, Jacob Williams"
+license = "Apache-2.0"
+description = "QDLDL (a sparse LDL^T solver for quasi-definite matrices) in modern Fortran, with AMD and RCM orderings"
+homepage = "https://github.com/jacobwilliams/qdldl-fortran"
+
+[build]
+auto-executables = true
+auto-examples = true
+auto-tests = true
+
+[library]
+source-dir = "src"
+
+[install]
+library = true

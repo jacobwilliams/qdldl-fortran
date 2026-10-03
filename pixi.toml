@@ -1,0 +1,29 @@
+[workspace]
+authors = ["Jacob Williams <jacobwilliams@users.noreply.github.com>"]
+channels = ["conda-forge"]
+name = "qdldl-fortran"
+platforms = ["osx-arm64", "linux-64", "win-64"]
+version = "0.1.0"
+
+[tasks]
+# the tests in each real and integer kind (other arguments are passed on to fpm)
+test-real32 = 'fpm test --profile debug --flag "-DREAL32"'
+test-real64 = 'fpm test --profile debug --flag "-DREAL64"'
+test-real128 = 'fpm test --profile debug --flag "-DREAL128"'
+test-int64 = 'fpm test --profile debug --flag "-DINT64"'
+# lists automatic arrays and array temporaries in the library (there must be none)
+stack-check = "bash tools/stack_check.sh"
+# builds the C QDLDL from reference/qdldl and compares it with the port (see tools/crosscheck)
+crosscheck = "bash tools/crosscheck/run.sh"
+docs = "dot -c && ford ford.md"   # (dot -c registers graphviz's layout plugins in a fresh environment)
+
+[dependencies]
+gfortran = "15.*"
+fpm = ">=0.13.0,<0.14"
+ford = ">=7.0.13,<8"
+graphviz = ">=14.1.2,<15"
+c-compiler = "*"
+lcov = ">=2.5,<3"
+
+[pypi-dependencies]
+fortitude-lint = ">=0.9.2, <0.10"

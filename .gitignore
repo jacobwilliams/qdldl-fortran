@@ -1,0 +1,8 @@
+build/
+doc/
+/coverage
+
+.pixi/
+*.mod
+*.o
+.DS_Store

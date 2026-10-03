@@ -1,0 +1,50 @@
+name: CI
+on: [push, pull_request]
+jobs:
+
+  Build:
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        kind: ["-DREAL64", "-DREAL32", "-DREAL128", "-DINT64"]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive   # reference/qdldl, for the cross-check with the C QDLDL
+
+    # installs pixi and creates the environment from pixi.toml/pixi.lock
+    # (gfortran, fpm, ford, fortitude, a C compiler), the same one used locally
+    - name: Setup pixi environment
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.80.0
+        locked: true   # fail if pixi.lock is out of date with pixi.toml
+        cache: true
+
+    - name: Run tests
+      run: pixi run fpm test --profile debug --flag "${{ matrix.kind }}"
+
+    - name: Lint, stack check, and cross-check with the C QDLDL
+      if: matrix.kind == '-DREAL64'
+      run: |
+        pixi run fortitude check
+        pixi run stack-check
+        pixi run crosscheck
+
+    - name: Build documentation
+      if: matrix.kind == '-DREAL64'
+      run: pixi run docs
+
+    - name: Deploy Documentation
+      if: matrix.kind == '-DREAL64' && github.ref == 'refs/heads/master'
+      uses: JamesIves/github-pages-deploy-action@v4.9.0
+      with:
+        branch: gh-pages
+        folder: doc
+        single-commit: true

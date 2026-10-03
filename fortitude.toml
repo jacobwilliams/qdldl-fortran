@@ -1,0 +1,22 @@
+# Fortitude (Fortran linter) configuration: https://fortitude.readthedocs.io
+# Run with `pixi run fortitude check`. (Review `--fix` changes before keeping
+# them: its fixes indent with 2 spaces, and can break the preprocessed .F90 files.)
+
+[check]
+line-length = 132            # the Fortran free-form limit, used throughout
+extend-exclude = [
+    "test",        # only the library (src/) and example/ are linted
+    "reference",   # the upstream sources
+]
+ignore = [
+    "C003",   # implicit-external-procedures: would require Fortran 2018's `implicit none (type, external)`
+    "S081",   # superfluous-semicolon
+    "C181",
+    "C182",   # one stat= for several allocations: any failure is reported as out of memory
+]
+
+[check.line-too-long]
+ignore-comments = true   # (long trailing `!!` comments are fine)
+
+[check.strings]
+quotes = "single"
