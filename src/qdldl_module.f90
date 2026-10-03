@@ -28,6 +28,7 @@
     module qdldl_module
 
     use qdldl_kinds,    only: wp, ip
+    use, intrinsic :: ieee_arithmetic, only: ieee_is_finite
     use qdldl_core,     only: qdldl_unknown, qdldl_success, qdldl_error_not_upper, qdldl_error_overflow, &
                               qdldl_error_empty_column, qdldl_error_zero_pivot, qdldl_error_invalid_input, &
                               qdldl_error_not_analyzed, qdldl_error_not_factored, qdldl_error_out_of_memory, &
@@ -618,7 +619,7 @@
         return
     end if
     do k = 1, me%nz
-        if (.not. is_finite(val(k))) then
+        if (.not. ieee_is_finite(val(k))) then
             istat = qdldl_error_not_finite
             return
         end if
@@ -691,7 +692,7 @@
     dmin = huge(1.0_wp)
     dmax = 0.0_wp
     do k = 1, me%n
-        if (.not. is_finite(me%D(k))) then
+        if (.not. ieee_is_finite(me%D(k))) then
             istat = qdldl_error_not_finite
             return
         end if
@@ -699,7 +700,7 @@
         dmax = max(dmax, abs(me%D(k)))
     end do
     do p = 1, me%nnz_l
-        if (.not. is_finite(me%Lx(p))) then
+        if (.not. ieee_is_finite(me%Lx(p))) then
             istat = qdldl_error_not_finite
             return
         end if
@@ -746,7 +747,7 @@
         return
     end if
     do k = 1, n
-        if (.not. is_finite(b(k))) then
+        if (.not. ieee_is_finite(b(k))) then
             istat = qdldl_error_not_finite
             return
         end if
@@ -766,7 +767,7 @@
         call residual(me%wx, me%wr, rn)
         do it = 1, nref
             tol = epsilon(1.0_wp) * (me%anorm * max_abs(me%wx) + bn)
-            if (rn <= tol .or. .not. is_finite(rn)) exit
+            if (rn <= tol .or. .not. ieee_is_finite(rn)) exit
             ! the correction, in wr, and the trial solution, in wy
             call qdldl_solve(n, me%Lp, me%Li, me%Lx, me%Dinv, me%wr)
             do k = 1, n
@@ -789,7 +790,7 @@
     end if
 
     do k = 1, n
-        if (.not. is_finite(me%wx(k))) then
+        if (.not. ieee_is_finite(me%wx(k))) then
             istat = qdldl_error_not_finite
             return
         end if
@@ -1029,19 +1030,6 @@
     end do
 
     end function max_abs
-!*****************************************************************************************
-
-!*****************************************************************************************
-!>
-!  Whether a real is finite (neither infinite nor NaN).
-
-    elemental logical function is_finite(x)
-
-    real(wp),intent(in) :: x  !! the value
-
-    is_finite = abs(x) <= huge(x)
-
-    end function is_finite
 !*****************************************************************************************
 
 !*****************************************************************************************
