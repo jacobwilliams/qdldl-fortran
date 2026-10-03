@@ -12,6 +12,7 @@ ignore = [
     "C003",   # implicit-external-procedures: would require Fortran 2018's `implicit none (type, external)`
     "S081",   # superfluous-semicolon
     "C181",
+    "C071",   # assumed size for c interfaces
     "C182",   # one stat= for several allocations: any failure is reported as out of memory
 ]
 

@@ -16,6 +16,7 @@
     interface
         function c_etree(n, Ap, Ai, work, Lnz, etree) bind(c, name='benchmark_c_etree') result(sumLnz)
             import :: c_int
+            implicit none
             integer(c_int),value :: n
             integer(c_int),intent(in) :: Ap(*), Ai(*)
             integer(c_int),intent(out) :: work(*), Lnz(*), etree(*)
@@ -25,6 +26,7 @@
         function c_factor(n, Ap, Ai, Ax, Lp, Li, Lx, D, Dinv, Lnz, etree, &
                           bwork, iwork, fwork) bind(c, name='benchmark_c_factor') result(npos)
             import :: c_int, c_int8_t, c_double
+            implicit none
             integer(c_int),value :: n
             integer(c_int),intent(in) :: Ap(*), Ai(*)
             real(c_double),intent(in) :: Ax(*)
@@ -38,6 +40,7 @@
 
         subroutine c_solve(n, Lp, Li, Lx, Dinv, x) bind(c, name='benchmark_c_solve')
             import :: c_int, c_double
+            implicit none
             integer(c_int),value :: n
             integer(c_int),intent(in) :: Lp(*), Li(*)
             real(c_double),intent(in) :: Lx(*), Dinv(*)
@@ -96,10 +99,12 @@
         result_c = c_factor(int(n,c_int), Ap_c, Ai_c, Ax, Lp_c, Li_c, Lx_c, D_c, Dinv_c, &
                             Lnz_c, etree_c, bwork_c, iwork_c, fwork_c)
         if (result_f /= result_c .or. result_f < 0) error stop 'C and Fortran factorization failed'
-        if (any(Lp_f - 1_ip /= Lp_c) .or. any(Li_f - 1_ip /= Li_c)) &
-            error stop 'C and Fortran L structures differ'
-        if (.not. close_enough(Lx_f, Lx_c) .or. .not. close_enough(D_f, D_c)) &
-            error stop 'C and Fortran factor values differ'
+        if (any(Lp_f - 1_ip /= Lp_c) .or. any(Li_f - 1_ip /= Li_c)) then
+          error stop 'C and Fortran L structures differ'
+        end if
+        if (.not. close_enough(Lx_f, Lx_c) .or. .not. close_enough(D_f, D_c)) then
+          error stop 'C and Fortran factor values differ'
+        end if
 
         do sample = 1, nsamples
             if (mod(sample,2) == 1) then
