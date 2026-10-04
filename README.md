@@ -240,7 +240,7 @@ routine was faster.
 
 Results on an Apple M5 (macOS 27.0), using GNU Fortran 15.3.0 and Clang 23.1.1:
 
-| Grid | n | nnz(A) | nnz(L) | Routine | Fortran (us) | C (us) | C / Fortran |
+| Grid | n | nnz(A) | nnz(L) | Routine | Fortran (µs) | C (µs) | C / Fortran |
 |---|---:|---:|---:|---|---:|---:|---:|
 | 20 x 20 | 400 | 1,160 | 7,619 | elimination tree | 11.55 | 9.90 | 0.86 |
 | | | | | factorization | 52.00 | 53.00 | 1.02 |
