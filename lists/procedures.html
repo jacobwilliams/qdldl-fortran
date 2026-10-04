@@ -1,0 +1,772 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="QDLDL, a sparse LDLT solver for quasi-definite matrices, in modern Fortran">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>All Procedures &ndash; qdldl-fortran
+</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+      <script src="../js/MathJax-config/mathjax-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">qdldl-fortran </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12" id='text'>
+			 <h1>Procedures</h1>
+			 <table class="table table-striped">
+			 <thead><tr><th>Procedure</th><th>Location</th><th>Procedure Type</th><th>Description</th></tr></thead>
+			 <tbody>
+			   <tr>
+                 <td><a href='../proc/amd.html'>amd</a></td>
+                 <td><a href='../module/qdldl_amd.html'>qdldl_amd</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Given a representation of the nonzero pattern of a symmetric matrix, <script type="math/tex">A</script>
+  (excluding the diagonal), performs an approximate minimum (UMFPACK/MA38-style)
+  degree ordering to compute a pivot order such that the introduction of nonzeros
+  (fill-in) in the Cholesky factors <script type="math/tex">A = LL^T</script> are kept low. At each step, the
+  pivot selected is the one with the minimum UMFPACK/MA38-style upper-bound on the
+  external degree. Aggressive absorption is used to tighten the bound on the degree.</p><a href="../proc/amd.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/analyze.html'>analyze</a></td>
+                 <td><a href='../module/qdldl_module.html'>qdldl_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Analyzes the sparsity pattern of the matrix, given in coordinate form: computes
+the ordering, the elimination tree, and the nonzeros of <script type="math/tex">L</script>, and allocates
+everything that <a href="../type/qdldl_type.html#boundprocedure-factor">factor</a> and <a href="../type/qdldl_type.html#boundprocedure-solve">solve</a> need.</p><a href="../proc/analyze.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/analyze_csc.html'>analyze_csc</a></td>
+                 <td><a href='../module/qdldl_module.html'>qdldl_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p><a href="../type/qdldl_type.html#boundprocedure-analyze">analyze</a> for a matrix given in compressed sparse column (CSC) form:
+the entries of column <code>j</code> are <code>Ai(Ap(j):Ap(j+1)-1)</code>, with <code>Ap(1) = 1</code>. Normally the
+upper triangle (as for the low-level routines), but, as for coordinate input,
+entries of either triangle are accepted and duplicates are added. The values
+given to <a href="../type/qdldl_type.html#boundprocedure-factor">factor</a> are then in the order of <code>Ai</code>.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/analyze_pattern.html'>analyze_pattern</a></td>
+                 <td><a href='../module/qdldl_module.html'>qdldl_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>The analysis proper, after the input has been checked.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/destroy.html'>destroy</a></td>
+                 <td><a href='../module/qdldl_module.html'>qdldl_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Frees all the storage, and resets the results. The options are kept.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/factor.html'>factor</a></td>
+                 <td><a href='../module/qdldl_module.html'>qdldl_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Factors the matrix with new values, in the order of the entries given to
+<a href="../type/qdldl_type.html#boundprocedure-analyze">analyze</a> (duplicates are added). Allocates nothing.</p><a href="../proc/factor.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/factor_kernel.html'>factor_kernel</a></td>
+                 <td><a href='../module/qdldl_core.html'>qdldl_core</a></td>
+                 <td>Function</td>
+                 <td><p>The numeric factorization shared by <a href="../proc/qdldl_factor.html">qdldl_factor</a> and <a href="../proc/qdldl_factor_ext.html">qdldl_factor_ext</a>,
+with the integer work array already partitioned (as upstream does with pointers).</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/get_permutation.html'>get_permutation</a></td>
+                 <td><a href='../module/qdldl_module.html'>qdldl_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>The permutation of the analysis: row <code>perm(k)</code> of <script type="math/tex">A</script> is row <code>k</code> of <script type="math/tex">PAP^T</script>.
+Unallocated if the pattern has not been analyzed.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/inertia.html'>inertia</a></td>
+                 <td><a href='../module/qdldl_module.html'>qdldl_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>The inertia of the last successful factorization: the numbers of positive,
+negative, and zero pivots (as computed, before any regularization).</p><a href="../proc/inertia.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/is_analyzed.html'>is_analyzed</a></td>
+                 <td><a href='../module/qdldl_module.html'>qdldl_module</a></td>
+                 <td>Function</td>
+                 <td><p>Whether the pattern has been analyzed.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/is_factored.html'>is_factored</a></td>
+                 <td><a href='../module/qdldl_module.html'>qdldl_module</a></td>
+                 <td>Function</td>
+                 <td><p>Whether the last <a href="../type/qdldl_type.html#boundprocedure-factor">factor</a> succeeded (so <a href="../type/qdldl_type.html#boundprocedure-solve">solve</a> can be used).</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/max_abs.html'>max_abs</a></td>
+                 <td><a href='../module/qdldl_module.html'>qdldl_module</a></td>
+                 <td>Function</td>
+                 <td><p>
+<script type="math/tex">\max_i |x_i|</script> (0 for an empty vector).</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/multiply.html'>multiply</a></td>
+                 <td><a href='../module/qdldl_module.html'>qdldl_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>
+<script type="math/tex">y = Ax</script> with the last values given to <a href="../type/qdldl_type.html#boundprocedure-factor">factor</a> (unregularized),
+whether or not that factorization succeeded.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/qdldl_amd_order.html'>qdldl_amd_order</a></td>
+                 <td><a href='../module/qdldl_ordering.html'>qdldl_ordering</a></td>
+                 <td>Subroutine</td>
+                 <td><p>The approximate minimum degree ordering, by <a href="../proc/amd.html">amd</a>, with elbow room of 20% plus
+<code>n</code> in its work array (so that compressions are rare).</p><a href="../proc/qdldl_amd_order.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/qdldl_etree.html'>qdldl_etree</a></td>
+                 <td><a href='../module/qdldl_core.html'>qdldl_core</a></td>
+                 <td>Function</td>
+                 <td><p>Computes the elimination tree of a quasi-definite matrix, and the number of
+nonzeros of each column of <script type="math/tex">L</script> (strictly below the diagonal), from the upper
+triangle of the matrix in CSC form, without duplicate entries.</p><a href="../proc/qdldl_etree.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/qdldl_factor.html'>qdldl_factor</a></td>
+                 <td><a href='../module/qdldl_core.html'>qdldl_core</a></td>
+                 <td>Function</td>
+                 <td><p>Computes the <script type="math/tex">LDL^T</script> factorization of a quasi-definite matrix from the upper
+triangle of the matrix in CSC form, without duplicate entries: <script type="math/tex">L</script> in CSC form
+(unit diagonal not stored), <script type="math/tex">D</script>, and <script type="math/tex">D^{-1}</script>.</p><a href="../proc/qdldl_factor.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/qdldl_factor_ext.html'>qdldl_factor_ext</a></td>
+                 <td><a href='../module/qdldl_core.html'>qdldl_core</a></td>
+                 <td>Function</td>
+                 <td><p><a href="../proc/qdldl_factor.html">qdldl_factor</a> with a zero-pivot tolerance, dynamic regularization, and the
+inertia of <code>D</code>.</p><a href="../proc/qdldl_factor_ext.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/qdldl_is_permutation.html'>qdldl_is_permutation</a></td>
+                 <td><a href='../module/qdldl_ordering.html'>qdldl_ordering</a></td>
+                 <td>Function</td>
+                 <td><p>Whether <code>perm</code> is a permutation of <code>1..n</code>.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/qdldl_lsolve.html'>qdldl_lsolve</a></td>
+                 <td><a href='../module/qdldl_core.html'>qdldl_core</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Solves <script type="math/tex">(L+I)x = b</script> in place.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/qdldl_ltsolve.html'>qdldl_ltsolve</a></td>
+                 <td><a href='../module/qdldl_core.html'>qdldl_core</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Solves <script type="math/tex">(L+I)^T x = b</script> in place.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/qdldl_order_natural_perm.html'>qdldl_order_natural_perm</a></td>
+                 <td><a href='../module/qdldl_ordering.html'>qdldl_ordering</a></td>
+                 <td>Subroutine</td>
+                 <td><p>The natural ordering: <code>perm(k) = k</code>.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/qdldl_rcm.html'>qdldl_rcm</a></td>
+                 <td><a href='../module/qdldl_ordering.html'>qdldl_ordering</a></td>
+                 <td>Subroutine</td>
+                 <td><p>The reverse Cuthill-McKee ordering, which reduces the bandwidth (and the profile)
+of the matrix.</p><a href="../proc/qdldl_rcm.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/qdldl_solve.html'>qdldl_solve</a></td>
+                 <td><a href='../module/qdldl_core.html'>qdldl_core</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Solves <script type="math/tex">LDL^Tx = b</script> in place, given the factors from <a href="../proc/qdldl_factor.html">qdldl_factor</a>.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/qdldl_status_message.html'>qdldl_status_message</a></td>
+                 <td><a href='../module/qdldl_module.html'>qdldl_module</a></td>
+                 <td>Function</td>
+                 <td><p>A short description of a status code.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/qdldl_symmetric_pattern.html'>qdldl_symmetric_pattern</a></td>
+                 <td><a href='../module/qdldl_ordering.html'>qdldl_ordering</a></td>
+                 <td>Subroutine</td>
+                 <td><p>The full symmetric adjacency structure (both triangles, without the diagonal) of
+a matrix given by its upper triangle in CSC form without duplicates: the
+neighbours of node <code>i</code> are <code>adj(xadj(i):xadj(i+1)-1)</code>.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/set_signs.html'>set_signs</a></td>
+                 <td><a href='../module/qdldl_module.html'>qdldl_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Sets the expected sign of each pivot (in the original order of the rows of
+<script type="math/tex">A</script>), for regularization: <code>+1</code> for a row of the positive definite block (<script type="math/tex">H</script>),
+<code>-1</code> for one of the negative definite block (<script type="math/tex">-C</script>), <code>0</code> if unknown (the sign is
+then inferred from the values). Must be called after <a href="../type/qdldl_type.html#boundprocedure-analyze">analyze</a> (which
+discards it).</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/solve.html'>solve</a></td>
+                 <td><a href='../module/qdldl_module.html'>qdldl_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>Solves <script type="math/tex">Ax = b</script> in place with the factorization, with optional iterative
+refinement against the (unregularized) matrix: steps of <script type="math/tex">r = b - Ax</script>,
+<script type="math/tex">x \leftarrow x + \text{solve}(r)</script>, while the scaled residual is above
+round-off and each step at least halves the residual (a step that doesn't
+reduce it is discarded). Allocates nothing.</p></td>
+               </tr>
+			   <tr>
+                 <td><a href='../proc/sym_multiply.html'>sym_multiply</a></td>
+                 <td><a href='../module/qdldl_module.html'>qdldl_module</a></td>
+                 <td>Subroutine</td>
+                 <td><p>
+<script type="math/tex">y = Ax</script> for a symmetric matrix given by its upper triangle in CSC form.</p></td>
+               </tr>
+			 </tbody></table>
+             <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: call~~graph~~CallGraph Pages: 1 -->
+<svg id="callgraphCallGraph" width="760pt" height="515pt"
+ viewBox="0.00 0.00 760.00 515.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="call~~graph~~CallGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 511.27)">
+<title>call~~graph~~CallGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-511.27 755.83,-511.27 755.83,4 -4,4"/>
+<!-- proc~amd -->
+<g id="call~~graph~~CallGraph_node1" class="node">
+<title>proc~amd</title>
+<g id="a_call~~graph~~CallGraph_node1"><a xlink:href="../proc/amd.html" xlink:title="amd">
+<polygon fill="#d9534f" stroke="#d9534f" points="751.83,-192.27 697.83,-192.27 697.83,-168 751.83,-168 751.83,-192.27"/>
+<text xml:space="preserve" text-anchor="middle" x="724.83" y="-176.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">amd</text>
+</a>
+</g>
+</g>
+<!-- proc~analyze -->
+<g id="call~~graph~~CallGraph_node2" class="node">
+<title>proc~analyze</title>
+<g id="a_call~~graph~~CallGraph_node2"><a xlink:href="../proc/analyze.html" xlink:title="qdldl_type%analyze">
+<polygon fill="#d9534f" stroke="#d9534f" points="317.79,-66.27 200.52,-66.27 200.52,-42 317.79,-42 317.79,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="259.15" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_type%analyze</text>
+</a>
+</g>
+</g>
+<!-- proc~analyze_pattern -->
+<g id="call~~graph~~CallGraph_node4" class="node">
+<title>proc~analyze_pattern</title>
+<g id="a_call~~graph~~CallGraph_node4"><a xlink:href="../proc/analyze_pattern.html" xlink:title="analyze_pattern">
+<polygon fill="#d9534f" stroke="#d9534f" points="463.56,-108.27 366.54,-108.27 366.54,-84 463.56,-84 463.56,-108.27"/>
+<text xml:space="preserve" text-anchor="middle" x="415.05" y="-92.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">analyze_pattern</text>
+</a>
+</g>
+</g>
+<!-- proc~analyze&#45;&gt;proc~analyze_pattern -->
+<g id="call~~graph~~CallGraph_edge1" class="edge">
+<title>proc~analyze&#45;&gt;proc~analyze_pattern</title>
+<path fill="none" stroke="#000000" d="M306.33,-66.74C322.31,-71.1 340.4,-76.04 357.14,-80.6"/>
+<polygon fill="#000000" stroke="#000000" points="355.88,-83.89 366.45,-83.14 357.72,-77.13 355.88,-83.89"/>
+</g>
+<!-- proc~destroy -->
+<g id="call~~graph~~CallGraph_node5" class="node">
+<title>proc~destroy</title>
+<g id="a_call~~graph~~CallGraph_node5"><a xlink:href="../proc/destroy.html" xlink:title="qdldl_type%destroy">
+<polygon fill="#d9534f" stroke="#d9534f" points="472.56,-24.27 357.54,-24.27 357.54,0 472.56,0 472.56,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="415.05" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_type%destroy</text>
+</a>
+</g>
+</g>
+<!-- proc~analyze&#45;&gt;proc~destroy -->
+<g id="call~~graph~~CallGraph_edge2" class="edge">
+<title>proc~analyze&#45;&gt;proc~destroy</title>
+<path fill="none" stroke="#000000" d="M306.33,-41.53C322.31,-37.17 340.4,-32.23 357.14,-27.67"/>
+<polygon fill="#000000" stroke="#000000" points="357.72,-31.14 366.45,-25.13 355.88,-24.38 357.72,-31.14"/>
+</g>
+<!-- proc~qdldl_is_permutation -->
+<g id="call~~graph~~CallGraph_node18" class="node">
+<title>proc~qdldl_is_permutation</title>
+<g id="a_call~~graph~~CallGraph_node18"><a xlink:href="../proc/qdldl_is_permutation.html" xlink:title="qdldl_is_permutation">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="476.31,-66.27 353.79,-66.27 353.79,-42 476.31,-42 476.31,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="415.05" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_is_permutation</text>
+</a>
+</g>
+</g>
+<!-- proc~analyze&#45;&gt;proc~qdldl_is_permutation -->
+<g id="call~~graph~~CallGraph_edge3" class="edge">
+<title>proc~analyze&#45;&gt;proc~qdldl_is_permutation</title>
+<path fill="none" stroke="#000000" d="M317.9,-54.13C325.78,-54.13 333.95,-54.13 342.05,-54.13"/>
+<polygon fill="#000000" stroke="#000000" points="341.9,-57.64 351.9,-54.14 341.9,-50.64 341.9,-57.64"/>
+</g>
+<!-- proc~analyze_csc -->
+<g id="call~~graph~~CallGraph_node3" class="node">
+<title>proc~analyze_csc</title>
+<g id="a_call~~graph~~CallGraph_node3"><a xlink:href="../proc/analyze_csc.html" xlink:title="qdldl_type%analyze_csc">
+<polygon fill="#d9534f" stroke="#d9534f" points="152.14,-46.27 12.37,-46.27 12.37,-22 152.14,-22 152.14,-46.27"/>
+<text xml:space="preserve" text-anchor="middle" x="82.26" y="-30.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_type%analyze_csc</text>
+</a>
+</g>
+</g>
+<!-- proc~analyze_csc&#45;&gt;proc~analyze -->
+<g id="call~~graph~~CallGraph_edge4" class="edge">
+<title>proc~analyze_csc&#45;&gt;proc~analyze</title>
+<path fill="none" stroke="#000000" d="M152.63,-42.07C164.56,-43.43 176.95,-44.85 188.88,-46.21"/>
+<polygon fill="#000000" stroke="#000000" points="188.29,-49.67 198.63,-47.33 189.09,-42.71 188.29,-49.67"/>
+</g>
+<!-- proc~analyze_csc&#45;&gt;proc~destroy -->
+<g id="call~~graph~~CallGraph_edge5" class="edge">
+<title>proc~analyze_csc&#45;&gt;proc~destroy</title>
+<path fill="none" stroke="#000000" d="M152.6,-29.52C209.41,-25.75 289.35,-20.43 345.84,-16.67"/>
+<polygon fill="#000000" stroke="#000000" points="345.91,-20.17 355.66,-16.02 345.45,-13.19 345.91,-20.17"/>
+</g>
+<!-- proc~qdldl_amd_order -->
+<g id="call~~graph~~CallGraph_node14" class="node">
+<title>proc~qdldl_amd_order</title>
+<g id="a_call~~graph~~CallGraph_node14"><a xlink:href="../proc/qdldl_amd_order.html" xlink:title="qdldl_amd_order">
+<polygon fill="#d9534f" stroke="#d9534f" points="637.83,-192.27 536.31,-192.27 536.31,-168 637.83,-168 637.83,-192.27"/>
+<text xml:space="preserve" text-anchor="middle" x="587.07" y="-176.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_amd_order</text>
+</a>
+</g>
+</g>
+<!-- proc~analyze_pattern&#45;&gt;proc~qdldl_amd_order -->
+<g id="call~~graph~~CallGraph_edge6" class="edge">
+<title>proc~analyze_pattern&#45;&gt;proc~qdldl_amd_order</title>
+<path fill="none" stroke="#000000" d="M460.8,-108.7C466.24,-111.09 471.55,-113.89 476.31,-117.13 496.62,-130.99 491.61,-145.87 512.31,-159.13 516.35,-161.72 520.71,-163.99 525.22,-165.99"/>
+<polygon fill="#000000" stroke="#000000" points="523.94,-169.25 534.53,-169.62 526.49,-162.73 523.94,-169.25"/>
+</g>
+<!-- proc~qdldl_etree -->
+<g id="call~~graph~~CallGraph_node15" class="node">
+<title>proc~qdldl_etree</title>
+<g id="a_call~~graph~~CallGraph_node15"><a xlink:href="../proc/qdldl_etree.html" xlink:title="qdldl_etree">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="622.45,-150.27 551.68,-150.27 551.68,-126 622.45,-126 622.45,-150.27"/>
+<text xml:space="preserve" text-anchor="middle" x="587.07" y="-134.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_etree</text>
+</a>
+</g>
+</g>
+<!-- proc~analyze_pattern&#45;&gt;proc~qdldl_etree -->
+<g id="call~~graph~~CallGraph_edge7" class="edge">
+<title>proc~analyze_pattern&#45;&gt;proc~qdldl_etree</title>
+<path fill="none" stroke="#000000" d="M463.86,-107.95C487.75,-113.85 516.52,-120.95 540.14,-126.79"/>
+<polygon fill="#000000" stroke="#000000" points="539.26,-130.18 549.81,-129.18 540.94,-123.38 539.26,-130.18"/>
+</g>
+<!-- proc~qdldl_order_natural_perm -->
+<g id="call~~graph~~CallGraph_node21" class="node">
+<title>proc~qdldl_order_natural_perm</title>
+<g id="a_call~~graph~~CallGraph_node21"><a xlink:href="../proc/qdldl_order_natural_perm.html" xlink:title="qdldl_order_natural_perm">
+<polygon fill="#d9534f" stroke="#d9534f" points="661.83,-108.27 512.31,-108.27 512.31,-84 661.83,-84 661.83,-108.27"/>
+<text xml:space="preserve" text-anchor="middle" x="587.07" y="-92.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_order_natural_perm</text>
+</a>
+</g>
+</g>
+<!-- proc~analyze_pattern&#45;&gt;proc~qdldl_order_natural_perm -->
+<g id="call~~graph~~CallGraph_edge8" class="edge">
+<title>proc~analyze_pattern&#45;&gt;proc~qdldl_order_natural_perm</title>
+<path fill="none" stroke="#000000" d="M463.86,-96.13C475.41,-96.13 488.1,-96.13 500.79,-96.13"/>
+<polygon fill="#000000" stroke="#000000" points="500.41,-99.64 510.41,-96.14 500.41,-92.64 500.41,-99.64"/>
+</g>
+<!-- proc~qdldl_rcm -->
+<g id="call~~graph~~CallGraph_node22" class="node">
+<title>proc~qdldl_rcm</title>
+<g id="a_call~~graph~~CallGraph_node22"><a xlink:href="../proc/qdldl_rcm.html" xlink:title="qdldl_rcm">
+<polygon fill="#d9534f" stroke="#d9534f" points="618.7,-66.27 555.43,-66.27 555.43,-42 618.7,-42 618.7,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="587.07" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_rcm</text>
+</a>
+</g>
+</g>
+<!-- proc~analyze_pattern&#45;&gt;proc~qdldl_rcm -->
+<g id="call~~graph~~CallGraph_edge9" class="edge">
+<title>proc~analyze_pattern&#45;&gt;proc~qdldl_rcm</title>
+<path fill="none" stroke="#000000" d="M463.86,-84.32C489.05,-78.1 519.65,-70.54 543.94,-64.54"/>
+<polygon fill="#000000" stroke="#000000" points="544.61,-67.98 553.48,-62.19 542.93,-61.19 544.61,-67.98"/>
+</g>
+<!-- proc~qdldl_symmetric_pattern -->
+<g id="call~~graph~~CallGraph_node25" class="node">
+<title>proc~qdldl_symmetric_pattern</title>
+<g id="a_call~~graph~~CallGraph_node25"><a xlink:href="../proc/qdldl_symmetric_pattern.html" xlink:title="qdldl_symmetric_pattern">
+<polygon fill="#d9534f" stroke="#d9534f" points="658.83,-24.27 515.31,-24.27 515.31,0 658.83,0 658.83,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="587.07" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_symmetric_pattern</text>
+</a>
+</g>
+</g>
+<!-- proc~analyze_pattern&#45;&gt;proc~qdldl_symmetric_pattern -->
+<g id="call~~graph~~CallGraph_edge10" class="edge">
+<title>proc~analyze_pattern&#45;&gt;proc~qdldl_symmetric_pattern</title>
+<path fill="none" stroke="#000000" d="M460.8,-83.57C466.24,-81.18 471.55,-78.38 476.31,-75.13 496.62,-61.28 491.61,-46.4 512.31,-33.13 514.32,-31.84 516.42,-30.63 518.57,-29.49"/>
+<polygon fill="#000000" stroke="#000000" points="520.02,-32.68 527.64,-25.31 517.09,-26.32 520.02,-32.68"/>
+</g>
+<!-- proc~factor -->
+<g id="call~~graph~~CallGraph_node6" class="node">
+<title>proc~factor</title>
+<g id="a_call~~graph~~CallGraph_node6"><a xlink:href="../proc/factor.html" xlink:title="qdldl_type%factor">
+<polygon fill="#d9534f" stroke="#d9534f" points="136.02,-171.27 28.5,-171.27 28.5,-147 136.02,-147 136.02,-171.27"/>
+<text xml:space="preserve" text-anchor="middle" x="82.26" y="-155.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_type%factor</text>
+</a>
+</g>
+</g>
+<!-- proc~qdldl_factor_ext -->
+<g id="call~~graph~~CallGraph_node17" class="node">
+<title>proc~qdldl_factor_ext</title>
+<g id="a_call~~graph~~CallGraph_node17"><a xlink:href="../proc/qdldl_factor_ext.html" xlink:title="qdldl_factor_ext">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="306.91,-171.27 211.39,-171.27 211.39,-147 306.91,-147 306.91,-171.27"/>
+<text xml:space="preserve" text-anchor="middle" x="259.15" y="-155.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_factor_ext</text>
+</a>
+</g>
+</g>
+<!-- proc~factor&#45;&gt;proc~qdldl_factor_ext -->
+<g id="call~~graph~~CallGraph_edge11" class="edge">
+<title>proc~factor&#45;&gt;proc~qdldl_factor_ext</title>
+<path fill="none" stroke="#000000" d="M136.21,-159.13C156.22,-159.13 179.1,-159.13 199.6,-159.13"/>
+<polygon fill="#000000" stroke="#000000" points="199.51,-162.64 209.51,-159.14 199.51,-155.64 199.51,-162.64"/>
+</g>
+<!-- proc~factor_kernel -->
+<g id="call~~graph~~CallGraph_node7" class="node">
+<title>proc~factor_kernel</title>
+<g id="a_call~~graph~~CallGraph_node7"><a xlink:href="../proc/factor_kernel.html" xlink:title="factor_kernel">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="456.06,-150.27 374.04,-150.27 374.04,-126 456.06,-126 456.06,-150.27"/>
+<text xml:space="preserve" text-anchor="middle" x="415.05" y="-134.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">factor_kernel</text>
+</a>
+</g>
+</g>
+<!-- proc~get_permutation -->
+<g id="call~~graph~~CallGraph_node8" class="node">
+<title>proc~get_permutation</title>
+<g id="a_call~~graph~~CallGraph_node8"><a xlink:href="../proc/get_permutation.html" xlink:title="qdldl_type%get_permutation">
+<polygon fill="#d9534f" stroke="#d9534f" points="164.52,-213.27 0,-213.27 0,-189 164.52,-189 164.52,-213.27"/>
+<text xml:space="preserve" text-anchor="middle" x="82.26" y="-197.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_type%get_permutation</text>
+</a>
+</g>
+</g>
+<!-- proc~inertia -->
+<g id="call~~graph~~CallGraph_node9" class="node">
+<title>proc~inertia</title>
+<g id="a_call~~graph~~CallGraph_node9"><a xlink:href="../proc/inertia.html" xlink:title="qdldl_type%inertia">
+<polygon fill="#d9534f" stroke="#d9534f" points="137.52,-255.27 27,-255.27 27,-231 137.52,-231 137.52,-255.27"/>
+<text xml:space="preserve" text-anchor="middle" x="82.26" y="-239.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_type%inertia</text>
+</a>
+</g>
+</g>
+<!-- proc~is_analyzed -->
+<g id="call~~graph~~CallGraph_node10" class="node">
+<title>proc~is_analyzed</title>
+<g id="a_call~~graph~~CallGraph_node10"><a xlink:href="../proc/is_analyzed.html" xlink:title="qdldl_type%is_analyzed">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="151.02,-297.27 13.5,-297.27 13.5,-273 151.02,-273 151.02,-297.27"/>
+<text xml:space="preserve" text-anchor="middle" x="82.26" y="-281.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_type%is_analyzed</text>
+</a>
+</g>
+</g>
+<!-- proc~is_factored -->
+<g id="call~~graph~~CallGraph_node11" class="node">
+<title>proc~is_factored</title>
+<g id="a_call~~graph~~CallGraph_node11"><a xlink:href="../proc/is_factored.html" xlink:title="qdldl_type%is_factored">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="149.14,-339.27 15.37,-339.27 15.37,-315 149.14,-315 149.14,-339.27"/>
+<text xml:space="preserve" text-anchor="middle" x="82.26" y="-323.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_type%is_factored</text>
+</a>
+</g>
+</g>
+<!-- proc~max_abs -->
+<g id="call~~graph~~CallGraph_node12" class="node">
+<title>proc~max_abs</title>
+<g id="a_call~~graph~~CallGraph_node12"><a xlink:href="../proc/max_abs.html" xlink:title="max_abs">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="288.54,-423.27 229.77,-423.27 229.77,-399 288.54,-399 288.54,-423.27"/>
+<text xml:space="preserve" text-anchor="middle" x="259.15" y="-407.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">max_abs</text>
+</a>
+</g>
+</g>
+<!-- proc~multiply -->
+<g id="call~~graph~~CallGraph_node13" class="node">
+<title>proc~multiply</title>
+<g id="a_call~~graph~~CallGraph_node13"><a xlink:href="../proc/multiply.html" xlink:title="qdldl_type%multiply">
+<polygon fill="#d9534f" stroke="#d9534f" points="141.64,-423.27 22.87,-423.27 22.87,-399 141.64,-399 141.64,-423.27"/>
+<text xml:space="preserve" text-anchor="middle" x="82.26" y="-407.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_type%multiply</text>
+</a>
+</g>
+</g>
+<!-- proc~qdldl_amd_order&#45;&gt;proc~amd -->
+<g id="call~~graph~~CallGraph_edge12" class="edge">
+<title>proc~qdldl_amd_order&#45;&gt;proc~amd</title>
+<path fill="none" stroke="#000000" d="M638.24,-180.13C654.09,-180.13 671.33,-180.13 686.15,-180.13"/>
+<polygon fill="#000000" stroke="#000000" points="685.94,-183.64 695.94,-180.14 685.94,-176.64 685.94,-183.64"/>
+</g>
+<!-- proc~qdldl_factor -->
+<g id="call~~graph~~CallGraph_node16" class="node">
+<title>proc~qdldl_factor</title>
+<g id="a_call~~graph~~CallGraph_node16"><a xlink:href="../proc/qdldl_factor.html" xlink:title="qdldl_factor">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="296.41,-129.27 221.89,-129.27 221.89,-105 296.41,-105 296.41,-129.27"/>
+<text xml:space="preserve" text-anchor="middle" x="259.15" y="-113.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_factor</text>
+</a>
+</g>
+</g>
+<!-- proc~qdldl_factor&#45;&gt;proc~factor_kernel -->
+<g id="call~~graph~~CallGraph_edge13" class="edge">
+<title>proc~qdldl_factor&#45;&gt;proc~factor_kernel</title>
+<path fill="none" stroke="#000000" d="M296.63,-122.11C316.29,-124.8 340.89,-128.15 362.48,-131.1"/>
+<polygon fill="#000000" stroke="#000000" points="361.9,-134.55 372.28,-132.44 362.85,-127.62 361.9,-134.55"/>
+</g>
+<!-- proc~qdldl_factor_ext&#45;&gt;proc~factor_kernel -->
+<g id="call~~graph~~CallGraph_edge14" class="edge">
+<title>proc~qdldl_factor_ext&#45;&gt;proc~factor_kernel</title>
+<path fill="none" stroke="#000000" d="M307.16,-152.72C324.57,-150.35 344.39,-147.64 362.2,-145.21"/>
+<polygon fill="#000000" stroke="#000000" points="362.63,-148.68 372.07,-143.86 361.68,-141.75 362.63,-148.68"/>
+</g>
+<!-- proc~qdldl_lsolve -->
+<g id="call~~graph~~CallGraph_node19" class="node">
+<title>proc~qdldl_lsolve</title>
+<g id="a_call~~graph~~CallGraph_node19"><a xlink:href="../proc/qdldl_lsolve.html" xlink:title="qdldl_lsolve">
+<polygon fill="#d9534f" stroke="#d9534f" points="451.93,-402.27 378.16,-402.27 378.16,-378 451.93,-378 451.93,-402.27"/>
+<text xml:space="preserve" text-anchor="middle" x="415.05" y="-386.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_lsolve</text>
+</a>
+</g>
+</g>
+<!-- proc~qdldl_ltsolve -->
+<g id="call~~graph~~CallGraph_node20" class="node">
+<title>proc~qdldl_ltsolve</title>
+<g id="a_call~~graph~~CallGraph_node20"><a xlink:href="../proc/qdldl_ltsolve.html" xlink:title="qdldl_ltsolve">
+<polygon fill="#d9534f" stroke="#d9534f" points="453.81,-360.27 376.29,-360.27 376.29,-336 453.81,-336 453.81,-360.27"/>
+<text xml:space="preserve" text-anchor="middle" x="415.05" y="-344.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_ltsolve</text>
+</a>
+</g>
+</g>
+<!-- proc~qdldl_solve -->
+<g id="call~~graph~~CallGraph_node23" class="node">
+<title>proc~qdldl_solve</title>
+<g id="a_call~~graph~~CallGraph_node23"><a xlink:href="../proc/qdldl_solve.html" xlink:title="qdldl_solve">
+<polygon fill="#d9534f" stroke="#d9534f" points="294.54,-381.27 223.77,-381.27 223.77,-357 294.54,-357 294.54,-381.27"/>
+<text xml:space="preserve" text-anchor="middle" x="259.15" y="-365.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_solve</text>
+</a>
+</g>
+</g>
+<!-- proc~qdldl_solve&#45;&gt;proc~qdldl_lsolve -->
+<g id="call~~graph~~CallGraph_edge15" class="edge">
+<title>proc~qdldl_solve&#45;&gt;proc~qdldl_lsolve</title>
+<path fill="none" stroke="#000000" d="M294.69,-373.85C315.84,-376.73 343.21,-380.47 366.41,-383.63"/>
+<polygon fill="#000000" stroke="#000000" points="365.87,-387.09 376.25,-384.98 366.82,-380.16 365.87,-387.09"/>
+</g>
+<!-- proc~qdldl_solve&#45;&gt;proc~qdldl_ltsolve -->
+<g id="call~~graph~~CallGraph_edge16" class="edge">
+<title>proc~qdldl_solve&#45;&gt;proc~qdldl_ltsolve</title>
+<path fill="none" stroke="#000000" d="M294.69,-364.42C315.31,-361.61 341.84,-357.99 364.65,-354.88"/>
+<polygon fill="#000000" stroke="#000000" points="364.91,-358.37 374.35,-353.55 363.97,-351.44 364.91,-358.37"/>
+</g>
+<!-- proc~qdldl_status_message -->
+<g id="call~~graph~~CallGraph_node24" class="node">
+<title>proc~qdldl_status_message</title>
+<g id="a_call~~graph~~CallGraph_node24"><a xlink:href="../proc/qdldl_status_message.html" xlink:title="qdldl_status_message">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146.14,-465.27 18.37,-465.27 18.37,-441 146.14,-441 146.14,-465.27"/>
+<text xml:space="preserve" text-anchor="middle" x="82.26" y="-449.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_status_message</text>
+</a>
+</g>
+</g>
+<!-- proc~set_signs -->
+<g id="call~~graph~~CallGraph_node26" class="node">
+<title>proc~set_signs</title>
+<g id="a_call~~graph~~CallGraph_node26"><a xlink:href="../proc/set_signs.html" xlink:title="qdldl_type%set_signs">
+<polygon fill="#d9534f" stroke="#d9534f" points="144.27,-507.27 20.25,-507.27 20.25,-483 144.27,-483 144.27,-507.27"/>
+<text xml:space="preserve" text-anchor="middle" x="82.26" y="-491.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_type%set_signs</text>
+</a>
+</g>
+</g>
+<!-- proc~solve -->
+<g id="call~~graph~~CallGraph_node27" class="node">
+<title>proc~solve</title>
+<g id="a_call~~graph~~CallGraph_node27"><a xlink:href="../proc/solve.html" xlink:title="qdldl_type%solve">
+<polygon fill="#d9534f" stroke="#d9534f" points="134.14,-381.27 30.37,-381.27 30.37,-357 134.14,-357 134.14,-381.27"/>
+<text xml:space="preserve" text-anchor="middle" x="82.26" y="-365.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_type%solve</text>
+</a>
+</g>
+</g>
+<!-- proc~solve&#45;&gt;proc~max_abs -->
+<g id="call~~graph~~CallGraph_edge17" class="edge">
+<title>proc~solve&#45;&gt;proc~max_abs</title>
+<path fill="none" stroke="#000000" d="M134.32,-381.4C161.16,-387.84 193.57,-395.63 218.5,-401.61"/>
+<polygon fill="#000000" stroke="#000000" points="217.37,-404.94 227.91,-403.87 219,-398.13 217.37,-404.94"/>
+</g>
+<!-- proc~solve&#45;&gt;proc~qdldl_solve -->
+<g id="call~~graph~~CallGraph_edge18" class="edge">
+<title>proc~solve&#45;&gt;proc~qdldl_solve</title>
+<path fill="none" stroke="#000000" d="M134.32,-369.13C158.92,-369.13 188.21,-369.13 212.13,-369.13"/>
+<polygon fill="#000000" stroke="#000000" points="211.88,-372.64 221.88,-369.14 211.88,-365.64 211.88,-372.64"/>
+</g>
+<!-- proc~sym_multiply -->
+<g id="call~~graph~~CallGraph_node28" class="node">
+<title>proc~sym_multiply</title>
+<g id="a_call~~graph~~CallGraph_node28"><a xlink:href="../proc/sym_multiply.html" xlink:title="sym_multiply">
+<polygon fill="#d9534f" stroke="#d9534f" points="299.79,-339.27 218.52,-339.27 218.52,-315 299.79,-315 299.79,-339.27"/>
+<text xml:space="preserve" text-anchor="middle" x="259.15" y="-323.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">sym_multiply</text>
+</a>
+</g>
+</g>
+<!-- proc~solve&#45;&gt;proc~sym_multiply -->
+<g id="call~~graph~~CallGraph_edge19" class="edge">
+<title>proc~solve&#45;&gt;proc~sym_multiply</title>
+<path fill="none" stroke="#000000" d="M134.32,-356.87C157.28,-351.36 184.31,-344.87 207.26,-339.36"/>
+<polygon fill="#000000" stroke="#000000" points="207.78,-342.83 216.68,-337.09 206.14,-336.03 207.78,-342.83"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 28.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.873868 0.873868) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 729.52,-28.27 729.52,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="143.89,-24.27 87.38,-24.27 87.38,0 143.89,0 143.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="115.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="221.39,-24.27 161.88,-24.27 161.88,0 221.39,0 221.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="191.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="368.27,-24.27 239,-24.27 239,0 368.27,0 368.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="303.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="529.39,-24.27 385.88,-24.27 385.88,0 529.39,0 529.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="457.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="603.89,-24.27 547.38,-24.27 547.38,0 603.89,0 603.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="575.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="725.52,-24.27 621.75,-24.27 621.75,0 725.52,0 725.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="673.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              qdldl-fortran
+ was developed by Jacob Williams<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

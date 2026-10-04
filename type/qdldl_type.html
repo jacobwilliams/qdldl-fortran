@@ -1,0 +1,2233 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="QDLDL, a sparse LDLT solver for quasi-definite matrices, in modern Fortran">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>qdldl_type &ndash; qdldl-fortran </title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+      <script src="../js/MathJax-config/mathjax-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">qdldl-fortran </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>qdldl_type
+      <small>Derived Type</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title="<p>100.0% of total for derived types.</p>Including implementation: 461 statements, 100.0% of total for derived types.">60 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/qdldl_module.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/qdldl_module.f90.html'>qdldl_module.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/qdldl_module.html'>qdldl_module</a></li>
+            <li class="breadcrumb-item active" aria-current="page">qdldl_type</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#vars-0"
+         aria-expanded="false" aria-controls="vars-0">
+         <h4 class="card-header bg-primary text-white">Variables</h4>
+      </a>
+      <div id="vars-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-ordering">ordering</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-zero_pivot_tol">zero_pivot_tol</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-regularize~3">regularize</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-reg_eps~3">reg_eps</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-reg_delta~3">reg_delta</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-static_reg">static_reg</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-max_refine">max_refine</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-n~14">n</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-nnz_a">nnz_a</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-nnz_l">nnz_l</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-n_positive~2">n_positive</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-n_negative~2">n_negative</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-n_zero~2">n_zero</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-n_regularized~2">n_regularized</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-zero_pivot_column">zero_pivot_column</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-max_abs_l">max_abs_l</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-pivot_ratio">pivot_ratio</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-refine_steps">refine_steps</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-residual">residual</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-analyzed">analyzed</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-has_values">has_values</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-factored">factored</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-nz">nz</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-anorm">anorm</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-ap~6">Ap</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-ai~6">Ai</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-ax~4">Ax</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-map">map</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-diag_pos">diag_pos</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-perm~5">perm</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-signs~3">signs</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-etree~5">etree</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-lnz~5">Lnz</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-lp~7">Lp</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-li~7">Li</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-lx~7">Lx</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-d~4">D</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-dinv~5">Dinv</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-bwork~3">bwork</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-iwork~3">iwork</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-fwork~3">fwork</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-wb">wb</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-wx">wx</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-wr">wr</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#variable-wy">wy</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#boundprocs-0"
+         aria-expanded="false" aria-controls="boundprocs-0">
+         <h4 class="card-header bg-primary text-white">Type-Bound Procedures</h4>
+      </a>
+      <div id="boundprocs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../type/qdldl_type.html#boundprocedure-analyze">analyze</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#boundprocedure-analyze_csc">analyze_csc</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#boundprocedure-set_signs">set_signs</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#boundprocedure-factor">factor</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#boundprocedure-solve">solve</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#boundprocedure-multiply">multiply</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#boundprocedure-inertia">inertia</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#boundprocedure-get_permutation">get_permutation</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#boundprocedure-destroy">destroy</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#boundprocedure-is_analyzed">is_analyzed</a>
+            <a class="list-group-item" href="../type/qdldl_type.html#boundprocedure-is_factored">is_factored</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../type/qdldl_type.html#src">qdldl_type</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+      <h2 id="type-def-statement">
+        type, public :: qdldl_type</h2>
+    <p>A sparse <script type="math/tex">LDL^T</script> factorization of a symmetric quasi-definite matrix
+<script type="math/tex">A</script>, as <script type="math/tex">PAP^T = LDL^T</script> with a fill-reducing permutation <script type="math/tex">P</script>.</p>
+<p>Give the pattern once (<a href="../type/qdldl_type.html#boundprocedure-analyze">analyze</a> or <a href="../type/qdldl_type.html#boundprocedure-analyze_csc">analyze_csc</a>),
+then <a href="../type/qdldl_type.html#boundprocedure-factor">factor</a> and <a href="../type/qdldl_type.html#boundprocedure-solve">solve</a> as often as needed.
+Neither of those allocates.</p>
+<p>All components are allocatable (no pointers), so intrinsic assignment
+(<code>ldl2 = ldl1</code>) makes an independent copy of the whole state, including a
+factorization.</p>
+<p>The options are public components with defaults; set them before
+<a href="../type/qdldl_type.html#boundprocedure-analyze">analyze</a> (<code>ordering</code>) or <a href="../type/qdldl_type.html#boundprocedure-factor">factor</a> (the others).
+The results are public components too, but read-only by convention.</p>
+    <br>
+
+    <section>
+    <h2>Components</h2>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ordering"></span>
+              integer,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>ordering</strong></td>
+<td> =</td>
+                <td>qdldl_order_default</td>
+            <td>
+                <p>the fill-reducing ordering (<code>qdldl_order_default</code> is AMD), used by
+<a href="../type/qdldl_type.html#boundprocedure-analyze">analyze</a> unless a permutation or ordering is passed to it</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-zero_pivot_tol"></span>
+              real(kind=wp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>zero_pivot_tol</strong></td>
+<td> =</td>
+                <td>0.0_wp</td>
+            <td>
+                <p>a pivot with <script type="math/tex">|d_k| \le</script>
+<code>zero_pivot_tol</code> <script type="math/tex">\max_{ij} |A_{ij}|</script> is zero.
+<code>0</code>: only an exact zero (upstream's behaviour)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-regularize~3"></span>
+              logical,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>regularize</strong></td>
+<td> =</td>
+                <td>.false.</td>
+            <td>
+                <p>dynamic regularization: replace a zero pivot, or one with
+<script type="math/tex">s_k d_k <</script>
+<code>reg_eps</code> (<script type="math/tex">s_k</script> its expected sign, see
+<a href="../type/qdldl_type.html#boundprocedure-set_signs">set_signs</a>), by <script type="math/tex">s_k</script>
+<code>reg_delta</code>, and continue.
+Off: a zero pivot stops the factorization (upstream's behaviour)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-reg_eps~3"></span>
+              real(kind=wp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>reg_eps</strong></td>
+<td> =</td>
+                <td>epsilon(1.0_wp)**0.8_wp</td>
+            <td>
+                <p>threshold of dynamic regularization (absolute)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-reg_delta~3"></span>
+              real(kind=wp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>reg_delta</strong></td>
+<td> =</td>
+                <td>sqrt(epsilon(1.0_wp))</td>
+            <td>
+                <p>the magnitude of a dynamically regularized pivot (absolute, positive)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-static_reg"></span>
+              real(kind=wp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>static_reg</strong></td>
+<td> =</td>
+                <td>0.0_wp</td>
+            <td>
+                <p>static regularization: <code>static_reg</code> <script type="math/tex">s_k</script> is added to each diagonal entry
+before factoring (<script type="math/tex">s_k</script>: the expected sign of row <script type="math/tex">k</script>, or the sign of
+its diagonal entry if unknown, <script type="math/tex">+1</script> for zero). Iterative refinement
+in <a href="../type/qdldl_type.html#boundprocedure-solve">solve</a> is against the unregularized matrix. <code>0</code>: off</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-max_refine"></span>
+              integer,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>max_refine</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+                <p>the maximum number of steps of iterative refinement in
+<a href="../type/qdldl_type.html#boundprocedure-solve">solve</a> (unless its <code>refine</code> argument is given). <code>0</code>: none</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~14"></span>
+              integer(kind=ip),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+                <p>order of the matrix</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nnz_a"></span>
+              integer(kind=ip),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>nnz_a</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+                <p>entries of the upper triangle of <script type="math/tex">A</script> (duplicates merged, diagonal included)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nnz_l"></span>
+              integer(kind=ip),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>nnz_l</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+                <p>nonzeros of <script type="math/tex">L</script> below the diagonal (from the analysis)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n_positive~2"></span>
+              integer(kind=ip),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n_positive</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+                <p>number of positive pivots (as computed, before regularization)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n_negative~2"></span>
+              integer(kind=ip),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n_negative</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+                <p>number of negative pivots (as computed, before regularization)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n_zero~2"></span>
+              integer(kind=ip),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n_zero</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+                <p>number of zero pivots (within the tolerance; nonzero only when regularizing)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n_regularized~2"></span>
+              integer(kind=ip),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n_regularized</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+                <p>number of pivots replaced by dynamic regularization</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-zero_pivot_column"></span>
+              integer(kind=ip),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>zero_pivot_column</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+                <p>after <code>qdldl_error_zero_pivot</code>: the row/column of <script type="math/tex">A</script> whose pivot was zero</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-max_abs_l"></span>
+              real(kind=wp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>max_abs_l</strong></td>
+<td> =</td>
+                <td>0.0_wp</td>
+            <td>
+                <p>
+<script type="math/tex">\max |L_{ij}|</script> (large: an unstable factorization)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-pivot_ratio"></span>
+              real(kind=wp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>pivot_ratio</strong></td>
+<td> =</td>
+                <td>0.0_wp</td>
+            <td>
+                <p>
+<script type="math/tex">\max_k |d_k| / \min_k |d_k|</script> (after regularization)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-refine_steps"></span>
+              integer,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>refine_steps</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+                <p>steps of iterative refinement taken by the last <a href="../type/qdldl_type.html#boundprocedure-solve">solve</a></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-residual"></span>
+              real(kind=wp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>residual</strong></td>
+<td> =</td>
+                <td>0.0_wp</td>
+            <td>
+                <p>the scaled residual <script type="math/tex">\lVert Ax-b \rVert_\infty /
+(\lVert A \rVert_\infty \lVert x \rVert_\infty + \lVert b \rVert_\infty)</script>
+of the last <a href="../type/qdldl_type.html#boundprocedure-solve">solve</a> with refinement (else 0)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-analyzed"></span>
+              logical,
+            </td>
+              <td>private</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>analyzed</strong></td>
+<td> =</td>
+                <td>.false.</td>
+            <td>
+                <p>the pattern has been analyzed</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-has_values"></span>
+              logical,
+            </td>
+              <td>private</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>has_values</strong></td>
+<td> =</td>
+                <td>.false.</td>
+            <td>
+                <p>values have been given to <a href="../type/qdldl_type.html#boundprocedure-factor">factor</a> (for <a href="../type/qdldl_type.html#boundprocedure-multiply">multiply</a>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-factored"></span>
+              logical,
+            </td>
+              <td>private</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>factored</strong></td>
+<td> =</td>
+                <td>.false.</td>
+            <td>
+                <p>the last <a href="../type/qdldl_type.html#boundprocedure-factor">factor</a> succeeded</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nz"></span>
+              integer(kind=ip),
+            </td>
+              <td>private</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>nz</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+                <p>number of entries given to the analysis (the size of <code>val</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-anorm"></span>
+              real(kind=wp),
+            </td>
+              <td>private</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>anorm</strong></td>
+<td> =</td>
+                <td>0.0_wp</td>
+            <td>
+                <p>
+<script type="math/tex">\lVert A \rVert_\infty</script> of the last values</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ap~6"></span>
+              integer(kind=ip),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>Ap</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>column pointers (<code>n+1</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ai~6"></span>
+              integer(kind=ip),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>Ai</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>row indices (<code>nnz_a</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ax~4"></span>
+              real(kind=wp),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>Ax</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>values (<code>nnz_a</code>), unregularized</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-map"></span>
+              integer(kind=ip),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>map</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>position in <code>Ax</code> of each input entry (<code>nz</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-diag_pos"></span>
+              integer(kind=ip),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>diag_pos</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>position in <code>Ax</code> of each diagonal entry (<code>n</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-perm~5"></span>
+              integer(kind=ip),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>perm</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>the permutation: row <code>perm(k)</code> of A is row <code>k</code> of P A P^T (<code>n</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-signs~3"></span>
+              real(kind=wp),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>signs</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>expected sign of each pivot, permuted (<code>n</code>; unallocated: unknown)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-etree~5"></span>
+              integer(kind=ip),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>etree</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>elimination tree (<code>n</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lnz~5"></span>
+              integer(kind=ip),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>Lnz</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>nonzeros in each column of L (<code>n</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lp~7"></span>
+              integer(kind=ip),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>Lp</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>column pointers of L (<code>n+1</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-li~7"></span>
+              integer(kind=ip),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>Li</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>row indices of L (<code>nnz_l</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lx~7"></span>
+              real(kind=wp),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>Lx</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>values of L (<code>nnz_l</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-d~4"></span>
+              real(kind=wp),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>D</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>D (<code>n</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dinv~5"></span>
+              real(kind=wp),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>Dinv</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>1/D (<code>n</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-bwork~3"></span>
+              logical,
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>bwork</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>factorization (<code>n</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-iwork~3"></span>
+              integer(kind=ip),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>iwork</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>factorization (<code>3n</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-fwork~3"></span>
+              real(kind=wp),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>fwork</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>factorization (<code>n</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-wb"></span>
+              real(kind=wp),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>wb</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>permuted right-hand side (<code>n</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-wx"></span>
+              real(kind=wp),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>wx</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>permuted solution (<code>n</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-wr"></span>
+              real(kind=wp),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>wr</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>residual and correction (<code>n</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-wy"></span>
+              real(kind=wp),
+            </td>
+              <td>private,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>wy</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                <p>trial solution (<code>n</code>)</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    </section>
+    <br>
+    
+
+
+      <section>
+        <h2>Type-Bound Procedures</h2>
+          <div class="row">
+              <div class="card mt-3">
+    <div class="card-header codesum">
+      <span class="anchor" id="boundprocedure-analyze"></span>
+      <h3>
+          procedure, public ::
+  <strong>analyze</strong>
+        
+      </h3>
+    </div>
+      <ul class="list-group">
+          <li class="list-group-item">
+                    <h3>
+    private  subroutine <a href='../proc/analyze.html'>analyze</a>(me, n, irow, icol, istat, perm, ordering)  
+</h3>
+    
+
+  <p>Analyzes the sparsity pattern of the matrix, given in coordinate form: computes
+the ordering, the elimination tree, and the nonzeros of <script type="math/tex">L</script>, and allocates
+everything that <a href="../type/qdldl_type.html#boundprocedure-factor">factor</a> and <a href="../type/qdldl_type.html#boundprocedure-solve">solve</a> need.</p><a href="../proc/analyze.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='qdldl_type.html'>qdldl_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+<p>order of the matrix (<code>n &gt;= 0</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>irow</strong>(:)</td>
+            <td>
+<p>row indices of the entries (<code>1..n</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>icol</strong>(:)</td>
+            <td>
+<p>column indices of the entries (<code>1..n</code>, same size as <code>irow</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>istat</strong></td>
+            <td>
+<p><code>qdldl_success</code>, <code>qdldl_error_invalid_input</code>,
+<code>qdldl_error_out_of_memory</code>, or <code>qdldl_error_overflow</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>perm</strong>(:)</td>
+            <td>
+<p>a permutation of <code>1..n</code> (the ordering <code>qdldl_order_user</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer,
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>ordering</strong></td>
+            <td>
+<p>the ordering (<code>qdldl_order_*</code>); overrides the component</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+          </li>
+      </ul>
+  </div>
+
+          </div>
+          <div class="row">
+              <div class="card mt-3">
+    <div class="card-header codesum">
+      <span class="anchor" id="boundprocedure-analyze_csc"></span>
+      <h3>
+          procedure, public ::
+  <strong>analyze_csc</strong>
+        
+      </h3>
+    </div>
+      <ul class="list-group">
+          <li class="list-group-item">
+                    <h3>
+    private  subroutine <a href='../proc/analyze_csc.html'>analyze_csc</a>(me, n, Ap, Ai, istat, perm, ordering)  
+</h3>
+    
+
+  <p><a href="../type/qdldl_type.html#boundprocedure-analyze">analyze</a> for a matrix given in compressed sparse column (CSC) form:
+the entries of column <code>j</code> are <code>Ai(Ap(j):Ap(j+1)-1)</code>, with <code>Ap(1) = 1</code>. Normally the
+upper triangle (as for the low-level routines), but, as for coordinate input,
+entries of either triangle are accepted and duplicates are added. The values
+given to <a href="../type/qdldl_type.html#boundprocedure-factor">factor</a> are then in the order of <code>Ai</code>.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='qdldl_type.html'>qdldl_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+<p>order of the matrix (<code>n &gt;= 0</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ap</strong>(:)</td>
+            <td>
+<p>column pointers (size <code>n+1</code>, <code>Ap(1) = 1</code>, nondecreasing)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ai</strong>(:)</td>
+            <td>
+<p>row indices (size at least <code>Ap(n+1)-1</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>istat</strong></td>
+            <td>
+<p>as for <a href="../type/qdldl_type.html#boundprocedure-analyze">analyze</a></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>perm</strong>(:)</td>
+            <td>
+<p>a permutation of <code>1..n</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer,
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>ordering</strong></td>
+            <td>
+<p>the ordering (<code>qdldl_order_*</code>)</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+          </li>
+      </ul>
+  </div>
+
+          </div>
+          <div class="row">
+              <div class="card mt-3">
+    <div class="card-header codesum">
+      <span class="anchor" id="boundprocedure-set_signs"></span>
+      <h3>
+          procedure, public ::
+  <strong>set_signs</strong>
+        
+      </h3>
+    </div>
+      <ul class="list-group">
+          <li class="list-group-item">
+                    <h3>
+    private  subroutine <a href='../proc/set_signs.html'>set_signs</a>(me, signs, istat)  
+</h3>
+    
+
+  <p>Sets the expected sign of each pivot (in the original order of the rows of
+<script type="math/tex">A</script>), for regularization: <code>+1</code> for a row of the positive definite block (<script type="math/tex">H</script>),
+<code>-1</code> for one of the negative definite block (<script type="math/tex">-C</script>), <code>0</code> if unknown (the sign is
+then inferred from the values). Must be called after <a href="../type/qdldl_type.html#boundprocedure-analyze">analyze</a> (which
+discards it).</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='qdldl_type.html'>qdldl_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>signs</strong>(:)</td>
+            <td>
+<p>expected signs (<code>-1</code>, <code>0</code>, or <code>+1</code>; size <code>n</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>istat</strong></td>
+            <td>
+<p><code>qdldl_success</code>, <code>qdldl_error_not_analyzed</code>,
+<code>qdldl_error_invalid_input</code>, or <code>qdldl_error_out_of_memory</code></p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+          </li>
+      </ul>
+  </div>
+
+          </div>
+          <div class="row">
+              <div class="card mt-3">
+    <div class="card-header codesum">
+      <span class="anchor" id="boundprocedure-factor"></span>
+      <h3>
+          procedure, public ::
+  <strong>factor</strong>
+        
+      </h3>
+    </div>
+      <ul class="list-group">
+          <li class="list-group-item">
+                    <h3>
+    private  subroutine <a href='../proc/factor.html'>factor</a>(me, val, istat)  
+</h3>
+    
+
+  <p>Factors the matrix with new values, in the order of the entries given to
+<a href="../type/qdldl_type.html#boundprocedure-analyze">analyze</a> (duplicates are added). Allocates nothing.</p><a href="../proc/factor.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='qdldl_type.html'>qdldl_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>val</strong>(:)</td>
+            <td>
+<p>the values of the entries (same size as <code>irow</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>istat</strong></td>
+            <td>
+<p><code>qdldl_success</code>, <code>qdldl_error_not_analyzed</code>,
+<code>qdldl_error_invalid_input</code> (wrong size, or
+<code>regularize</code> with <code>reg_delta &lt;= 0</code>),
+<code>qdldl_error_not_finite</code>, or <code>qdldl_error_zero_pivot</code></p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+          </li>
+      </ul>
+  </div>
+
+          </div>
+          <div class="row">
+              <div class="card mt-3">
+    <div class="card-header codesum">
+      <span class="anchor" id="boundprocedure-solve"></span>
+      <h3>
+          procedure, public ::
+  <strong>solve</strong>
+        
+      </h3>
+    </div>
+      <ul class="list-group">
+          <li class="list-group-item">
+                    <h3>
+    private  subroutine <a href='../proc/solve.html'>solve</a>(me, b, istat, refine)  
+</h3>
+    
+
+  <p>Solves <script type="math/tex">Ax = b</script> in place with the factorization, with optional iterative
+refinement against the (unregularized) matrix: steps of <script type="math/tex">r = b - Ax</script>,
+<script type="math/tex">x \leftarrow x + \text{solve}(r)</script>, while the scaled residual is above
+round-off and each step at least halves the residual (a step that doesn't
+reduce it is discarded). Allocates nothing.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='qdldl_type.html'>qdldl_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              real(kind=wp),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>b</strong>(:)</td>
+            <td>
+<p>on input the right-hand side, on output the solution (size <code>n</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>istat</strong></td>
+            <td>
+<p><code>qdldl_success</code>, <code>qdldl_error_not_factored</code>,
+<code>qdldl_error_invalid_input</code> (wrong size), or
+<code>qdldl_error_not_finite</code> (in <code>b</code> or the solution;
+<code>b</code> is then unchanged)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer,
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>refine</strong></td>
+            <td>
+<p>maximum number of refinement steps (default: <code>max_refine</code>)</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+          </li>
+      </ul>
+  </div>
+
+          </div>
+          <div class="row">
+              <div class="card mt-3">
+    <div class="card-header codesum">
+      <span class="anchor" id="boundprocedure-multiply"></span>
+      <h3>
+          procedure, public ::
+  <strong>multiply</strong>
+        
+      </h3>
+    </div>
+      <ul class="list-group">
+          <li class="list-group-item">
+                    <h3>
+    private  subroutine <a href='../proc/multiply.html'>multiply</a>(me, x, y, istat)  
+</h3>
+    
+
+  <p>
+<script type="math/tex">y = Ax</script> with the last values given to <a href="../type/qdldl_type.html#boundprocedure-factor">factor</a> (unregularized),
+whether or not that factorization succeeded.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='qdldl_type.html'>qdldl_type</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x</strong>(:)</td>
+            <td>
+<p>the vector (size <code>n</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>y</strong>(:)</td>
+            <td>
+<p>the product (size <code>n</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer,
+            </td>
+<td>intent(out),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>istat</strong></td>
+            <td>
+<p><code>qdldl_success</code>, <code>qdldl_error_not_factored</code> (no values yet),
+or <code>qdldl_error_invalid_input</code> (wrong sizes); <code>y = 0</code> on error</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+          </li>
+      </ul>
+  </div>
+
+          </div>
+          <div class="row">
+              <div class="card mt-3">
+    <div class="card-header codesum">
+      <span class="anchor" id="boundprocedure-inertia"></span>
+      <h3>
+          procedure, public ::
+  <strong>inertia</strong>
+        
+      </h3>
+    </div>
+      <ul class="list-group">
+          <li class="list-group-item">
+                    <h3>
+    private  subroutine <a href='../proc/inertia.html'>inertia</a>(me, n_positive, n_negative, n_zero, n_regularized)  
+</h3>
+    
+
+  <p>The inertia of the last successful factorization: the numbers of positive,
+negative, and zero pivots (as computed, before any regularization).</p><a href="../proc/inertia.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='qdldl_type.html'>qdldl_type</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n_positive</strong></td>
+            <td>
+<p>number of positive pivots</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n_negative</strong></td>
+            <td>
+<p>number of negative pivots</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n_zero</strong></td>
+            <td>
+<p>number of zero pivots (within the tolerance)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n_regularized</strong></td>
+            <td>
+<p>number of pivots replaced by dynamic regularization</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+          </li>
+      </ul>
+  </div>
+
+          </div>
+          <div class="row">
+              <div class="card mt-3">
+    <div class="card-header codesum">
+      <span class="anchor" id="boundprocedure-get_permutation"></span>
+      <h3>
+          procedure, public ::
+  <strong>get_permutation</strong>
+        
+      </h3>
+    </div>
+      <ul class="list-group">
+          <li class="list-group-item">
+                    <h3>
+    private  subroutine <a href='../proc/get_permutation.html'>get_permutation</a>(me, perm)  
+</h3>
+    
+
+  <p>The permutation of the analysis: row <code>perm(k)</code> of <script type="math/tex">A</script> is row <code>k</code> of <script type="math/tex">PAP^T</script>.
+Unallocated if the pattern has not been analyzed.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='qdldl_type.html'>qdldl_type</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>perm</strong></td>
+            <td>
+<p>the permutation (size <code>n</code>)</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+          </li>
+      </ul>
+  </div>
+
+          </div>
+          <div class="row">
+              <div class="card mt-3">
+    <div class="card-header codesum">
+      <span class="anchor" id="boundprocedure-destroy"></span>
+      <h3>
+          procedure, public ::
+  <strong>destroy</strong>
+        
+      </h3>
+    </div>
+      <ul class="list-group">
+          <li class="list-group-item">
+                    <h3>
+    private  subroutine <a href='../proc/destroy.html'>destroy</a>(me)  
+</h3>
+    
+
+  <p>Frees all the storage, and resets the results. The options are kept.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='qdldl_type.html'>qdldl_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+          </li>
+      </ul>
+  </div>
+
+          </div>
+          <div class="row">
+              <div class="card mt-3">
+    <div class="card-header codesum">
+      <span class="anchor" id="boundprocedure-is_analyzed"></span>
+      <h3>
+          procedure, public ::
+  <strong>is_analyzed</strong>
+        
+      </h3>
+    </div>
+      <ul class="list-group">
+          <li class="list-group-item">
+                    <h3>
+    private pure function <a href='../proc/is_analyzed.html'>is_analyzed</a>(me)  
+</h3>
+    
+
+  <p>Whether the pattern has been analyzed.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='qdldl_type.html'>qdldl_type</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>logical</small>
+    </h4>
+    
+
+          </li>
+      </ul>
+  </div>
+
+          </div>
+          <div class="row">
+              <div class="card mt-3">
+    <div class="card-header codesum">
+      <span class="anchor" id="boundprocedure-is_factored"></span>
+      <h3>
+          procedure, public ::
+  <strong>is_factored</strong>
+        
+      </h3>
+    </div>
+      <ul class="list-group">
+          <li class="list-group-item">
+                    <h3>
+    private pure function <a href='../proc/is_factored.html'>is_factored</a>(me)  
+</h3>
+    
+
+  <p>Whether the last <a href="../type/qdldl_type.html#boundprocedure-factor">factor</a> succeeded (so <a href="../type/qdldl_type.html#boundprocedure-solve">solve</a> can be used).</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='qdldl_type.html'>qdldl_type</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>me</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>logical</small>
+    </h4>
+    
+
+          </li>
+      </ul>
+  </div>
+
+          </div>
+      </section>
+
+    <section>
+    <h3><span class="anchor" id="src"></span>Source Code</h3>
+    <div class="hl codehilite"><pre><span></span><span class="w">    </span><span class="k">type</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">qdldl_type</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">!! A sparse \(LDL^T\) factorization of a symmetric quasi-definite matrix</span>
+<span class="w">        </span><span class="c">!! \(A\), as \(PAP^T = LDL^T\) with a fill-reducing permutation \(P\).</span>
+<span class="w">        </span><span class="c">!!</span>
+<span class="w">        </span><span class="c">!! Give the pattern once ([[qdldl_type:analyze]] or [[qdldl_type:analyze_csc]]),</span>
+<span class="w">        </span><span class="c">!! then [[qdldl_type:factor]] and [[qdldl_type:solve]] as often as needed.</span>
+<span class="w">        </span><span class="c">!! Neither of those allocates.</span>
+<span class="w">        </span><span class="c">!!</span>
+<span class="w">        </span><span class="c">!! All components are allocatable (no pointers), so intrinsic assignment</span>
+<span class="w">        </span><span class="c">!! (`ldl2 = ldl1`) makes an independent copy of the whole state, including a</span>
+<span class="w">        </span><span class="c">!! factorization.</span>
+<span class="w">        </span><span class="c">!!</span>
+<span class="w">        </span><span class="c">!! The options are public components with defaults; set them before</span>
+<span class="w">        </span><span class="c">!! [[qdldl_type:analyze]] (`ordering`) or [[qdldl_type:factor]] (the others).</span>
+<span class="w">        </span><span class="c">!! The results are public components too, but read-only by convention.</span>
+
+<span class="w">        </span><span class="k">private</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">! options</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">,</span><span class="k">public</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">ordering</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">qdldl_order_default</span><span class="w"></span>
+<span class="w">            </span><span class="c">!! the fill-reducing ordering (`qdldl_order_default` is AMD), used by</span>
+<span class="w">            </span><span class="c">!! [[qdldl_type:analyze]] unless a permutation or ordering is passed to it</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">zero_pivot_tol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">            </span><span class="c">!! a pivot with \(|d_k| \le\) `zero_pivot_tol` \(\max_{ij} |A_{ij}|\) is zero.</span>
+<span class="w">            </span><span class="c">!! `0`: only an exact zero (upstream&#39;s behaviour)</span>
+<span class="w">        </span><span class="kt">logical</span><span class="p">,</span><span class="k">public</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">regularize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
+<span class="w">            </span><span class="c">!! dynamic regularization: replace a zero pivot, or one with</span>
+<span class="w">            </span><span class="c">!! \(s_k d_k &lt;\) `reg_eps` (\(s_k\) its expected sign, see</span>
+<span class="w">            </span><span class="c">!! [[qdldl_type:set_signs]]), by \(s_k\) `reg_delta`, and continue.</span>
+<span class="w">            </span><span class="c">!! Off: a zero pivot stops the factorization (upstream&#39;s behaviour)</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">reg_eps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">epsilon</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="p">)</span><span class="o">**</span><span class="mf">0.8_wp</span><span class="w"></span>
+<span class="w">            </span><span class="c">!! threshold of dynamic regularization (absolute)</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">reg_delta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sqrt</span><span class="p">(</span><span class="nb">epsilon</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="p">))</span><span class="w"></span>
+<span class="w">            </span><span class="c">!! the magnitude of a dynamically regularized pivot (absolute, positive)</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">static_reg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">            </span><span class="c">!! static regularization: `static_reg` \(s_k\) is added to each diagonal entry</span>
+<span class="w">            </span><span class="c">!! before factoring (\(s_k\): the expected sign of row \(k\), or the sign of</span>
+<span class="w">            </span><span class="c">!! its diagonal entry if unknown, \(+1\) for zero). Iterative refinement</span>
+<span class="w">            </span><span class="c">!! in [[qdldl_type:solve]] is against the unregularized matrix. `0`: off</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">,</span><span class="k">public</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">max_refine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">            </span><span class="c">!! the maximum number of steps of iterative refinement in</span>
+<span class="w">            </span><span class="c">!! [[qdldl_type:solve]] (unless its `refine` argument is given). `0`: none</span>
+
+<span class="w">        </span><span class="c">! results</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">                  </span><span class="c">!! order of the matrix</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">nnz_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">              </span><span class="c">!! entries of the upper triangle of \(A\) (duplicates merged, diagonal included)</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">nnz_l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">              </span><span class="c">!! nonzeros of \(L\) below the diagonal (from the analysis)</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n_positive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">         </span><span class="c">!! number of positive pivots (as computed, before regularization)</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n_negative</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">         </span><span class="c">!! number of negative pivots (as computed, before regularization)</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n_zero</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">             </span><span class="c">!! number of zero pivots (within the tolerance; nonzero only when regularizing)</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n_regularized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">      </span><span class="c">!! number of pivots replaced by dynamic regularization</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">zero_pivot_column</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="c">!! after `qdldl_error_zero_pivot`: the row/column of \(A\) whose pivot was zero</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">public</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">max_abs_l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">     </span><span class="c">!! \(\max |L_{ij}|\) (large: an unstable factorization)</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">public</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">pivot_ratio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">   </span><span class="c">!! \(\max_k |d_k| / \min_k |d_k|\) (after regularization)</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">,</span><span class="k">public</span><span class="w">     </span><span class="kd">::</span><span class="w"> </span><span class="n">refine_steps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">       </span><span class="c">!! steps of iterative refinement taken by the last [[qdldl_type:solve]]</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">public</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">residual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">      </span><span class="c">!! the scaled residual \(\lVert Ax-b \rVert_\infty /</span>
+<span class="w">                                                     </span><span class="c">!! (\lVert A \rVert_\infty \lVert x \rVert_\infty + \lVert b \rVert_\infty)\)</span>
+<span class="w">                                                     </span><span class="c">!! of the last [[qdldl_type:solve]] with refinement (else 0)</span>
+
+<span class="w">        </span><span class="c">! state</span>
+<span class="w">        </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">analyzed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w">      </span><span class="c">!! the pattern has been analyzed</span>
+<span class="w">        </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">has_values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w">    </span><span class="c">!! values have been given to [[qdldl_type:factor]] (for [[qdldl_type:multiply]])</span>
+<span class="w">        </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">factored</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w">      </span><span class="c">!! the last [[qdldl_type:factor]] succeeded</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">nz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">              </span><span class="c">!! number of entries given to the analysis (the size of `val`)</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">anorm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w">         </span><span class="c">!! \(\lVert A \rVert_\infty\) of the last values</span>
+
+<span class="w">        </span><span class="c">! the matrix: the upper triangle of P A P^T in CSC form</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Ap</span><span class="w">         </span><span class="c">!! column pointers (`n+1`)</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Ai</span><span class="w">         </span><span class="c">!! row indices (`nnz_a`)</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">Ax</span><span class="w">         </span><span class="c">!! values (`nnz_a`), unregularized</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">map</span><span class="w">        </span><span class="c">!! position in `Ax` of each input entry (`nz`)</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">diag_pos</span><span class="w">   </span><span class="c">!! position in `Ax` of each diagonal entry (`n`)</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">perm</span><span class="w">       </span><span class="c">!! the permutation: row `perm(k)` of A is row `k` of P A P^T (`n`)</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">signs</span><span class="w">      </span><span class="c">!! expected sign of each pivot, permuted (`n`; unallocated: unknown)</span>
+
+<span class="w">        </span><span class="c">! the factors</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">etree</span><span class="w">      </span><span class="c">!! elimination tree (`n`)</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Lnz</span><span class="w">        </span><span class="c">!! nonzeros in each column of L (`n`)</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Lp</span><span class="w">         </span><span class="c">!! column pointers of L (`n+1`)</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">Li</span><span class="w">         </span><span class="c">!! row indices of L (`nnz_l`)</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">Lx</span><span class="w">         </span><span class="c">!! values of L (`nnz_l`)</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">D</span><span class="w">          </span><span class="c">!! D (`n`)</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">Dinv</span><span class="w">       </span><span class="c">!! 1/D (`n`)</span>
+
+<span class="w">        </span><span class="c">! work arrays</span>
+<span class="w">        </span><span class="kt">logical</span><span class="p">,</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w">     </span><span class="kd">::</span><span class="w"> </span><span class="n">bwork</span><span class="w">      </span><span class="c">!! factorization (`n`)</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">iwork</span><span class="w">      </span><span class="c">!! factorization (`3n`)</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">fwork</span><span class="w">      </span><span class="c">!! factorization (`n`)</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">wb</span><span class="w">         </span><span class="c">!! permuted right-hand side (`n`)</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">wx</span><span class="w">         </span><span class="c">!! permuted solution (`n`)</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">wr</span><span class="w">         </span><span class="c">!! residual and correction (`n`)</span>
+<span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">dimension</span><span class="p">(:),</span><span class="k">allocatable</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">wy</span><span class="w">         </span><span class="c">!! trial solution (`n`)</span>
+
+<span class="w">    </span><span class="k">contains</span>
+
+<span class="k">        procedure</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">analyze</span><span class="w"></span>
+<span class="w">        </span><span class="k">procedure</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">analyze_csc</span><span class="w"></span>
+<span class="w">        </span><span class="k">procedure</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">set_signs</span><span class="w"></span>
+<span class="w">        </span><span class="k">procedure</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">factor</span><span class="w"></span>
+<span class="w">        </span><span class="k">procedure</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">solve</span><span class="w"></span>
+<span class="w">        </span><span class="k">procedure</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">multiply</span><span class="w"></span>
+<span class="w">        </span><span class="k">procedure</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">inertia</span><span class="w"></span>
+<span class="w">        </span><span class="k">procedure</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">get_permutation</span><span class="w"></span>
+<span class="w">        </span><span class="k">procedure</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">destroy</span><span class="w"></span>
+<span class="w">        </span><span class="k">procedure</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">is_analyzed</span><span class="w"></span>
+<span class="w">        </span><span class="k">procedure</span><span class="p">,</span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">is_factored</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">end type </span><span class="n">qdldl_type</span><span class="w"></span>
+</pre></div>
+
+    </section>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              qdldl-fortran
+ was developed by Jacob Williams<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

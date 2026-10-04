@@ -1,0 +1,701 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="QDLDL, a sparse LDLT solver for quasi-definite matrices, in modern Fortran">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="./favicon.png">
+
+    <title> qdldl-fortran </title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="./css/fontawesome.min.css" rel="stylesheet">
+    <link href="./css/brands.min.css" rel="stylesheet">
+    <link href="./css/regular.min.css" rel="stylesheet">
+    <link href="./css/solid.min.css" rel="stylesheet">
+    <link href="./css/v4-font-face.min.css" rel="stylesheet">
+    <link href="./css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+      <script src="./js/MathJax-config/mathjax-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="./css/local.css" rel="stylesheet">
+    <link href="./css/pygments.css" rel="stylesheet">
+    <script src="./js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="./index.html">qdldl-fortran </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="./lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="./lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="./lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="./lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="./search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <!-- Main component for a primary marketing message or call to action -->
+    <div class="p-5 mb-4 bg-light border rounded-3" id="jumbotron">
+      <p>QDLDL, a sparse LDL<sup>T</sup> solver for quasi-definite matrices, in modern Fortran</p>
+        <p> Find us on&hellip;</p>
+      <p>
+        <a class="btn btn-lg btn-primary" href="https://github.com/jacobwilliams/qdldl-fortran" role="button">GitHub</a>
+        
+        
+        
+        
+      </p>
+    </div>
+
+      <div class="row" id='text'>
+        <div class=col-md-8>
+          <h1>qdldl-fortran</h1>
+          <p><a href="https://github.com/topics/fortran"><img alt="Language" src="https://img.shields.io/badge/-Fortran-734f96?logo=fortran&amp;logoColor=white"></a>
+<a href="https://github.com/jacobwilliams/qdldl-fortran/actions"><img alt="Build Status" src="https://github.com/jacobwilliams/qdldl-fortran/actions/workflows/CI.yml/badge.svg"></a>
+<a href="https://github.com/jacobwilliams/qdldl-fortran/commits/master"><img alt="last-commit" src="https://img.shields.io/github/last-commit/jacobwilliams/qdldl-fortran"></a>
+<a href="https://jacobwilliams.github.io/qdldl-fortran"><img alt="Docs" src="https://img.shields.io/badge/docs-api-blue"></a></p>
+<p>A modern Fortran port of <a href="https://github.com/osqp/qdldl">QDLDL</a>, the sparse
+$LDL^T$ solver for quasi-definite matrices used inside the OSQP solver. It
+comes with fill-reducing orderings (AMD and reverse Cuthill–McKee) and an
+object-oriented interface. You only need <a href="https://fpm.fortran-lang.org">fpm</a>
+to build it.</p>
+<h2>What it is, and when to use it</h2>
+<p>QDLDL factors a sparse symmetric matrix as $PAP^T = LDL^T$ ($L$ unit lower
+triangular, $D$ diagonal) <strong>without pivoting</strong>. That makes it small and fast,
+and it is the reason for its main limitation. The factorization is guaranteed
+stable only for <strong>quasi-definite</strong> matrices,</p>
+<p>
+<script type="math/tex; mode=display">
+\begin{bmatrix} H & B^T \cr B & -C \end{bmatrix}, \quad H \succ 0,\ C \succ 0,
+</script>
+</p>
+<p>which can be factored in <em>any</em> symmetric order (Vanderbei, 1995). The order can
+therefore be chosen for sparsity alone.</p>
+<ul>
+<li><strong>Use it for</strong> small to medium quasi-definite systems: regularized KKT
+  systems of optimization solvers, and least-squares augmented systems.
+  The overhead per call is very low. Factoring and solving never allocate
+  memory, the matrix can be of any real kind (single, double, or quadruple
+  precision), and the solver objects can be copied.</li>
+<li><strong>Don't use it for</strong> large 3-D problems or genuinely indefinite matrices.
+  It is single-threaded, not supernodal, and doesn't pivot. Use MUMPS, HSL,
+  SPRAL, or Pardiso there.</li>
+</ul>
+<p>The signs of $D$ give the <strong>inertia</strong> of the matrix for free (Sylvester's law).
+This count is exact for a quasi-definite matrix, and only as reliable as the
+pivots otherwise.</p>
+<h2>Example</h2>
+<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">qdldl_module</span><span class="w"></span>
+<span class="k">type</span><span class="p">(</span><span class="n">qdldl_type</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ldl</span><span class="w"></span>
+<span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">istat</span><span class="w"></span>
+
+<span class="c">! the pattern, once: entries of either triangle in coordinate form</span>
+<span class="c">! (duplicates are added; missing diagonal entries become explicit zeros)</span>
+<span class="k">call </span><span class="n">ldl</span><span class="p">%</span><span class="n">analyze</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">irow</span><span class="p">,</span><span class="w"> </span><span class="n">icol</span><span class="p">,</span><span class="w"> </span><span class="n">istat</span><span class="p">)</span><span class="w">        </span><span class="c">! AMD ordering by default</span>
+
+<span class="c">! the values, as often as needed (in the order of irow/icol)</span>
+<span class="k">call </span><span class="n">ldl</span><span class="p">%</span><span class="n">factor</span><span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="w"> </span><span class="n">istat</span><span class="p">)</span><span class="w"></span>
+<span class="k">call </span><span class="n">ldl</span><span class="p">%</span><span class="n">solve</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">istat</span><span class="p">)</span><span class="w">                      </span><span class="c">! b is overwritten by x</span>
+
+<span class="k">call </span><span class="n">ldl</span><span class="p">%</span><span class="n">inertia</span><span class="p">(</span><span class="n">n_positive</span><span class="p">,</span><span class="w"> </span><span class="n">n_negative</span><span class="p">,</span><span class="w"> </span><span class="n">n_zero</span><span class="p">)</span><span class="w"></span>
+<span class="k">call </span><span class="n">ldl</span><span class="p">%</span><span class="n">multiply</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w">                       </span><span class="c">! y = A x, with the last values</span>
+</code></pre></div>
+
+<p>See <a href="example/example_kkt.f90"><code>example/example_kkt.f90</code></a> for a complete program
+(a KKT system with static regularization and iterative refinement).</p>
+<p>To use it from another fpm project:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">[dependencies]</span><span class="w"></span>
+<span class="n">qdldl-fortran</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;https://github.com/jacobwilliams/qdldl-fortran&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+
+<h2>The interface</h2>
+<h3><code>qdldl_type</code></h3>
+<table>
+<thead>
+<tr>
+<th>Procedure</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>analyze(n, irow, icol, istat [, perm] [, ordering])</code></td>
+<td>Analyzes the pattern, given in coordinate form. Computes the ordering, the elimination tree, and the nonzeros of $L$, and allocates everything else.</td>
+</tr>
+<tr>
+<td><code>analyze_csc(n, Ap, Ai, istat [, perm] [, ordering])</code></td>
+<td>The same, for a matrix in compressed sparse column (CSC) form (1-based, <code>Ap(1) = 1</code>).</td>
+</tr>
+<tr>
+<td><code>set_signs(signs, istat)</code></td>
+<td>The expected sign of each pivot (<code>+1</code> for the $H$ block, <code>-1</code> for the $-C$ block, <code>0</code> if unknown), used for regularization.</td>
+</tr>
+<tr>
+<td><code>factor(val, istat)</code></td>
+<td>Factors the matrix with new values. Duplicates are added. Allocates nothing.</td>
+</tr>
+<tr>
+<td><code>solve(b, istat [, refine])</code></td>
+<td>Solves $Ax = b$ in place, with optional iterative refinement. Allocates nothing.</td>
+</tr>
+<tr>
+<td><code>multiply(x, y [, istat])</code></td>
+<td>$y = Ax$ with the last values (unregularized).</td>
+</tr>
+<tr>
+<td><code>inertia(n_positive, n_negative, n_zero [, n_regularized])</code></td>
+<td>The inertia of the last factorization.</td>
+</tr>
+<tr>
+<td><code>get_permutation(perm)</code></td>
+<td>The permutation: row <code>perm(k)</code> of $A$ is row <code>k</code> of $PAP^T$.</td>
+</tr>
+<tr>
+<td><code>is_analyzed()</code>, <code>is_factored()</code></td>
+<td>The state.</td>
+</tr>
+<tr>
+<td><code>destroy()</code></td>
+<td>Frees everything (the options are kept).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Input.</strong> An off-diagonal entry $(i,j)$ stands for both $(i,j)$ and
+$(j,i)$, and duplicates are added. If you give both triangles, give the values
+of only one of them (with zeros for the other), or the off-diagonal values are
+doubled. The permutation is applied internally: <code>b</code> and <code>x</code> are always in the
+original order.</p>
+<p><strong>Copies.</strong> All components are allocatable (no pointers), so <code>ldl2 = ldl1</code>
+makes an independent copy, including the factorization.</p>
+<p><strong>Options</strong> (public components, with their defaults):</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ordering</code></td>
+<td><code>qdldl_order_default</code> (AMD)</td>
+<td><code>qdldl_order_natural</code>, <code>qdldl_order_rcm</code>, <code>qdldl_order_amd</code>, or <code>qdldl_order_user</code> (with <code>perm</code>)</td>
+</tr>
+<tr>
+<td><code>zero_pivot_tol</code></td>
+<td><code>0</code></td>
+<td>a pivot with $\lvert d_k\rvert \le$ <code>zero_pivot_tol</code> $\cdot \max_{ij}\lvert A_{ij}\rvert$ is zero (<code>0</code>: an exact zero only, as upstream)</td>
+</tr>
+<tr>
+<td><code>regularize</code></td>
+<td><code>.false.</code></td>
+<td>dynamic regularization: a zero pivot, or one with $s_k d_k &lt;$ <code>reg_eps</code>, is replaced by $s_k$ <code>reg_delta</code> instead of stopping the factorization</td>
+</tr>
+<tr>
+<td><code>reg_eps</code></td>
+<td>$\epsilon^{0.8}$ (3e-13 in double precision)</td>
+<td>threshold of dynamic regularization (absolute)</td>
+</tr>
+<tr>
+<td><code>reg_delta</code></td>
+<td>$\sqrt\epsilon$ (1.5e-8)</td>
+<td>magnitude of a regularized pivot (absolute)</td>
+</tr>
+<tr>
+<td><code>static_reg</code></td>
+<td><code>0</code></td>
+<td>added to each diagonal entry with its expected sign before factoring</td>
+</tr>
+<tr>
+<td><code>max_refine</code></td>
+<td><code>0</code></td>
+<td>maximum number of steps of iterative refinement in <code>solve</code>, against the unregularized matrix</td>
+</tr>
+</tbody>
+</table>
+<p>$s_k$ is the expected sign from <code>set_signs</code>. If it is unknown, the sign of
+the pivot itself (dynamic regularization) or of the diagonal entry (static
+regularization) is used.</p>
+<p><strong>Results</strong> (read-only public components): <code>n</code>, <code>nnz_a</code>, <code>nnz_l</code>,
+<code>n_positive</code>, <code>n_negative</code>, <code>n_zero</code>, <code>n_regularized</code>, <code>zero_pivot_column</code>,
+<code>max_abs_l</code> and <code>pivot_ratio</code> (to detect pivot growth), <code>refine_steps</code>, and
+<code>residual</code>.</p>
+<p><strong>Status codes.</strong> <code>qdldl_success</code> (0), and negative named constants for
+errors: <code>qdldl_error_not_upper</code>, <code>qdldl_error_overflow</code>,
+<code>qdldl_error_empty_column</code>, <code>qdldl_error_zero_pivot</code>,
+<code>qdldl_error_invalid_input</code>, <code>qdldl_error_not_analyzed</code>,
+<code>qdldl_error_not_factored</code>, <code>qdldl_error_out_of_memory</code>, and
+<code>qdldl_error_not_finite</code>. <code>qdldl_status_message(istat)</code> describes each one.
+Allocations use <code>stat=</code>, so running out of memory returns a status code
+instead of crashing.</p>
+<h3>Regularization and inertia: caveats</h3>
+<ul>
+<li>Without regularization (the default), the behaviour is upstream's: the first
+  zero pivot stops the factorization (<code>qdldl_error_zero_pivot</code>, with the row in
+  <code>zero_pivot_column</code>).</li>
+<li><strong>Static regularization</strong> (<code>static_reg</code> &gt; 0, with <code>set_signs</code>) makes a KKT
+  matrix $\left[\matrix{H &amp; J^T \cr J &amp; 0}\right]$ with $H \succ 0$
+  quasi-definite. Iterative refinement (<code>max_refine</code> &gt; 0) then recovers the
+  solution of the <em>unregularized</em> system. Choose <code>static_reg</code> well above the
+  round-off of the real kind ($\sqrt\epsilon$ is a reasonable start).</li>
+<li><strong>Dynamic regularization</strong> (<code>regularize</code>) always completes the factorization.
+  <code>n_regularized</code> &gt; 0 tells you that the matrix was not quasi-definite in that
+  order, or was singular (an optimization solver would then increase its
+  Hessian shift).</li>
+<li>The inertia counts the pivots <em>as computed, before replacement</em>. It is exact
+  for a quasi-definite matrix with <code>n_regularized = 0</code>. Otherwise it describes
+  the matrix that was actually factored.</li>
+<li>Without pivoting, a matrix that isn't quasi-definite can factor with large
+  growth and give a wrong inertia. A large <code>max_abs_l</code> or <code>pivot_ratio</code> is the
+  sign of that.</li>
+</ul>
+<h3>Low-level routines</h3>
+<p>The one-to-one port of the C routines is public too, for callers that manage
+their own storage. It uses 1-based indexing, the upper triangle in CSC form,
+and no duplicates:</p>
+<table>
+<thead>
+<tr>
+<th>Fortran</th>
+<th>C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>qdldl_etree(n, Ap, Ai, work, Lnz, etree)</code></td>
+<td><code>QDLDL_etree</code></td>
+</tr>
+<tr>
+<td><code>qdldl_factor(n, Ap, Ai, Ax, Lp, Li, Lx, D, Dinv, Lnz, etree, bwork, iwork, fwork [, zero_col])</code></td>
+<td><code>QDLDL_factor</code></td>
+</tr>
+<tr>
+<td><code>qdldl_solve(n, Lp, Li, Lx, Dinv, x)</code></td>
+<td><code>QDLDL_solve</code></td>
+</tr>
+<tr>
+<td><code>qdldl_lsolve</code>, <code>qdldl_ltsolve</code></td>
+<td><code>QDLDL_Lsolve</code>, <code>QDLDL_Ltsolve</code></td>
+</tr>
+<tr>
+<td><code>qdldl_factor_ext(...)</code></td>
+<td>(new) <code>qdldl_factor</code> with a zero-pivot tolerance, dynamic regularization, and the inertia</td>
+</tr>
+</tbody>
+</table>
+<p>The orderings are also available on their own: <code>qdldl_amd_order</code> and
+<code>qdldl_rcm</code> (on the adjacency structure built by <code>qdldl_symmetric_pattern</code>),
+and the modernized SuiteSparse routine <code>amd</code> (module <code>qdldl_amd</code>). As in
+SuiteSparse's C AMD, <code>qdldl_amd_order</code> removes dense rows (more than
+$\max(16, 10\sqrt{n})$ entries) before ordering and places them last;
+otherwise a dense row, common in KKT matrices, can make AMD take $O(n^2)$
+time. The <code>amd</code> routine itself does not do this.</p>
+<h2>Kinds</h2>
+<p>The kinds are chosen by preprocessor macros: <code>-DREAL32</code>, <code>-DREAL64</code> (the
+default), or <code>-DREAL128</code> for the reals (<code>qdldl_wp</code>), and <code>-DINT64</code> for 64-bit
+indices (<code>qdldl_ip</code>). You need 64-bit indices when the nonzeros of $L$ can
+exceed $2^{31}-1$. Otherwise the analysis returns <code>qdldl_error_overflow</code>.</p>
+<div class="codehilite"><pre><span></span><code>fpm <span class="nb">test</span> --profile debug --flag <span class="s2">&quot;-DREAL32 -DINT64&quot;</span>
+</code></pre></div>
+
+<h2>Development</h2>
+<p>Upstream's C QDLDL is a git submodule (<code>reference/qdldl</code>), used only by the
+cross-check. Clone with <code>git clone --recursive</code>, or run
+<code>git submodule update --init</code> in an existing clone.</p>
+<p>The build environment is <a href="https://pixi.sh">pixi</a> (gfortran, fpm, FORD,
+fortitude, and a C compiler):</p>
+<div class="codehilite"><pre><span></span><code>pixi run fpm <span class="nb">test</span>                 <span class="c1"># all tests (double precision)</span>
+pixi run test-real32              <span class="c1"># ... in single precision (also test-real128, test-int64)</span>
+pixi run fpm run --example benchmark --profile release
+pixi run fortitude check          <span class="c1"># lint</span>
+pixi run stack-check              <span class="c1"># no automatic arrays or array temporaries in the library</span>
+pixi run crosscheck               <span class="c1"># compare with upstream&#39;s C QDLDL (in reference/qdldl)</span>
+pixi run docs                     <span class="c1"># the API documentation, with FORD</span>
+</code></pre></div>
+
+<ul>
+<li><strong>Tests</strong>: <code>test_core</code> runs upstream QDLDL's unit tests through the
+  low-level routines. <code>test_type</code> covers the object-oriented interface.
+  <code>test_orderings</code> covers the orderings, with the fill of each recorded as a
+  regression check. <code>test_random_qd</code> checks random quasi-definite matrices,
+  with exact inertia. <code>test_inertia</code> covers regularization, refinement, and
+  zero pivots, and <code>test_kinds</code> the kind of the build. Tolerances scale with
+  <code>epsilon(1.0_wp)</code>, and every test passes in each kind.</li>
+<li><strong>Cross-check</strong>: <code>tools/crosscheck</code> builds the C QDLDL and runs both
+  versions on the same random matrices (up to $n = 2000$, 640,000 nonzeros
+  in $L$). Their elimination trees and the structure of $L$ are identical,
+  and the values of $L$, $D$, and the solutions agree <strong>bit for bit</strong>.</li>
+<li><strong>No stack use that grows with the problem</strong>: the library has no automatic
+  arrays and no array temporaries (<code>tools/stack_check.sh</code>). The work arrays
+  are kept in the type, and allocated in the analysis.</li>
+</ul>
+<h3>Benchmark</h3>
+<p><code>example/benchmark.f90</code>, release build, on an Apple M-series laptop (times in
+seconds):</p>
+<table>
+<thead>
+<tr>
+<th>Matrix</th>
+<th style="text-align: right;">n</th>
+<th>ordering</th>
+<th style="text-align: right;">nnz(L)</th>
+<th style="text-align: right;">analyze</th>
+<th style="text-align: right;">factor</th>
+<th style="text-align: right;">solve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2-D Laplacian 100²</td>
+<td style="text-align: right;">10,000</td>
+<td>natural</td>
+<td style="text-align: right;">990,099</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">0.023</td>
+<td style="text-align: right;">0.0012</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align: right;"></td>
+<td>RCM</td>
+<td style="text-align: right;">671,550</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: right;">0.011</td>
+<td style="text-align: right;">0.0008</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align: right;"></td>
+<td>AMD</td>
+<td style="text-align: right;">196,332</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">0.0002</td>
+</tr>
+<tr>
+<td>2-D KKT 100²</td>
+<td style="text-align: right;">20,000</td>
+<td>natural</td>
+<td style="text-align: right;">2,019,896</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">0.063</td>
+<td style="text-align: right;">0.0020</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align: right;"></td>
+<td>AMD</td>
+<td style="text-align: right;">659,448</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">0.015</td>
+<td style="text-align: right;">0.0007</td>
+</tr>
+<tr>
+<td>3-D Laplacian 20³</td>
+<td style="text-align: right;">8,000</td>
+<td>natural</td>
+<td style="text-align: right;">3,047,619</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: right;">0.206</td>
+<td style="text-align: right;">0.0032</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align: right;"></td>
+<td>AMD</td>
+<td style="text-align: right;">834,282</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">0.057</td>
+<td style="text-align: right;">0.0009</td>
+</tr>
+<tr>
+<td>3-D KKT 20³</td>
+<td style="text-align: right;">16,000</td>
+<td>natural</td>
+<td style="text-align: right;">5,996,075</td>
+<td style="text-align: right;">0.012</td>
+<td style="text-align: right;">0.794</td>
+<td style="text-align: right;">0.0059</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align: right;"></td>
+<td>AMD</td>
+<td style="text-align: right;">3,598,128</td>
+<td style="text-align: right;">0.011</td>
+<td style="text-align: right;">0.508</td>
+<td style="text-align: right;">0.0036</td>
+</tr>
+</tbody>
+</table>
+<h3>C and Fortran kernel comparison</h3>
+<p><code>pixi run benchmark</code> compiles both implementations with <code>-O3</code> (plus
+<code>-funroll-loops</code> for the Fortran) and times their
+matching low-level elimination-tree, factorization, and solve routines on the
+same 2-D five-point Laplacian matrices using natural ordering. The matrix is
+generated once; conversion between the C (0-based) and Fortran (1-based) CSC
+indices, allocations, and correctness checks are outside the timed regions.
+Each entry is the median per-call time from five samples (20 elimination-tree,
+5 factorization, or 100 solve calls per sample). A ratio below 1 means the C
+routine was faster.</p>
+<p>Results on an Apple M5 (macOS 27.0), using GNU Fortran 15.3.0 and Clang 23.1.1:</p>
+<table>
+<thead>
+<tr>
+<th>Grid</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">nnz(A)</th>
+<th style="text-align: right;">nnz(L)</th>
+<th>Routine</th>
+<th style="text-align: right;">Fortran (µs)</th>
+<th style="text-align: right;">C (µs)</th>
+<th style="text-align: right;">C / Fortran</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20 x 20</td>
+<td style="text-align: right;">400</td>
+<td style="text-align: right;">1,160</td>
+<td style="text-align: right;">7,619</td>
+<td>elimination tree</td>
+<td style="text-align: right;">11.55</td>
+<td style="text-align: right;">9.90</td>
+<td style="text-align: right;">0.86</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td>factorization</td>
+<td style="text-align: right;">52.00</td>
+<td style="text-align: right;">53.00</td>
+<td style="text-align: right;">1.02</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td>solve</td>
+<td style="text-align: right;">9.51</td>
+<td style="text-align: right;">11.05</td>
+<td style="text-align: right;">1.16</td>
+</tr>
+<tr>
+<td>50 x 50</td>
+<td style="text-align: right;">2,500</td>
+<td style="text-align: right;">7,400</td>
+<td style="text-align: right;">122,549</td>
+<td>elimination tree</td>
+<td style="text-align: right;">188.40</td>
+<td style="text-align: right;">185.75</td>
+<td style="text-align: right;">0.99</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td>factorization</td>
+<td style="text-align: right;">1,212.40</td>
+<td style="text-align: right;">1,099.40</td>
+<td style="text-align: right;">0.91</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td>solve</td>
+<td style="text-align: right;">120.31</td>
+<td style="text-align: right;">127.18</td>
+<td style="text-align: right;">1.06</td>
+</tr>
+<tr>
+<td>100 x 100</td>
+<td style="text-align: right;">10,000</td>
+<td style="text-align: right;">29,800</td>
+<td style="text-align: right;">990,099</td>
+<td>elimination tree</td>
+<td style="text-align: right;">1,628.90</td>
+<td style="text-align: right;">1,657.25</td>
+<td style="text-align: right;">1.02</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td>factorization</td>
+<td style="text-align: right;">16,510.80</td>
+<td style="text-align: right;">17,009.00</td>
+<td style="text-align: right;">1.03</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td>solve</td>
+<td style="text-align: right;">963.77</td>
+<td style="text-align: right;">993.20</td>
+<td style="text-align: right;">1.03</td>
+</tr>
+</tbody>
+</table>
+<p>These figures compare the low-level kernels, not the complete public Fortran
+interface (which also supports ordering, coordinate input, and additional
+validation).</p>
+<h2>License</h2>
+<p>Apache License 2.0 (<a href="LICENSE">LICENSE</a>). This library is a derivative of
+QDLDL (Copyright 2018, Paul Goulart, Bartolomeo Stellato, Goran Banjac, Ian
+McInerney, The OSQP developers; Apache 2.0). It includes a modernized version
+of the Fortran AMD of SuiteSparse (Copyright 1996-2022, Timothy A. Davis,
+Patrick R. Amestoy, and Iain S. Duff; BSD 3-clause). See <a href="NOTICE">NOTICE</a>.</p>
+<h2>References</h2>
+<ul>
+<li>R. J. Vanderbei, <em>Symmetric quasidefinite matrices</em>, SIAM J. Optim. 5(1),
+  100–113, 1995.</li>
+<li>T. A. Davis, <em>Algorithm 849: A concise sparse Cholesky factorization
+  package</em>, ACM TOMS 31(4), 587–591, 2005.</li>
+<li>P. R. Amestoy, T. A. Davis, I. S. Duff, <em>An approximate minimum degree
+  ordering algorithm</em>, SIAM J. Matrix Anal. Appl. 17(4), 886–905, 1996.</li>
+<li>B. Stellato, G. Banjac, P. Goulart, A. Bemporad, S. Boyd, <em>OSQP: an
+  operator splitting solver for quadratic programs</em>, Math. Prog. Comp. 12,
+  637–672, 2020.</li>
+</ul>
+        </div>
+          <div class="col-md-4">
+            <div class="card card-body bg-light">
+              <h2 class="card-title">Developer Info</h2>
+              <h4 class="card-text">Jacob Williams</h4>
+              <p class="card-text"></p>
+                <div class="text-center"><div class="btn-group" role="group">
+                    
+                    <a class="btn btn-lg btn-primary" href="https://github.com/jacobwilliams"><i class="fa fa-github fa-lg"></i></a>
+                    
+                    
+                    
+                    
+                    
+                    
+                </div></div>
+            </div>
+          </div>
+      </div>
+        <div class="row">
+          <hr>
+          <div class="col-xs-6 col-sm-3">
+            <div>
+              <h3>Source Files</h3>
+              <ul><li><a href='sourcefile/qdldl_amd.f90.html'>qdldl_amd.f90</a></li><li><a href='sourcefile/qdldl_core.f90.html'>qdldl_core.f90</a></li><li><a href='sourcefile/qdldl_kinds.f90.html'>qdldl_kinds.F90</a></li><li><a href='sourcefile/qdldl_module.f90.html'>qdldl_module.f90</a></li><li><a href='sourcefile/qdldl_ordering.f90.html'>qdldl_ordering.f90</a></li></ul>
+            </div>
+            <div>
+              <ul>
+                <li><a href="./lists/files.html"><em>All source files&hellip;</em></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-3">
+            <div>
+              <h3>Modules</h3>
+              <ul><li><a href='module/qdldl_amd.html'>qdldl_amd</a></li><li><a href='module/qdldl_core.html'>qdldl_core</a></li><li><a href='module/qdldl_kinds.html'>qdldl_kinds</a></li><li><a href='module/qdldl_module.html'>qdldl_module</a></li><li><a href='module/qdldl_ordering.html'>qdldl_ordering</a></li></ul>
+            </div>
+            <div>
+              <ul>
+                <li><a href="./lists/modules.html"><em>All modules&hellip;</em></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-3">
+            <div>
+              <h3>Procedures</h3>
+              <ul><li><a href='proc/amd.html'>amd</a></li><li><a href='proc/analyze.html'>analyze</a></li><li><a href='proc/analyze_csc.html'>analyze_csc</a></li><li><a href='proc/analyze_pattern.html'>analyze_pattern</a></li><li><a href='proc/destroy.html'>destroy</a></li><li><a href='proc/factor.html'>factor</a></li><li><a href='proc/factor_kernel.html'>factor_kernel</a></li><li><a href='proc/get_permutation.html'>get_permutation</a></li><li><a href='proc/inertia.html'>inertia</a></li><li><a href='proc/is_analyzed.html'>is_analyzed</a></li></ul>
+            </div>
+            <div>
+              <ul>
+                <li><a href="./lists/procedures.html"><em>All procedures&hellip;</em></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-3">
+            <div>
+              <h3>Derived Types</h3>
+              <ul><li><a href='type/qdldl_type.html'>qdldl_type</a></li></ul>
+            </div>
+            <div>
+              <ul>
+                <li><a href="./lists/types.html"><em>All derived types&hellip;</em></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              qdldl-fortran
+ was developed by Jacob Williams<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

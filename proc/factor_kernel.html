@@ -1,0 +1,951 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="QDLDL, a sparse LDLT solver for quasi-definite matrices, in modern Fortran">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>factor_kernel &ndash; qdldl-fortran</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+      <script src="../js/MathJax-config/mathjax-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">qdldl-fortran </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>factor_kernel
+      <small>Function</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 7.6% of total for procedures.">120 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/qdldl_core.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/qdldl_core.f90.html'>qdldl_core.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/qdldl_core.html'>qdldl_core</a></li>
+            <li class="breadcrumb-item active" aria-current="page">factor_kernel</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/factor_kernel.html#src">factor_kernel</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>private  function factor_kernel(n, Ap, Ai, Ax, Lp, Li, Lx, D, Dinv, Lnz, etree, yMarkers, yIdx, elimBuffer, LNextSpaceInCol, yVals, zero_tol, regularize, reg_eps, reg_delta, npos, nneg, nzero, nreg, zero_col, signs) result(status)  
+</h2>
+    
+
+    <p>The numeric factorization shared by <a href="../proc/qdldl_factor.html">qdldl_factor</a> and <a href="../proc/qdldl_factor_ext.html">qdldl_factor_ext</a>,
+with the integer work array already partitioned (as upstream does with pointers).</p>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~9"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+                <p>number of columns</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ap~5"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ap</strong>(n+1)</td>
+            <td>
+                <p>column pointers of <code>A</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ai~5"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ai</strong>(Ap(n+1)-1)</td>
+            <td>
+                <p>row indices of <code>A</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ax~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ax</strong>(Ap(n+1)-1)</td>
+            <td>
+                <p>values of <code>A</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lp~3"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Lp</strong>(n+1)</td>
+            <td>
+                <p>column pointers of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-li~3"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Li</strong>(sum(Lnz))</td>
+            <td>
+                <p>row indices of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lx~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Lx</strong>(sum(Lnz))</td>
+            <td>
+                <p>values of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-d~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>D</strong>(n)</td>
+            <td>
+                <p><code>D</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dinv~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Dinv</strong>(n)</td>
+            <td>
+                <p><code>1/D</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lnz~4"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Lnz</strong>(n)</td>
+            <td>
+                <p>nonzeros of each column of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-etree~4"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>etree</strong>(n)</td>
+            <td>
+                <p>the elimination tree</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ymarkers"></span>
+              logical,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>yMarkers</strong>(n)</td>
+            <td>
+                <p>which entries of <code>y</code> have been visited</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-yidx"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>yIdx</strong>(n)</td>
+            <td>
+                <p>the nonzero pattern of <code>y</code> (the current row of <code>L</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-elimbuffer"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>elimBuffer</strong>(n)</td>
+            <td>
+                <p>an elimination path, in reverse</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lnextspaceincol"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>LNextSpaceInCol</strong>(n)</td>
+            <td>
+                <p>the next free position in each column of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-yvals"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>yVals</strong>(n)</td>
+            <td>
+                <p>the values of <code>y</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-zero_tol~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>zero_tol</strong></td>
+            <td>
+                <p>zero-pivot tolerance</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-regularize~2"></span>
+              logical,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>regularize</strong></td>
+            <td>
+                <p>regularize pivots instead of stopping</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-reg_eps~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>reg_eps</strong></td>
+            <td>
+                <p>regularization threshold</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-reg_delta~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>reg_delta</strong></td>
+            <td>
+                <p>regularized pivot magnitude</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-npos~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>npos</strong></td>
+            <td>
+                <p>number of positive pivots</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nneg~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>nneg</strong></td>
+            <td>
+                <p>number of negative pivots</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nzero~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>nzero</strong></td>
+            <td>
+                <p>number of zero pivots</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nreg~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>nreg</strong></td>
+            <td>
+                <p>number of regularized pivots</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-zero_col~3"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>zero_col</strong></td>
+            <td>
+                <p>the column of a zero pivot that stopped the factorization</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-signs~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>signs</strong>(n)</td>
+            <td>
+                <p>expected signs of the pivots</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <h3>Return Value
+        <small>
+          <span class="anchor" id="variable-status~3"></span>
+          integer
+        </small>
+      </h3>
+      <p><code>qdldl_success</code> or <code>qdldl_error_zero_pivot</code></p>
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: proc~~factor_kernel~~CalledByGraph Pages: 1 -->
+<svg id="procfactor_kernelCalledByGraph" width="365pt" height="74pt"
+ viewBox="0.00 0.00 365.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~factor_kernel~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 70.27)">
+<title>proc~~factor_kernel~~CalledByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-70.27 361.06,-70.27 361.06,4 -4,4"/>
+<!-- proc~factor_kernel -->
+<g id="proc~~factor_kernel~~CalledByGraph_node1" class="node">
+<title>proc~factor_kernel</title>
+<polygon fill="none" stroke="black" points="357.06,-45.27 275.04,-45.27 275.04,-21 357.06,-21 357.06,-45.27"/>
+<text xml:space="preserve" text-anchor="middle" x="316.05" y="-29.53" font-family="Helvetica,sans-Serif" font-size="10.50">factor_kernel</text>
+</g>
+<!-- proc~qdldl_factor -->
+<g id="proc~~factor_kernel~~CalledByGraph_node2" class="node">
+<title>proc~qdldl_factor</title>
+<g id="a_proc~~factor_kernel~~CalledByGraph_node2"><a xlink:href="../proc/qdldl_factor.html" xlink:title="qdldl_factor">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="228.54,-66.27 154.02,-66.27 154.02,-42 228.54,-42 228.54,-66.27"/>
+<text xml:space="preserve" text-anchor="middle" x="191.28" y="-50.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_factor</text>
+</a>
+</g>
+</g>
+<!-- proc~qdldl_factor&#45;&gt;proc~factor_kernel -->
+<g id="proc~~factor_kernel~~CalledByGraph_edge1" class="edge">
+<title>proc~qdldl_factor&#45;&gt;proc~factor_kernel</title>
+<path fill="none" stroke="#000000" d="M228.78,-47.89C239.71,-46.02 251.9,-43.94 263.6,-41.94"/>
+<polygon fill="#000000" stroke="#000000" points="263.85,-45.44 273.12,-40.31 262.67,-38.54 263.85,-45.44"/>
+</g>
+<!-- proc~qdldl_factor_ext -->
+<g id="proc~~factor_kernel~~CalledByGraph_node3" class="node">
+<title>proc~qdldl_factor_ext</title>
+<g id="a_proc~~factor_kernel~~CalledByGraph_node3"><a xlink:href="../proc/qdldl_factor_ext.html" xlink:title="qdldl_factor_ext">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="239.04,-24.27 143.52,-24.27 143.52,0 239.04,0 239.04,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="191.28" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_factor_ext</text>
+</a>
+</g>
+</g>
+<!-- proc~qdldl_factor_ext&#45;&gt;proc~factor_kernel -->
+<g id="proc~~factor_kernel~~CalledByGraph_edge2" class="edge">
+<title>proc~qdldl_factor_ext&#45;&gt;proc~factor_kernel</title>
+<path fill="none" stroke="#000000" d="M239.39,-20.19C247.3,-21.55 255.54,-22.96 263.55,-24.33"/>
+<polygon fill="#000000" stroke="#000000" points="262.72,-27.73 273.17,-25.97 263.9,-20.83 262.72,-27.73"/>
+</g>
+<!-- proc~factor -->
+<g id="proc~~factor_kernel~~CalledByGraph_node4" class="node">
+<title>proc~factor</title>
+<g id="a_proc~~factor_kernel~~CalledByGraph_node4"><a xlink:href="../proc/factor.html" xlink:title="qdldl_type%factor">
+<polygon fill="#d9534f" stroke="#d9534f" points="107.52,-24.27 0,-24.27 0,0 107.52,0 107.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="53.76" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_type%factor</text>
+</a>
+</g>
+</g>
+<!-- proc~factor&#45;&gt;proc~qdldl_factor_ext -->
+<g id="proc~~factor_kernel~~CalledByGraph_edge3" class="edge">
+<title>proc~factor&#45;&gt;proc~qdldl_factor_ext</title>
+<path fill="none" stroke="#000000" d="M107.93,-12.13C115.8,-12.13 123.95,-12.13 131.92,-12.13"/>
+<polygon fill="#000000" stroke="#000000" points="131.91,-15.64 141.91,-12.14 131.91,-8.64 131.91,-15.64"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 28.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.873868 0.873868) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 729.52,-28.27 729.52,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="143.89,-24.27 87.38,-24.27 87.38,0 143.89,0 143.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="115.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="221.39,-24.27 161.88,-24.27 161.88,0 221.39,0 221.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="191.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="368.27,-24.27 239,-24.27 239,0 368.27,0 368.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="303.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="529.39,-24.27 385.88,-24.27 385.88,0 529.39,0 529.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="457.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="603.89,-24.27 547.38,-24.27 547.38,0 603.89,0 603.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="575.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="725.52,-24.27 621.75,-24.27 621.75,0 725.52,0 725.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="673.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="w">    </span><span class="k">function </span><span class="n">factor_kernel</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">Ap</span><span class="p">,</span><span class="w"> </span><span class="n">Ai</span><span class="p">,</span><span class="w"> </span><span class="n">Ax</span><span class="p">,</span><span class="w"> </span><span class="n">Lp</span><span class="p">,</span><span class="w"> </span><span class="n">Li</span><span class="p">,</span><span class="w"> </span><span class="n">Lx</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="p">,</span><span class="w"> </span><span class="n">Dinv</span><span class="p">,</span><span class="w"> </span><span class="n">Lnz</span><span class="p">,</span><span class="w"> </span><span class="n">etree</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
+<span class="w">                           </span><span class="n">yMarkers</span><span class="p">,</span><span class="w"> </span><span class="n">yIdx</span><span class="p">,</span><span class="w"> </span><span class="n">elimBuffer</span><span class="p">,</span><span class="w"> </span><span class="n">LNextSpaceInCol</span><span class="p">,</span><span class="w"> </span><span class="n">yVals</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
+<span class="w">                           </span><span class="n">zero_tol</span><span class="p">,</span><span class="w"> </span><span class="n">regularize</span><span class="p">,</span><span class="w"> </span><span class="n">reg_eps</span><span class="p">,</span><span class="w"> </span><span class="n">reg_delta</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
+<span class="w">                           </span><span class="n">npos</span><span class="p">,</span><span class="w"> </span><span class="n">nneg</span><span class="p">,</span><span class="w"> </span><span class="n">nzero</span><span class="p">,</span><span class="w"> </span><span class="n">nreg</span><span class="p">,</span><span class="w"> </span><span class="n">zero_col</span><span class="p">,</span><span class="w"> </span><span class="n">signs</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">status</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w">                   </span><span class="c">!! number of columns</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">Ap</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w">             </span><span class="c">!! column pointers of `A`</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">Ai</span><span class="p">(</span><span class="n">Ap</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w">       </span><span class="c">!! row indices of `A`</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">Ax</span><span class="p">(</span><span class="n">Ap</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w">       </span><span class="c">!! values of `A`</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">      </span><span class="kd">::</span><span class="w"> </span><span class="n">Lp</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w">             </span><span class="c">!! column pointers of `L`</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">D</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">                </span><span class="c">!! `D`</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">Dinv</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">             </span><span class="c">!! `1/D`</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">Lnz</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">              </span><span class="c">!! nonzeros of each column of `L`</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">       </span><span class="kd">::</span><span class="w"> </span><span class="n">etree</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">            </span><span class="c">!! the elimination tree</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">      </span><span class="kd">::</span><span class="w"> </span><span class="n">Li</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">Lnz</span><span class="p">))</span><span class="w">        </span><span class="c">!! row indices of `L`</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">Lx</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">Lnz</span><span class="p">))</span><span class="w">        </span><span class="c">!! values of `L`</span>
+<span class="w">    </span><span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">yMarkers</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">         </span><span class="c">!! which entries of `y` have been visited</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">      </span><span class="kd">::</span><span class="w"> </span><span class="n">yIdx</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">             </span><span class="c">!! the nonzero pattern of `y` (the current row of `L`)</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">      </span><span class="kd">::</span><span class="w"> </span><span class="n">elimBuffer</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">       </span><span class="c">!! an elimination path, in reverse</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">      </span><span class="kd">::</span><span class="w"> </span><span class="n">LNextSpaceInCol</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">  </span><span class="c">!! the next free position in each column of `L`</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">         </span><span class="kd">::</span><span class="w"> </span><span class="n">yVals</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">            </span><span class="c">!! the values of `y`</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">zero_tol</span><span class="w">            </span><span class="c">!! zero-pivot tolerance</span>
+<span class="w">    </span><span class="kt">logical</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">           </span><span class="kd">::</span><span class="w"> </span><span class="n">regularize</span><span class="w">          </span><span class="c">!! regularize pivots instead of stopping</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">reg_eps</span><span class="w">             </span><span class="c">!! regularization threshold</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">          </span><span class="kd">::</span><span class="w"> </span><span class="n">reg_delta</span><span class="w">           </span><span class="c">!! regularized pivot magnitude</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">      </span><span class="kd">::</span><span class="w"> </span><span class="n">npos</span><span class="w">                </span><span class="c">!! number of positive pivots</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">      </span><span class="kd">::</span><span class="w"> </span><span class="n">nneg</span><span class="w">                </span><span class="c">!! number of negative pivots</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">      </span><span class="kd">::</span><span class="w"> </span><span class="n">nzero</span><span class="w">               </span><span class="c">!! number of zero pivots</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">      </span><span class="kd">::</span><span class="w"> </span><span class="n">nreg</span><span class="w">                </span><span class="c">!! number of regularized pivots</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">      </span><span class="kd">::</span><span class="w"> </span><span class="n">zero_col</span><span class="w">            </span><span class="c">!! the column of a zero pivot that stopped the factorization</span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">),</span><span class="k">optional</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">signs</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">            </span><span class="c">!! expected signs of the pivots</span>
+<span class="w">    </span><span class="kt">integer</span><span class="w">                      </span><span class="kd">::</span><span class="w"> </span><span class="n">status</span><span class="w">              </span><span class="c">!! `qdldl_success` or `qdldl_error_zero_pivot`</span>
+
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">nnzY</span><span class="p">,</span><span class="w"> </span><span class="n">bidx</span><span class="p">,</span><span class="w"> </span><span class="n">cidx</span><span class="p">,</span><span class="w"> </span><span class="n">nextIdx</span><span class="p">,</span><span class="w"> </span><span class="n">nnzE</span><span class="p">,</span><span class="w"> </span><span class="n">tmpIdx</span><span class="w"></span>
+<span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">wp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">yVals_cidx</span><span class="p">,</span><span class="w"> </span><span class="n">dk</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">status</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">qdldl_success</span><span class="w"></span>
+<span class="w">    </span><span class="n">npos</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">    </span><span class="n">nneg</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">    </span><span class="n">nzero</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">    </span><span class="n">nreg</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">    </span><span class="n">zero_col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">Lp</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">   </span><span class="c">! first column starts at index one</span>
+
+<span class="w">    </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">        </span><span class="c">! compute L column indices</span>
+<span class="w">        </span><span class="n">Lp</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Lp</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Lnz</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w">    </span><span class="c">! cumsum, total at the end</span>
+<span class="w">        </span><span class="c">! set all yIdx to be &#39;unused&#39; initially. In each column of L, the next</span>
+<span class="w">        </span><span class="c">! available space to start is just the first space in the column</span>
+<span class="w">        </span><span class="n">yMarkers</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
+<span class="w">        </span><span class="n">yVals</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">        </span><span class="n">D</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">        </span><span class="n">LNextSpaceInCol</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Lp</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">end do</span>
+
+<span class="k">    do </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">! For each k, we compute a solution to y = L(1:k-1,1:k-1)\b, where b is the</span>
+<span class="w">        </span><span class="c">! kth column of A that sits above the diagonal. The solution y is then the</span>
+<span class="w">        </span><span class="c">! kth row of L, with an implied &#39;1&#39; at the diagonal entry.</span>
+
+<span class="w">        </span><span class="n">nnzY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">   </span><span class="c">! number of nonzeros in this row of L</span>
+
+<span class="w">        </span><span class="c">! this loop determines where nonzeros will go in the kth row of L,</span>
+<span class="w">        </span><span class="c">! but doesn&#39;t compute the actual values</span>
+<span class="w">        </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ap</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="w"> </span><span class="n">Ap</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+
+<span class="w">            </span><span class="n">bidx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ai</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w">   </span><span class="c">! we are working on this element of b</span>
+
+<span class="w">            </span><span class="c">! Initialize D(k) as the element of this column corresponding to the</span>
+<span class="w">            </span><span class="c">! diagonal place. Don&#39;t use this element as part of the elimination step</span>
+<span class="w">            </span><span class="c">! that computes the kth row of L</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">bidx</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                </span><span class="n">D</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ax</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">cycle</span>
+<span class="k">            end if</span>
+
+<span class="k">            </span><span class="n">yVals</span><span class="p">(</span><span class="n">bidx</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ax</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w">   </span><span class="c">! initialise y(bidx) = b(bidx)</span>
+
+<span class="w">            </span><span class="c">! use the forward elimination tree to figure out which elements</span>
+<span class="w">            </span><span class="c">! must be eliminated after this element of b</span>
+<span class="w">            </span><span class="n">nextIdx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bidx</span><span class="w"></span>
+
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">yMarkers</span><span class="p">(</span><span class="n">nextIdx</span><span class="p">))</span><span class="w"> </span><span class="k">then</span><span class="w">   </span><span class="c">! this y term not already visited</span>
+
+<span class="w">                </span><span class="n">yMarkers</span><span class="p">(</span><span class="n">nextIdx</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span><span class="w">  </span><span class="c">! I touched this one</span>
+<span class="w">                </span><span class="n">elimBuffer</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nextIdx</span><span class="w">     </span><span class="c">! it goes at the start of the current list</span>
+<span class="w">                </span><span class="n">nnzE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">                    </span><span class="c">! length of unvisited elimination path from here</span>
+
+<span class="w">                </span><span class="n">nextIdx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">etree</span><span class="p">(</span><span class="n">bidx</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">                </span><span class="k">do while</span><span class="w"> </span><span class="p">(</span><span class="n">nextIdx</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">qdldl_unknown</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">nextIdx</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">yMarkers</span><span class="p">(</span><span class="n">nextIdx</span><span class="p">))</span><span class="w"> </span><span class="k">exit</span>
+<span class="k">                    </span><span class="n">yMarkers</span><span class="p">(</span><span class="n">nextIdx</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span><span class="w">      </span><span class="c">! I touched this one</span>
+<span class="w">                    </span><span class="n">nnzE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nnzE</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w">                 </span><span class="c">! the list is one longer than before</span>
+<span class="w">                    </span><span class="n">elimBuffer</span><span class="p">(</span><span class="n">nnzE</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nextIdx</span><span class="w">      </span><span class="c">! it goes in the current list</span>
+<span class="w">                    </span><span class="n">nextIdx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">etree</span><span class="p">(</span><span class="n">nextIdx</span><span class="p">)</span><span class="w">        </span><span class="c">! one step further along tree</span>
+<span class="w">                </span><span class="k">end do</span><span class="w"></span>
+
+<span class="w">                </span><span class="c">! now I put the buffered elimination list into</span>
+<span class="w">                </span><span class="c">! my current ordering in reverse order</span>
+<span class="w">                </span><span class="k">do while</span><span class="w"> </span><span class="p">(</span><span class="n">nnzE</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="w">                    </span><span class="n">nnzY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nnzY</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                    </span><span class="n">yIdx</span><span class="p">(</span><span class="n">nnzY</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">elimBuffer</span><span class="p">(</span><span class="n">nnzE</span><span class="p">)</span><span class="w"></span>
+<span class="w">                    </span><span class="n">nnzE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nnzE</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                </span><span class="k">end do</span>
+
+<span class="k">            end if</span>
+
+<span class="k">        end do</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">! this loop places nonzero values in the kth row</span>
+<span class="w">        </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nnzY</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"></span>
+
+<span class="w">            </span><span class="n">cidx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yIdx</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w">    </span><span class="c">! which column are we working on?</span>
+
+<span class="w">            </span><span class="c">! loop along the elements in this column of L and subtract to solve to y</span>
+<span class="w">            </span><span class="n">tmpIdx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LNextSpaceInCol</span><span class="p">(</span><span class="n">cidx</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">yVals_cidx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yVals</span><span class="p">(</span><span class="n">cidx</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Lp</span><span class="p">(</span><span class="n">cidx</span><span class="p">),</span><span class="w"> </span><span class="n">tmpIdx</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                </span><span class="n">yVals</span><span class="p">(</span><span class="n">Li</span><span class="p">(</span><span class="n">j</span><span class="p">))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yVals</span><span class="p">(</span><span class="n">Li</span><span class="p">(</span><span class="n">j</span><span class="p">))</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Lx</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">yVals_cidx</span><span class="w"></span>
+<span class="w">            </span><span class="k">end do</span><span class="w"></span>
+
+<span class="w">            </span><span class="c">! now I have the cidx-th element of y = L\b, so compute the corresponding</span>
+<span class="w">            </span><span class="c">! element of this row of L and put it into the right place</span>
+<span class="w">            </span><span class="n">Li</span><span class="p">(</span><span class="n">tmpIdx</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
+<span class="w">            </span><span class="n">Lx</span><span class="p">(</span><span class="n">tmpIdx</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yVals_cidx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Dinv</span><span class="p">(</span><span class="n">cidx</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">            </span><span class="c">! D(k) -= yVals(cidx)*yVals(cidx)*Dinv(cidx)</span>
+<span class="w">            </span><span class="n">D</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">D</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">yVals_cidx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Lx</span><span class="p">(</span><span class="n">tmpIdx</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">LNextSpaceInCol</span><span class="p">(</span><span class="n">cidx</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LNextSpaceInCol</span><span class="p">(</span><span class="n">cidx</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+
+<span class="w">            </span><span class="c">! reset the y values and markers once I&#39;m done with them</span>
+<span class="w">            </span><span class="n">yVals</span><span class="p">(</span><span class="n">cidx</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">            </span><span class="n">yMarkers</span><span class="p">(</span><span class="n">cidx</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">end do</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">! Classify the pivot. If it is zero, we can&#39;t factor this matrix:</span>
+<span class="w">        </span><span class="c">! abort, unless regularizing.</span>
+<span class="w">        </span><span class="n">dk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">D</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">dk</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">zero_tol</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">regularize</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                </span><span class="n">zero_col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
+<span class="w">                </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">qdldl_error_zero_pivot</span><span class="w"></span>
+<span class="w">                </span><span class="k">return</span>
+<span class="k">            end if</span>
+<span class="k">            </span><span class="n">nzero</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nzero</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="n">dk</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">            </span><span class="n">npos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">npos</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="k">else</span>
+<span class="k">            </span><span class="n">nneg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nneg</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="k">end if</span>
+
+<span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="n">regularize</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">            </span><span class="c">! the expected sign of this pivot</span>
+<span class="w">            </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">present</span><span class="p">(</span><span class="n">signs</span><span class="p">))</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">signs</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                if</span><span class="w"> </span><span class="p">(</span><span class="n">dk</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.0_wp</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                    </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">1.0_wp</span><span class="w"></span>
+<span class="w">                </span><span class="k">else</span>
+<span class="k">                    </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0_wp</span><span class="w"></span>
+<span class="w">                </span><span class="k">end if</span>
+<span class="k">            else</span>
+<span class="k">                </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">sign</span><span class="p">(</span><span class="mf">1.0_wp</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">end if</span>
+<span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="o">*</span><span class="n">dk</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">reg_eps</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">dk</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">zero_tol</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                </span><span class="n">D</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">reg_delta</span><span class="w"></span>
+<span class="w">                </span><span class="n">nreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nreg</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="k">end if</span>
+<span class="k">        end if</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">! compute the inverse of the diagonal</span>
+<span class="w">        </span><span class="n">Dinv</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0_wp</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">D</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">end do</span>
+
+<span class="k">    end function </span><span class="n">factor_kernel</span><span class="w"></span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              qdldl-fortran
+ was developed by Jacob Williams<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

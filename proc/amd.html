@@ -1,0 +1,1348 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="QDLDL, a sparse LDLT solver for quasi-definite matrices, in modern Fortran">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>amd &ndash; qdldl-fortran</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+      <script src="../js/MathJax-config/mathjax-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">qdldl-fortran </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>amd
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title="26.5% of total for procedures.">418 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/qdldl_amd.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/qdldl_amd.f90.html'>qdldl_amd.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/qdldl_amd.html'>qdldl_amd</a></li>
+            <li class="breadcrumb-item active" aria-current="page">amd</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../proc/amd.html#src">amd</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  subroutine amd(n, pe, iw, len, iwlen, pfree, nv, next, last, head, elen, degree, ncmpa, w)  
+</h2>
+    
+
+    <p>Given a representation of the nonzero pattern of a symmetric matrix, <script type="math/tex">A</script>
+  (excluding the diagonal), performs an approximate minimum (UMFPACK/MA38-style)
+  degree ordering to compute a pivot order such that the introduction of nonzeros
+  (fill-in) in the Cholesky factors <script type="math/tex">A = LL^T</script> are kept low. At each step, the
+  pivot selected is the one with the minimum UMFPACK/MA38-style upper-bound on the
+  external degree. Aggressive absorption is used to tighten the bound on the degree.</p>
+<p><strong>The arguments are not checked for errors on input.</strong></p>
+<p>The input pattern is held in <code>iw(1:pfree-1)</code>: row <code>i</code> (<code>len(i)</code> column indices,
+  excluding the diagonal, in any order, without duplicates) is
+  <code>iw(pe(i):pe(i)+len(i)-1)</code>. Both triangles must be present. There may be empty
+  space between the rows. <code>iwlen &gt;= pfree + n</code> is recommended (better yet,
+  <code>iwlen &gt; 1.2*pfree</code>), or excessive compressions take place; the algorithm does
+  not run at all if <code>iwlen &lt; pfree - 1</code>.</p>
+<p>On output, <code>last</code> holds the permutation (row <code>last(k)</code> of <script type="math/tex">A</script> is the <code>k</code>-th
+  row of <script type="math/tex">PAP^T</script>) and <code>elen</code> its inverse.</p>
+<h3>References</h3>
+<ul>
+<li>T. A. Davis and I. S. Duff, "An unsymmetric-pattern multifrontal method for
+    sparse LU factorization", SIAM J. Matrix Anal. Appl. 18(1), 140-158.</li>
+<li>P. R. Amestoy, T. A. Davis, and I. S. Duff, "An approximate minimum degree
+    ordering algorithm", SIAM J. Matrix Anal. Appl. 17(4), 886-905, 1996.</li>
+<li>A. George and J. Liu, "The evolution of the minimum degree ordering algorithm",
+    SIAM Review 31(1), 1-19, 1989.</li>
+</ul>
+<h3>Data structures</h3>
+<p>During execution <code>pe</code> holds, for a principal supervariable <code>i</code>, the index in <code>iw</code>
+  of its description; for a non-principal supervariable absorbed into <code>j</code>, <code>-j</code>; for
+  an unabsorbed element <code>e</code>, the index in <code>iw</code> of its description; for an element
+  absorbed into <code>e2</code>, <code>-e2</code> (or <code>0</code> for a null element). On output it holds the
+  assembly tree. The list of supervariable <code>i</code> is: its elements
+  <code>iw(pe(i):pe(i)+elen(i)-1)</code>, then its supervariables up to <code>pe(i)+len(i)-1</code>. The
+  list of element <code>e</code> is its supervariables <code>iw(pe(e):pe(e)+len(e)-1)</code>.
+  <code>abs(nv(i))</code> is the number of rows represented by principal supervariable <code>i</code> (<code>0</code>
+  if non-principal; negative while <code>i</code> is in the pattern <code>Lme</code> of the current pivot
+  element <code>me</code>). <code>degree(i)</code> is the approximate external degree of supervariable
+  <code>i</code>, or <code>|Le|</code> for an element. <code>head</code>, <code>next</code>, and <code>last</code> hold the degree lists
+  and the hash buckets. <code>w</code> flags elements and variables: for an element <code>e</code>,
+  <code>w(e) = 0</code> if absorbed, <code>w(e) - wflg = |Le \ Lme|</code> if <code>w(e) &gt;= wflg</code>.</p>
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~13"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+                <p>the matrix order (<code>1 &lt;= n &lt; huge/2 - 2</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-pe~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>pe</strong>(n)</td>
+            <td>
+                <p>on input, the start of each row in <code>iw</code> (or 0 if empty);
+on output, the assembly tree</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-iw~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>iw</strong>(iwlen)</td>
+            <td>
+                <p>on input, the pattern; undefined on output</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-len~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>len</strong>(n)</td>
+            <td>
+                <p>on input, the number of entries of each row; undefined on output</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-iwlen~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>iwlen</strong></td>
+            <td>
+                <p>the length of <code>iw</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-pfree~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>pfree</strong></td>
+            <td>
+                <p>on input, <code>iw(pfree:iwlen)</code> is empty; on output, the size of <code>iw</code>
+that would have needed no compressions</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nv~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>nv</strong>(n)</td>
+            <td>
+                <p>on output, <code>nv(e)</code> is the degree of element <code>e</code> when it was created</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-next~3"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>next</strong>(n)</td>
+            <td>
+                <p>work array: degree lists and hash buckets</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-last~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>last</strong>(n)</td>
+            <td>
+                <p>on output, the permutation</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-head~3"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>head</strong>(n)</td>
+            <td>
+                <p>work array: heads of the degree lists and hash buckets</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-elen~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>elen</strong>(n)</td>
+            <td>
+                <p>on output, the inverse permutation</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-degree~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>degree</strong>(n)</td>
+            <td>
+                <p>work array: approximate degrees</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ncmpa~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>ncmpa</strong></td>
+            <td>
+                <p>the number of times <code>iw</code> was compressed</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-w~3"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>w</strong>(n)</td>
+            <td>
+                <p>work array: flags</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: proc~~amd~~CalledByGraph Pages: 1 -->
+<svg id="procamdCalledByGraph" width="641pt" height="31pt"
+ viewBox="0.00 0.00 641.00 31.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~amd~~CalledByGraph" class="graph" transform="scale(0.968893 0.968893) rotate(0) translate(4 28.27)">
+<title>proc~~amd~~CalledByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 657.58,-28.27 657.58,4 -4,4"/>
+<!-- proc~amd -->
+<g id="proc~~amd~~CalledByGraph_node1" class="node">
+<title>proc~amd</title>
+<polygon fill="none" stroke="black" points="653.58,-24.27 599.58,-24.27 599.58,0 653.58,0 653.58,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="626.58" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">amd</text>
+</g>
+<!-- proc~qdldl_amd_order -->
+<g id="proc~~amd~~CalledByGraph_node2" class="node">
+<title>proc~qdldl_amd_order</title>
+<g id="a_proc~~amd~~CalledByGraph_node2"><a xlink:href="../proc/qdldl_amd_order.html" xlink:title="qdldl_amd_order">
+<polygon fill="#d9534f" stroke="#d9534f" points="563.58,-24.27 462.06,-24.27 462.06,0 563.58,0 563.58,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="512.82" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_amd_order</text>
+</a>
+</g>
+</g>
+<!-- proc~qdldl_amd_order&#45;&gt;proc~amd -->
+<g id="proc~~amd~~CalledByGraph_edge1" class="edge">
+<title>proc~qdldl_amd_order&#45;&gt;proc~amd</title>
+<path fill="none" stroke="#000000" d="M563.82,-12.13C571.92,-12.13 580.19,-12.13 587.94,-12.13"/>
+<polygon fill="#000000" stroke="#000000" points="587.69,-15.64 597.69,-12.14 587.69,-8.64 587.69,-15.64"/>
+</g>
+<!-- proc~analyze_pattern -->
+<g id="proc~~amd~~CalledByGraph_node3" class="node">
+<title>proc~analyze_pattern</title>
+<g id="a_proc~~amd~~CalledByGraph_node3"><a xlink:href="../proc/analyze_pattern.html" xlink:title="analyze_pattern">
+<polygon fill="#d9534f" stroke="#d9534f" points="426.06,-24.27 329.04,-24.27 329.04,0 426.06,0 426.06,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="377.55" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">analyze_pattern</text>
+</a>
+</g>
+</g>
+<!-- proc~analyze_pattern&#45;&gt;proc~qdldl_amd_order -->
+<g id="proc~~amd~~CalledByGraph_edge2" class="edge">
+<title>proc~analyze_pattern&#45;&gt;proc~qdldl_amd_order</title>
+<path fill="none" stroke="#000000" d="M426.29,-12.13C434.1,-12.13 442.3,-12.13 450.39,-12.13"/>
+<polygon fill="#000000" stroke="#000000" points="450.2,-15.64 460.2,-12.14 450.2,-8.64 450.2,-15.64"/>
+</g>
+<!-- proc~analyze -->
+<g id="proc~~amd~~CalledByGraph_node4" class="node">
+<title>proc~analyze</title>
+<g id="a_proc~~amd~~CalledByGraph_node4"><a xlink:href="../proc/analyze.html" xlink:title="qdldl_type%analyze">
+<polygon fill="#d9534f" stroke="#d9534f" points="293.04,-24.27 175.77,-24.27 175.77,0 293.04,0 293.04,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="234.4" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_type%analyze</text>
+</a>
+</g>
+</g>
+<!-- proc~analyze&#45;&gt;proc~analyze_pattern -->
+<g id="proc~~amd~~CalledByGraph_edge3" class="edge">
+<title>proc~analyze&#45;&gt;proc~analyze_pattern</title>
+<path fill="none" stroke="#000000" d="M293.22,-12.13C301.29,-12.13 309.6,-12.13 317.69,-12.13"/>
+<polygon fill="#000000" stroke="#000000" points="317.43,-15.64 327.43,-12.14 317.43,-8.64 317.43,-15.64"/>
+</g>
+<!-- proc~analyze_csc -->
+<g id="proc~~amd~~CalledByGraph_node5" class="node">
+<title>proc~analyze_csc</title>
+<g id="a_proc~~amd~~CalledByGraph_node5"><a xlink:href="../proc/analyze_csc.html" xlink:title="qdldl_type%analyze_csc">
+<polygon fill="#d9534f" stroke="#d9534f" points="139.77,-24.27 0,-24.27 0,0 139.77,0 139.77,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="69.88" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_type%analyze_csc</text>
+</a>
+</g>
+</g>
+<!-- proc~analyze_csc&#45;&gt;proc~analyze -->
+<g id="proc~~amd~~CalledByGraph_edge4" class="edge">
+<title>proc~analyze_csc&#45;&gt;proc~analyze</title>
+<path fill="none" stroke="#000000" d="M139.81,-12.13C147.86,-12.13 156.09,-12.13 164.15,-12.13"/>
+<polygon fill="#000000" stroke="#000000" points="163.89,-15.64 173.89,-12.14 163.89,-8.64 163.89,-15.64"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panprocamdCalledByGraph = svgPanZoom('#procamdCalledByGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 28.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.873868 0.873868) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 729.52,-28.27 729.52,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="69.27,-24.27 0,-24.27 0,0 69.27,0 69.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="34.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="143.89,-24.27 87.38,-24.27 87.38,0 143.89,0 143.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="115.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="221.39,-24.27 161.88,-24.27 161.88,0 221.39,0 221.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="191.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="368.27,-24.27 239,-24.27 239,0 368.27,0 368.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="303.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="529.39,-24.27 385.88,-24.27 385.88,0 529.39,0 529.39,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="457.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="603.89,-24.27 547.38,-24.27 547.38,0 603.89,0 603.89,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="575.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="725.52,-24.27 621.75,-24.27 621.75,0 725.52,0 725.52,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="673.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    <section>
+    <h2><span class="anchor" id="src"></span>Source Code</h2>
+    <div class="hl codehilite"><pre><span></span><span class="w">    </span><span class="k">subroutine </span><span class="n">amd</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">pe</span><span class="p">,</span><span class="w"> </span><span class="n">iw</span><span class="p">,</span><span class="w"> </span><span class="nb">len</span><span class="p">,</span><span class="w"> </span><span class="n">iwlen</span><span class="p">,</span><span class="w"> </span><span class="n">pfree</span><span class="p">,</span><span class="w"> </span><span class="n">nv</span><span class="p">,</span><span class="w"> </span><span class="n">next</span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="p">,</span><span class="w"> </span><span class="n">head</span><span class="p">,</span><span class="w"> </span><span class="n">elen</span><span class="p">,</span><span class="w"> </span><span class="n">degree</span><span class="p">,</span><span class="w"> </span><span class="n">ncmpa</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">n</span><span class="w">             </span><span class="c">!! the matrix order (`1 &lt;= n &lt; huge/2 - 2`)</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">pe</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">         </span><span class="c">!! on input, the start of each row in `iw` (or 0 if empty);</span>
+<span class="w">                                               </span><span class="c">!! on output, the assembly tree</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">iwlen</span><span class="w">         </span><span class="c">!! the length of `iw`</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">iw</span><span class="p">(</span><span class="n">iwlen</span><span class="p">)</span><span class="w">     </span><span class="c">!! on input, the pattern; undefined on output</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">        </span><span class="c">!! on input, the number of entries of each row; undefined on output</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">pfree</span><span class="w">         </span><span class="c">!! on input, `iw(pfree:iwlen)` is empty; on output, the size of `iw`</span>
+<span class="w">                                               </span><span class="c">!! that would have needed no compressions</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">nv</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">         </span><span class="c">!! on output, `nv(e)` is the degree of element `e` when it was created</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">next</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">       </span><span class="c">!! work array: degree lists and hash buckets</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">last</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">       </span><span class="c">!! on output, the permutation</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">       </span><span class="c">!! work array: heads of the degree lists and hash buckets</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">elen</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">       </span><span class="c">!! on output, the inverse permutation</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">degree</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">     </span><span class="c">!! work array: approximate degrees</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">ncmpa</span><span class="w">         </span><span class="c">!! the number of times `iw` was compressed</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w">   </span><span class="kd">::</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">          </span><span class="c">!! work array: flags</span>
+
+<span class="w">    </span><span class="c">! local integers (see the original for their full description)</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">deg</span><span class="w">      </span><span class="c">! the degree of a variable or element</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">degme</span><span class="w">    </span><span class="c">! size, |Lme|, of the current element, me (= degree (me))</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">dext</span><span class="w">     </span><span class="c">! external degree, |Le \ Lme|, of some element e</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="nb">dmax</span><span class="w">     </span><span class="c">! largest |Le| seen so far</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">e</span><span class="w">        </span><span class="c">! an element</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">elenme</span><span class="w">   </span><span class="c">! the length, elen (me), of element list of pivotal var.</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">eln</span><span class="w">      </span><span class="c">! the length, elen (...), of an element list</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">hash</span><span class="w">     </span><span class="c">! the computed value of the hash function</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">hmod</span><span class="w">     </span><span class="c">! the hash function is computed modulo hmod = max (1,n-1)</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">i</span><span class="w">        </span><span class="c">! a supervariable</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ilast</span><span class="w">    </span><span class="c">! the entry in a link list preceding i</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">inext</span><span class="w">    </span><span class="c">! the entry in a link list following i</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">j</span><span class="w">        </span><span class="c">! a supervariable</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">jlast</span><span class="w">    </span><span class="c">! the entry in a link list preceding j</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">jnext</span><span class="w">    </span><span class="c">! the entry in a link list, or path, following j</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">k</span><span class="w">        </span><span class="c">! the pivot order of an element or variable</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">knt1</span><span class="w">     </span><span class="c">! loop counter used during element construction</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">knt2</span><span class="w">     </span><span class="c">! loop counter used during element construction</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">knt3</span><span class="w">     </span><span class="c">! loop counter used during compression</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">lenj</span><span class="w">     </span><span class="c">! len (j)</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ln</span><span class="w">       </span><span class="c">! length of a supervariable list</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">maxmem</span><span class="w">   </span><span class="c">! amount of memory needed for no compressions</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">me</span><span class="w">       </span><span class="c">! current supervariable being eliminated, and the current element</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">mem</span><span class="w">      </span><span class="c">! memory in use assuming no compressions have occurred</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">mindeg</span><span class="w">   </span><span class="c">! current minimum degree</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">nel</span><span class="w">      </span><span class="c">! number of pivots selected so far</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">newmem</span><span class="w">   </span><span class="c">! amount of new memory needed for current pivot element</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">nleft</span><span class="w">    </span><span class="c">! n - nel, the number of nonpivotal rows/columns remaining</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">nvi</span><span class="w">      </span><span class="c">! the number of variables in a supervariable i (= nv (i))</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">nvj</span><span class="w">      </span><span class="c">! the number of variables in a supervariable j (= nv (j))</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">nvpiv</span><span class="w">    </span><span class="c">! number of pivots in current element</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">slenme</span><span class="w">   </span><span class="c">! number of variables in variable list of pivotal variable</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">we</span><span class="w">       </span><span class="c">! w (e)</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">wflg</span><span class="w">     </span><span class="c">! used for flagging the w array</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">wnvi</span><span class="w">     </span><span class="c">! wflg - nv (i)</span>
+<span class="w">    </span><span class="kt">logical</span><span class="w">     </span><span class="kd">::</span><span class="w"> </span><span class="n">absorb</span><span class="w">   </span><span class="c">! j can be absorbed into i (supervariable detection)</span>
+
+<span class="w">    </span><span class="c">! local pointers (indices into iw)</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">p</span><span class="w">        </span><span class="c">! pointer into lots of things</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">p1</span><span class="w">       </span><span class="c">! pe (i) for some variable i (start of element list)</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">p2</span><span class="w">       </span><span class="c">! pe (i) + elen (i) -  1 for some var. i (end of el. list)</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">p3</span><span class="w">       </span><span class="c">! index of first supervariable in clean list</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">pdst</span><span class="w">     </span><span class="c">! destination pointer, for compression</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">pend</span><span class="w">     </span><span class="c">! end of memory to compress</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">pj</span><span class="w">       </span><span class="c">! pointer into an element or variable</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">pme</span><span class="w">      </span><span class="c">! pointer into the current element (pme1...pme2)</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">pme1</span><span class="w">     </span><span class="c">! the current element, me, is stored in iw (pme1...pme2)</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">pme2</span><span class="w">     </span><span class="c">! the end of the current element</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">pn</span><span class="w">       </span><span class="c">! pointer into a &quot;clean&quot; variable, also used to compress</span>
+<span class="w">    </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">psrc</span><span class="w">     </span><span class="c">! source pointer, for compression</span>
+
+<span class="w">    </span><span class="c">!=======================================================================</span>
+<span class="w">    </span><span class="c">!  INITIALIZATIONS</span>
+<span class="w">    </span><span class="c">!=======================================================================</span>
+
+<span class="w">    </span><span class="n">wflg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="w">    </span><span class="n">mindeg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">    </span><span class="n">ncmpa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">    </span><span class="n">nel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">    </span><span class="n">hmod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="mi">1_ip</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="nb">dmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">    </span><span class="n">mem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pfree</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">    </span><span class="n">maxmem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem</span><span class="w"></span>
+<span class="w">    </span><span class="n">me</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">        </span><span class="n">last</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="n">head</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="n">nv</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="n">w</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="n">elen</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="n">degree</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">end do</span><span class="w"></span>
+
+<span class="w">    </span><span class="c">! ----------------------------------------------------------------</span>
+<span class="w">    </span><span class="c">! initialize degree lists and eliminate rows with no off-diag. nz.</span>
+<span class="w">    </span><span class="c">! ----------------------------------------------------------------</span>
+
+<span class="w">    </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">        </span><span class="n">deg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">degree</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">deg</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">            </span><span class="c">! place i in the degree list corresponding to its degree</span>
+<span class="w">            </span><span class="n">inext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">(</span><span class="n">deg</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inext</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">last</span><span class="p">(</span><span class="n">inext</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="w">            </span><span class="n">next</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inext</span><span class="w"></span>
+<span class="w">            </span><span class="n">head</span><span class="p">(</span><span class="n">deg</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="w">        </span><span class="k">else</span><span class="w"></span>
+<span class="w">            </span><span class="c">! we have a variable that can be eliminated at once because</span>
+<span class="w">            </span><span class="c">! there is no off-diagonal non-zero in its row.</span>
+<span class="w">            </span><span class="n">nel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nel</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="n">elen</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">nel</span><span class="w"></span>
+<span class="w">            </span><span class="n">pe</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">            </span><span class="n">w</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="k">end if</span>
+<span class="k">    end do</span><span class="w"></span>
+
+<span class="w">    </span><span class="c">!=======================================================================</span>
+<span class="w">    </span><span class="c">!  WHILE (selecting pivots) DO</span>
+<span class="w">    </span><span class="c">!=======================================================================</span>
+
+<span class="w">    </span><span class="k">do while</span><span class="w"> </span><span class="p">(</span><span class="n">nel</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">!=======================================================================</span>
+<span class="w">        </span><span class="c">!  GET PIVOT OF MINIMUM DEGREE</span>
+<span class="w">        </span><span class="c">!=======================================================================</span>
+
+<span class="w">        </span><span class="c">! find next supervariable for elimination</span>
+<span class="w">        </span><span class="k">do </span><span class="n">deg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mindeg</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">            </span><span class="n">me</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">(</span><span class="n">deg</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">me</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">exit</span>
+<span class="k">        end do</span>
+<span class="k">        </span><span class="n">mindeg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">deg</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">! remove chosen variable from link list</span>
+<span class="w">        </span><span class="n">inext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">next</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inext</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">last</span><span class="p">(</span><span class="n">inext</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="n">head</span><span class="p">(</span><span class="n">deg</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inext</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">! me represents the elimination of pivots nel+1 to nel+nv(me).</span>
+<span class="w">        </span><span class="c">! place me itself as the first in this set.  It will be moved</span>
+<span class="w">        </span><span class="c">! to the nel+nv(me) position when the permutation vectors are</span>
+<span class="w">        </span><span class="c">! computed.</span>
+<span class="w">        </span><span class="n">elenme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">elen</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">elen</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="p">(</span><span class="n">nel</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">nvpiv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nv</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">nel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nel</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">nvpiv</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">!=======================================================================</span>
+<span class="w">        </span><span class="c">!  CONSTRUCT NEW ELEMENT</span>
+<span class="w">        </span><span class="c">!=======================================================================</span>
+
+<span class="w">        </span><span class="c">! At this point, me is the pivotal supervariable.  It will be</span>
+<span class="w">        </span><span class="c">! converted into the current element.  Scan list of the</span>
+<span class="w">        </span><span class="c">! pivotal supervariable, me, setting tree pointers and</span>
+<span class="w">        </span><span class="c">! constructing new list of supervariables for the new element,</span>
+<span class="w">        </span><span class="c">! me.  p is a pointer to the current position in the old list.</span>
+
+<span class="w">        </span><span class="c">! flag the variable &quot;me&quot; as being in Lme by negating nv (me)</span>
+<span class="w">        </span><span class="n">nv</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">nvpiv</span><span class="w"></span>
+<span class="w">        </span><span class="n">degme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">elenme</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+
+<span class="w">            </span><span class="c">! construct the new element in place</span>
+<span class="w">            </span><span class="n">pme1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pe</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">pme2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pme1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+
+<span class="w">            </span><span class="k">do </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pme1</span><span class="p">,</span><span class="w"> </span><span class="n">pme1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iw</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="n">nvi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nv</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nvi</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">                    </span><span class="c">! i is a principal variable not yet placed in Lme.</span>
+<span class="w">                    </span><span class="c">! store i in new list</span>
+<span class="w">                    </span><span class="n">degme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">degme</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">nvi</span><span class="w"></span>
+<span class="w">                    </span><span class="c">! flag i as being in Lme by negating nv (i)</span>
+<span class="w">                    </span><span class="n">nv</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">nvi</span><span class="w"></span>
+<span class="w">                    </span><span class="n">pme2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pme2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                    </span><span class="n">iw</span><span class="p">(</span><span class="n">pme2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="w">                    </span><span class="c">! remove variable i from degree list.</span>
+<span class="w">                    </span><span class="n">ilast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">last</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">                    </span><span class="n">inext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">next</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inext</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">last</span><span class="p">(</span><span class="n">inext</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ilast</span><span class="w"></span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ilast</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                        </span><span class="n">next</span><span class="p">(</span><span class="n">ilast</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inext</span><span class="w"></span>
+<span class="w">                    </span><span class="k">else</span><span class="w"></span>
+<span class="w">                        </span><span class="c">! i is at the head of the degree list</span>
+<span class="w">                        </span><span class="n">head</span><span class="p">(</span><span class="n">degree</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inext</span><span class="w"></span>
+<span class="w">                    </span><span class="k">end if</span>
+<span class="k">                end if</span>
+<span class="k">            end do</span><span class="w"></span>
+<span class="w">            </span><span class="c">! this element takes no new memory in iw:</span>
+<span class="w">            </span><span class="n">newmem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">else</span><span class="w"></span>
+
+<span class="w">            </span><span class="c">! construct the new element in empty space, iw (pfree ...)</span>
+<span class="w">            </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pe</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">pme1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pfree</span><span class="w"></span>
+<span class="w">            </span><span class="n">slenme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">elenme</span><span class="w"></span>
+
+<span class="w">            </span><span class="k">do </span><span class="n">knt1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">elenme</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">knt1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">elenme</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">                    </span><span class="c">! search the supervariables in me.</span>
+<span class="w">                    </span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="w"></span>
+<span class="w">                    </span><span class="n">pj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="w"></span>
+<span class="w">                    </span><span class="n">ln</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">slenme</span><span class="w"></span>
+<span class="w">                </span><span class="k">else</span><span class="w"></span>
+<span class="w">                    </span><span class="c">! search the elements in me.</span>
+<span class="w">                    </span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iw</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="w"></span>
+<span class="w">                    </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                    </span><span class="n">pj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pe</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"></span>
+<span class="w">                    </span><span class="n">ln</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">end if</span><span class="w"></span>
+
+<span class="w">                </span><span class="c">! search for different supervariables and add them to the</span>
+<span class="w">                </span><span class="c">! new list, compressing when necessary. this loop is</span>
+<span class="w">                </span><span class="c">! executed once for each element in the list and once for</span>
+<span class="w">                </span><span class="c">! all the supervariables in the list.</span>
+<span class="w">                </span><span class="k">do </span><span class="n">knt2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">ln</span><span class="w"></span>
+<span class="w">                    </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iw</span><span class="p">(</span><span class="n">pj</span><span class="p">)</span><span class="w"></span>
+<span class="w">                    </span><span class="n">pj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pj</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                    </span><span class="n">nvi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nv</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nvi</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+
+<span class="w">                        </span><span class="c">! compress iw, if necessary</span>
+<span class="w">                        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pfree</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">iwlen</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">                            </span><span class="c">! prepare for compressing iw by adjusting</span>
+<span class="w">                            </span><span class="c">! pointers and lengths so that the lists being</span>
+<span class="w">                            </span><span class="c">! searched in the inner and outer loops contain</span>
+<span class="w">                            </span><span class="c">! only the remaining entries.</span>
+<span class="w">                            </span><span class="n">pe</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="w"></span>
+<span class="w">                            </span><span class="nb">len</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">knt1</span><span class="w"></span>
+<span class="w">                            </span><span class="c">! nothing left of supervariable me</span>
+<span class="w">                            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">pe</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">                            </span><span class="n">pe</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pj</span><span class="w"></span>
+<span class="w">                            </span><span class="nb">len</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ln</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">knt2</span><span class="w"></span>
+<span class="w">                            </span><span class="c">! nothing left of element e</span>
+<span class="w">                            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">pe</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+
+<span class="w">                            </span><span class="n">ncmpa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ncmpa</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                            </span><span class="c">! store first item in pe</span>
+<span class="w">                            </span><span class="c">! set first entry to -item</span>
+<span class="w">                            </span><span class="k">do </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">                                </span><span class="n">pn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pe</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">                                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pn</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                                    </span><span class="n">pe</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iw</span><span class="p">(</span><span class="n">pn</span><span class="p">)</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">iw</span><span class="p">(</span><span class="n">pn</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">j</span><span class="w"></span>
+<span class="w">                                </span><span class="k">end if</span>
+<span class="k">                            end do</span><span class="w"></span>
+
+<span class="w">                            </span><span class="c">! psrc/pdst point to source/destination</span>
+<span class="w">                            </span><span class="n">pdst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                            </span><span class="n">psrc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                            </span><span class="n">pend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pme1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+
+<span class="w">                            </span><span class="k">do while</span><span class="w"> </span><span class="p">(</span><span class="n">psrc</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">pend</span><span class="p">)</span><span class="w"></span>
+<span class="w">                                </span><span class="c">! search for next negative entry</span>
+<span class="w">                                </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">iw</span><span class="p">(</span><span class="n">psrc</span><span class="p">)</span><span class="w"></span>
+<span class="w">                                </span><span class="n">psrc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">psrc</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                                    </span><span class="n">iw</span><span class="p">(</span><span class="n">pdst</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pe</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">pe</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pdst</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">pdst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pdst</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                                    </span><span class="c">! copy from source to destination</span>
+<span class="w">                                    </span><span class="n">lenj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">                                    </span><span class="k">do </span><span class="n">knt3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">lenj</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="w">                                        </span><span class="n">iw</span><span class="p">(</span><span class="n">pdst</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">knt3</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iw</span><span class="p">(</span><span class="n">psrc</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">knt3</span><span class="p">)</span><span class="w"></span>
+<span class="w">                                    </span><span class="k">end do</span>
+<span class="k">                                    </span><span class="n">pdst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pdst</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">lenj</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">psrc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">psrc</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">lenj</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                                </span><span class="k">end if</span>
+<span class="k">                            end do</span><span class="w"></span>
+
+<span class="w">                            </span><span class="c">! move the new partially-constructed element</span>
+<span class="w">                            </span><span class="n">p1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pdst</span><span class="w"></span>
+<span class="w">                            </span><span class="k">do </span><span class="n">psrc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pme1</span><span class="p">,</span><span class="w"> </span><span class="n">pfree</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                                </span><span class="n">iw</span><span class="p">(</span><span class="n">pdst</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iw</span><span class="p">(</span><span class="n">psrc</span><span class="p">)</span><span class="w"></span>
+<span class="w">                                </span><span class="n">pdst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pdst</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                            </span><span class="k">end do</span>
+<span class="k">                            </span><span class="n">pme1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p1</span><span class="w"></span>
+<span class="w">                            </span><span class="n">pfree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pdst</span><span class="w"></span>
+<span class="w">                            </span><span class="n">pj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pe</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"></span>
+<span class="w">                            </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pe</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"></span>
+<span class="w">                        </span><span class="k">end if</span><span class="w"></span>
+
+<span class="w">                        </span><span class="c">! i is a principal variable not yet placed in Lme</span>
+<span class="w">                        </span><span class="c">! store i in new list</span>
+<span class="w">                        </span><span class="n">degme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">degme</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">nvi</span><span class="w"></span>
+<span class="w">                        </span><span class="c">! flag i as being in Lme by negating nv (i)</span>
+<span class="w">                        </span><span class="n">nv</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">nvi</span><span class="w"></span>
+<span class="w">                        </span><span class="n">iw</span><span class="p">(</span><span class="n">pfree</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="w">                        </span><span class="n">pfree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pfree</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+
+<span class="w">                        </span><span class="c">! remove variable i from degree link list</span>
+<span class="w">                        </span><span class="n">ilast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">last</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">                        </span><span class="n">inext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">next</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">                        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inext</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">last</span><span class="p">(</span><span class="n">inext</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ilast</span><span class="w"></span>
+<span class="w">                        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ilast</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                            </span><span class="n">next</span><span class="p">(</span><span class="n">ilast</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inext</span><span class="w"></span>
+<span class="w">                        </span><span class="k">else</span><span class="w"></span>
+<span class="w">                            </span><span class="c">! i is at the head of the degree list</span>
+<span class="w">                            </span><span class="n">head</span><span class="p">(</span><span class="n">degree</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inext</span><span class="w"></span>
+<span class="w">                        </span><span class="k">end if</span>
+
+<span class="k">                    end if</span>
+<span class="k">                end do</span>
+
+<span class="k">                if</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">me</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">                    </span><span class="c">! set tree pointer and flag to indicate element e is</span>
+<span class="w">                    </span><span class="c">! absorbed into new element me (the parent of e is me)</span>
+<span class="w">                    </span><span class="n">pe</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">me</span><span class="w"></span>
+<span class="w">                    </span><span class="n">w</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">                </span><span class="k">end if</span>
+<span class="k">            end do</span>
+
+<span class="k">            </span><span class="n">pme2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pfree</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="c">! this element takes newmem new memory in iw (possibly zero)</span>
+<span class="w">            </span><span class="n">newmem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pfree</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pme1</span><span class="w"></span>
+<span class="w">            </span><span class="n">mem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">newmem</span><span class="w"></span>
+<span class="w">            </span><span class="n">maxmem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="n">maxmem</span><span class="p">,</span><span class="w"> </span><span class="n">mem</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">end if</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">! me has now been converted into an element in iw (pme1..pme2)</span>
+
+<span class="w">        </span><span class="c">! degme holds the external degree of new element</span>
+<span class="w">        </span><span class="n">degree</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">degme</span><span class="w"></span>
+<span class="w">        </span><span class="n">pe</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pme1</span><span class="w"></span>
+<span class="w">        </span><span class="nb">len</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pme2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pme1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">! make sure that wflg is not too large.  With the current</span>
+<span class="w">        </span><span class="c">! value of wflg, wflg+n must not cause integer overflow</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">wflg</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nb">huge</span><span class="p">(</span><span class="n">wflg</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">call </span><span class="n">reset_w</span><span class="p">()</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">!=======================================================================</span>
+<span class="w">        </span><span class="c">!  COMPUTE (w (e) - wflg) = |Le\Lme| FOR ALL ELEMENTS</span>
+<span class="w">        </span><span class="c">!=======================================================================</span>
+
+<span class="w">        </span><span class="c">! Scan 1:  compute the external degrees of previous elements</span>
+<span class="w">        </span><span class="c">! with respect to the current element.  That is:</span>
+<span class="w">        </span><span class="c">!      (w (e) - wflg) = |Le \ Lme|</span>
+<span class="w">        </span><span class="c">! for each element e that appears in any supervariable in Lme.</span>
+<span class="w">        </span><span class="c">! If (w (e) - wflg) becomes zero, then the element e will be</span>
+<span class="w">        </span><span class="c">! absorbed in scan 2.</span>
+
+<span class="w">        </span><span class="k">do </span><span class="n">pme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pme1</span><span class="p">,</span><span class="w"> </span><span class="n">pme2</span><span class="w"></span>
+<span class="w">            </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iw</span><span class="p">(</span><span class="n">pme</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">eln</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">elen</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">eln</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">                </span><span class="c">! note that nv (i) has been negated to denote i in Lme:</span>
+<span class="w">                </span><span class="n">nvi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">nv</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="n">wnvi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wflg</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">nvi</span><span class="w"></span>
+<span class="w">                </span><span class="k">do </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pe</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">pe</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">eln</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                    </span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iw</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="w"></span>
+<span class="w">                    </span><span class="n">we</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"></span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">we</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">wflg</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">                        </span><span class="c">! unabsorbed element e has been seen in this loop</span>
+<span class="w">                        </span><span class="n">we</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">we</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">nvi</span><span class="w"></span>
+<span class="w">                    </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="n">we</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">                        </span><span class="c">! e is an unabsorbed element</span>
+<span class="w">                        </span><span class="c">! this is the first we have seen e in all of Scan 1</span>
+<span class="w">                        </span><span class="n">we</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">degree</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wnvi</span><span class="w"></span>
+<span class="w">                    </span><span class="k">end if</span>
+<span class="k">                    </span><span class="n">w</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">we</span><span class="w"></span>
+<span class="w">                </span><span class="k">end do</span>
+<span class="k">            end if</span>
+<span class="k">        end do</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">!=======================================================================</span>
+<span class="w">        </span><span class="c">!  DEGREE UPDATE AND ELEMENT ABSORPTION</span>
+<span class="w">        </span><span class="c">!=======================================================================</span>
+
+<span class="w">        </span><span class="c">! Scan 2:  for each i in Lme, sum up the degree of Lme (which</span>
+<span class="w">        </span><span class="c">! is degme), plus the sum of the external degrees of each Le</span>
+<span class="w">        </span><span class="c">! for the elements e appearing within i, plus the</span>
+<span class="w">        </span><span class="c">! supervariables in i.  Place i in hash list.</span>
+
+<span class="w">        </span><span class="k">do </span><span class="n">pme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pme1</span><span class="p">,</span><span class="w"> </span><span class="n">pme2</span><span class="w"></span>
+<span class="w">            </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iw</span><span class="p">(</span><span class="n">pme</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">p1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pe</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">p2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">elen</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="n">pn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p1</span><span class="w"></span>
+<span class="w">            </span><span class="n">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">            </span><span class="n">deg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+
+<span class="w">            </span><span class="c">! scan the element list associated with supervariable i</span>
+<span class="w">            </span><span class="k">do </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p1</span><span class="p">,</span><span class="w"> </span><span class="n">p2</span><span class="w"></span>
+<span class="w">                </span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iw</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="c">! dext = | Le \ Lme |</span>
+<span class="w">                </span><span class="n">dext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">wflg</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dext</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">                    </span><span class="n">deg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">deg</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dext</span><span class="w"></span>
+<span class="w">                    </span><span class="n">iw</span><span class="p">(</span><span class="n">pn</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="w"></span>
+<span class="w">                    </span><span class="n">pn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pn</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                    </span><span class="n">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">mod</span><span class="p">(</span><span class="n">hash</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">,</span><span class="w"> </span><span class="n">hmod</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="n">dext</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">                    </span><span class="c">! aggressive absorption: e is not adjacent to me, but</span>
+<span class="w">                    </span><span class="c">! the |Le \ Lme| is 0, so absorb it into me</span>
+<span class="w">                    </span><span class="n">pe</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">me</span><span class="w"></span>
+<span class="w">                    </span><span class="n">w</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">                </span><span class="k">end if</span><span class="w"></span>
+<span class="w">                </span><span class="c">! (else: element e has already been absorbed, due to</span>
+<span class="w">                </span><span class="c">! regular absorption, in the element construction. Ignore it.)</span>
+<span class="w">            </span><span class="k">end do</span><span class="w"></span>
+
+<span class="w">            </span><span class="c">! count the number of elements in i (including me):</span>
+<span class="w">            </span><span class="n">elen</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pn</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">p1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+
+<span class="w">            </span><span class="c">! scan the supervariables in the list associated with i</span>
+<span class="w">            </span><span class="n">p3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pn</span><span class="w"></span>
+<span class="w">            </span><span class="k">do </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">p1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iw</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="n">nvj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nv</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nvj</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">                    </span><span class="c">! j is unabsorbed, and not in Lme.</span>
+<span class="w">                    </span><span class="c">! add to degree and add to new list</span>
+<span class="w">                    </span><span class="n">deg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">deg</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">nvj</span><span class="w"></span>
+<span class="w">                    </span><span class="n">iw</span><span class="p">(</span><span class="n">pn</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"></span>
+<span class="w">                    </span><span class="n">pn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pn</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                    </span><span class="n">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">mod</span><span class="p">(</span><span class="n">hash</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">hmod</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">end if</span>
+<span class="k">            end do</span><span class="w"></span>
+
+<span class="w">            </span><span class="c">! update the degree and check for mass elimination</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">deg</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+
+<span class="w">                </span><span class="c">! mass elimination: there is nothing left of this node except</span>
+<span class="w">                </span><span class="c">! for an edge to the current pivot element.  elen (i) is 1,</span>
+<span class="w">                </span><span class="c">! and there are no variables adjacent to node i.</span>
+<span class="w">                </span><span class="c">! Absorb i into the current pivot element, me.</span>
+<span class="w">                </span><span class="n">pe</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">me</span><span class="w"></span>
+<span class="w">                </span><span class="n">nvi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">nv</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="n">degme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">degme</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">nvi</span><span class="w"></span>
+<span class="w">                </span><span class="n">nvpiv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nvpiv</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">nvi</span><span class="w"></span>
+<span class="w">                </span><span class="n">nel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nel</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">nvi</span><span class="w"></span>
+<span class="w">                </span><span class="n">nv</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">                </span><span class="n">elen</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+
+<span class="w">            </span><span class="k">else</span><span class="w"></span>
+
+<span class="w">                </span><span class="c">! update the upper-bound degree of i</span>
+<span class="w">                </span><span class="c">! the following degree does not yet include the size</span>
+<span class="w">                </span><span class="c">! of the current element, which is added later:</span>
+<span class="w">                </span><span class="n">degree</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">min</span><span class="p">(</span><span class="n">degree</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">deg</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">                </span><span class="c">! add me to the list for i</span>
+<span class="w">                </span><span class="c">! move first supervariable to end of list</span>
+<span class="w">                </span><span class="n">iw</span><span class="p">(</span><span class="n">pn</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iw</span><span class="p">(</span><span class="n">p3</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="c">! move first element to end of element part of list</span>
+<span class="w">                </span><span class="n">iw</span><span class="p">(</span><span class="n">p3</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iw</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="c">! add new element to front of list.</span>
+<span class="w">                </span><span class="n">iw</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">me</span><span class="w"></span>
+<span class="w">                </span><span class="c">! store the new length of the list in len (i)</span>
+<span class="w">                </span><span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pn</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">p1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+
+<span class="w">                </span><span class="c">! place in hash bucket.  Save hash key of i in last (i).</span>
+<span class="w">                </span><span class="n">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hash</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">(</span><span class="n">hash</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">                    </span><span class="c">! the degree list is empty, hash head is -j</span>
+<span class="w">                    </span><span class="n">next</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">j</span><span class="w"></span>
+<span class="w">                    </span><span class="n">head</span><span class="p">(</span><span class="n">hash</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"></span>
+<span class="w">                </span><span class="k">else</span><span class="w"></span>
+<span class="w">                    </span><span class="c">! degree list is not empty</span>
+<span class="w">                    </span><span class="c">! use last (head (hash)) as hash head</span>
+<span class="w">                    </span><span class="n">next</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">last</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">                    </span><span class="n">last</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="w">                </span><span class="k">end if</span>
+<span class="k">                </span><span class="n">last</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hash</span><span class="w"></span>
+<span class="w">            </span><span class="k">end if</span>
+<span class="k">        end do</span>
+
+<span class="k">        </span><span class="n">degree</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">degme</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">! Clear the counter array, w (...), by incrementing wflg.</span>
+<span class="w">        </span><span class="nb">dmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="nb">dmax</span><span class="p">,</span><span class="w"> </span><span class="n">degme</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">wflg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wflg</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">dmax</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">! make sure that wflg+n does not cause integer overflow</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">wflg</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nb">huge</span><span class="p">(</span><span class="n">wflg</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">call </span><span class="n">reset_w</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="c">! at this point, w (1..n) .lt. wflg holds</span>
+
+<span class="w">        </span><span class="c">!=======================================================================</span>
+<span class="w">        </span><span class="c">!  SUPERVARIABLE DETECTION</span>
+<span class="w">        </span><span class="c">!=======================================================================</span>
+
+<span class="w">        </span><span class="k">do </span><span class="n">pme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pme1</span><span class="p">,</span><span class="w"> </span><span class="n">pme2</span><span class="w"></span>
+<span class="w">            </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iw</span><span class="p">(</span><span class="n">pme</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nv</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">                </span><span class="c">! i is a principal variable in Lme</span>
+
+<span class="w">                </span><span class="c">! examine all hash buckets with 2 or more variables.  We</span>
+<span class="w">                </span><span class="c">! do this by examing all unique hash keys for super-</span>
+<span class="w">                </span><span class="c">! variables in the pattern Lme of the current element, me</span>
+<span class="w">                </span><span class="n">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">last</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="c">! let i = head of hash bucket, and empty the hash bucket</span>
+<span class="w">                </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">(</span><span class="n">hash</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">cycle</span>
+<span class="k">                if</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">                    </span><span class="c">! degree list is empty</span>
+<span class="w">                    </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">j</span><span class="w"></span>
+<span class="w">                    </span><span class="n">head</span><span class="p">(</span><span class="n">hash</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">                </span><span class="k">else</span><span class="w"></span>
+<span class="w">                    </span><span class="c">! degree list is not empty, restore last () of head</span>
+<span class="w">                    </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">last</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">                    </span><span class="n">last</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">                </span><span class="k">end if</span>
+<span class="k">                if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">cycle</span>
+
+<span class="k">                do while</span><span class="w"> </span><span class="p">(</span><span class="n">next</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">                    </span><span class="c">! this bucket has one or more variables following i.</span>
+<span class="w">                    </span><span class="c">! scan all of them to see if i can absorb any entries</span>
+<span class="w">                    </span><span class="c">! that follow i in hash bucket.  Scatter i into w.</span>
+<span class="w">                    </span><span class="n">ln</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">                    </span><span class="n">eln</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">elen</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">                    </span><span class="c">! do not flag the first element in the list (me)</span>
+<span class="w">                    </span><span class="k">do </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pe</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">pe</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ln</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                        </span><span class="n">w</span><span class="p">(</span><span class="n">iw</span><span class="p">(</span><span class="n">p</span><span class="p">))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wflg</span><span class="w"></span>
+<span class="w">                    </span><span class="k">end do</span><span class="w"></span>
+
+<span class="w">                    </span><span class="c">! scan every other entry j following i in bucket</span>
+<span class="w">                    </span><span class="n">jlast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="w">                    </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">next</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">                    </span><span class="k">do while</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">                        </span><span class="c">! check if j and i have identical nonzero pattern</span>
+<span class="w">                        </span><span class="c">! (the same size data structure, the same number of</span>
+<span class="w">                        </span><span class="c">! adjacent elements, and the same entries)</span>
+<span class="w">                        </span><span class="n">absorb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ln</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">elen</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">eln</span><span class="w"></span>
+<span class="w">                        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">absorb</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">                            </span><span class="c">! do not flag the first element in the list (me)</span>
+<span class="w">                            </span><span class="k">do </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pe</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">pe</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ln</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">w</span><span class="p">(</span><span class="n">iw</span><span class="p">(</span><span class="n">p</span><span class="p">))</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">wflg</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">                                    </span><span class="c">! an entry (iw(p)) is in j but not in i</span>
+<span class="w">                                    </span><span class="n">absorb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span><span class="w"></span>
+<span class="w">                                    </span><span class="k">exit</span>
+<span class="k">                                end if</span>
+<span class="k">                            end do</span>
+<span class="k">                        end if</span>
+
+<span class="k">                        if</span><span class="w"> </span><span class="p">(</span><span class="n">absorb</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">                            </span><span class="c">! found it!  j can be absorbed into i</span>
+<span class="w">                            </span><span class="n">pe</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"></span>
+<span class="w">                            </span><span class="c">! both nv (i) and nv (j) are negated since they</span>
+<span class="w">                            </span><span class="c">! are in Lme, and the absolute values of each</span>
+<span class="w">                            </span><span class="c">! are the number of variables in i and j:</span>
+<span class="w">                            </span><span class="n">nv</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nv</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">nv</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">                            </span><span class="n">nv</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">                            </span><span class="n">elen</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">                            </span><span class="c">! delete j from hash bucket</span>
+<span class="w">                            </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">next</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">                            </span><span class="n">next</span><span class="p">(</span><span class="n">jlast</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"></span>
+<span class="w">                        </span><span class="k">else</span><span class="w"></span>
+<span class="w">                            </span><span class="c">! j cannot be absorbed into i</span>
+<span class="w">                            </span><span class="n">jlast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"></span>
+<span class="w">                            </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">next</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">                        </span><span class="k">end if</span>
+<span class="k">                    end do</span><span class="w"></span>
+
+<span class="w">                    </span><span class="c">! no more variables can be absorbed into i</span>
+<span class="w">                    </span><span class="c">! go to next i in bucket and clear flag array</span>
+<span class="w">                    </span><span class="n">wflg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wflg</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                    </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">next</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">exit</span>
+<span class="k">                end do</span>
+<span class="k">            end if</span>
+<span class="k">        end do</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">!=======================================================================</span>
+<span class="w">        </span><span class="c">!  RESTORE DEGREE LISTS AND REMOVE NONPRINCIPAL SUPERVAR. FROM ELEMENT</span>
+<span class="w">        </span><span class="c">!=======================================================================</span>
+
+<span class="w">        </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pme1</span><span class="w"></span>
+<span class="w">        </span><span class="n">nleft</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">nel</span><span class="w"></span>
+<span class="w">        </span><span class="k">do </span><span class="n">pme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pme1</span><span class="p">,</span><span class="w"> </span><span class="n">pme2</span><span class="w"></span>
+<span class="w">            </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iw</span><span class="p">(</span><span class="n">pme</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">nvi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">nv</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nvi</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">                </span><span class="c">! i is a principal variable in Lme</span>
+<span class="w">                </span><span class="c">! restore nv (i) to signify that i is principal</span>
+<span class="w">                </span><span class="n">nv</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nvi</span><span class="w"></span>
+
+<span class="w">                </span><span class="c">! compute the external degree (add size of current elem)</span>
+<span class="w">                </span><span class="n">deg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">min</span><span class="p">(</span><span class="n">degree</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">degme</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">nvi</span><span class="p">,</span><span class="w"> </span><span class="n">nleft</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">nvi</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">                </span><span class="c">! place the supervariable at the head of the degree list</span>
+<span class="w">                </span><span class="n">inext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">(</span><span class="n">deg</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inext</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">last</span><span class="p">(</span><span class="n">inext</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="w">                </span><span class="n">next</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inext</span><span class="w"></span>
+<span class="w">                </span><span class="n">last</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">                </span><span class="n">head</span><span class="p">(</span><span class="n">deg</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+
+<span class="w">                </span><span class="c">! save the new degree, and find the minimum degree</span>
+<span class="w">                </span><span class="n">mindeg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">min</span><span class="p">(</span><span class="n">mindeg</span><span class="p">,</span><span class="w"> </span><span class="n">deg</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="n">degree</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">deg</span><span class="w"></span>
+
+<span class="w">                </span><span class="c">! place the supervariable in the element pattern</span>
+<span class="w">                </span><span class="n">iw</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="w">                </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">            </span><span class="k">end if</span>
+<span class="k">        end do</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">!=======================================================================</span>
+<span class="w">        </span><span class="c">!  FINALIZE THE NEW ELEMENT</span>
+<span class="w">        </span><span class="c">!=======================================================================</span>
+
+<span class="w">        </span><span class="n">nv</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nvpiv</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">degme</span><span class="w"></span>
+<span class="w">        </span><span class="c">! nv (me) is now the degree of pivot (including diagonal part)</span>
+<span class="w">        </span><span class="c">! save the length of the list for the new element me</span>
+<span class="w">        </span><span class="nb">len</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pme1</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">            </span><span class="c">! there is nothing left of the current pivot element</span>
+<span class="w">            </span><span class="n">pe</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">            </span><span class="n">w</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="k">end if</span>
+<span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="n">newmem</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">            </span><span class="c">! element was not constructed in place: deallocate part</span>
+<span class="w">            </span><span class="c">! of it (final size is less than or equal to newmem,</span>
+<span class="w">            </span><span class="c">! since newly nonprincipal variables have been removed).</span>
+<span class="w">            </span><span class="n">pfree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="w"></span>
+<span class="w">            </span><span class="n">mem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">newmem</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">me</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">end if</span>
+
+<span class="k">    end do</span><span class="w">   </span><span class="c">! END WHILE (selecting pivots)</span>
+
+<span class="w">    </span><span class="c">!=======================================================================</span>
+<span class="w">    </span><span class="c">!  COMPUTE THE PERMUTATION VECTORS</span>
+<span class="w">    </span><span class="c">!=======================================================================</span>
+
+<span class="w">    </span><span class="c">! The time taken by the following code is O(n).  At this</span>
+<span class="w">    </span><span class="c">! point, elen (e) = -k has been done for all elements e,</span>
+<span class="w">    </span><span class="c">! and elen (i) = 0 has been done for all nonprincipal</span>
+<span class="w">    </span><span class="c">! variables i.  At this point, there are no principal</span>
+<span class="w">    </span><span class="c">! supervariables left, and all elements are absorbed.</span>
+
+<span class="w">    </span><span class="c">! compute the ordering of unordered nonprincipal variables</span>
+<span class="w">    </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">elen</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+
+<span class="w">            </span><span class="c">! i is an un-ordered row.  Traverse the tree from i until</span>
+<span class="w">            </span><span class="c">! reaching an element, e.  The element, e, was the</span>
+<span class="w">            </span><span class="c">! principal supervariable of i and all nodes in the path</span>
+<span class="w">            </span><span class="c">! from i to when e was selected as pivot.</span>
+<span class="w">            </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">pe</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="c">! while (j is a variable) do:</span>
+<span class="w">            </span><span class="k">do while</span><span class="w"> </span><span class="p">(</span><span class="n">elen</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">pe</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">end do</span>
+<span class="k">            </span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"></span>
+
+<span class="w">            </span><span class="c">! get the current pivot ordering of e</span>
+<span class="w">            </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">elen</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">            </span><span class="c">! traverse the path again from i to e, and compress the</span>
+<span class="w">            </span><span class="c">! path (all nodes point to e).  Path compression allows</span>
+<span class="w">            </span><span class="c">! this code to compute in O(n) time.  Order the unordered</span>
+<span class="w">            </span><span class="c">! nodes in the path, and place the element e at the end.</span>
+<span class="w">            </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="w">            </span><span class="c">! while (j is a variable) do:</span>
+<span class="w">            </span><span class="k">do while</span><span class="w"> </span><span class="p">(</span><span class="n">elen</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="n">jnext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">pe</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="n">pe</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">elen</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">                    </span><span class="c">! j is an unordered row</span>
+<span class="w">                    </span><span class="n">elen</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
+<span class="w">                    </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">                </span><span class="k">end if</span>
+<span class="k">                </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jnext</span><span class="w"></span>
+<span class="w">            </span><span class="k">end do</span><span class="w"></span>
+<span class="w">            </span><span class="c">! leave elen (e) negative, so we know it is an element</span>
+<span class="w">            </span><span class="n">elen</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">k</span><span class="w"></span>
+<span class="w">        </span><span class="k">end if</span>
+<span class="k">    end do</span><span class="w"></span>
+
+<span class="w">    </span><span class="c">! reset the inverse permutation (elen (1..n)) to be positive,</span>
+<span class="w">    </span><span class="c">! and compute the permutation (last (1..n)).</span>
+<span class="w">    </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">        </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">elen</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="n">last</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"></span>
+<span class="w">        </span><span class="n">elen</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
+<span class="w">    </span><span class="k">end do</span><span class="w"></span>
+
+<span class="w">    </span><span class="c">!=======================================================================</span>
+<span class="w">    </span><span class="c">!  RETURN THE MEMORY USAGE IN IW</span>
+<span class="w">    </span><span class="c">!=======================================================================</span>
+
+<span class="w">    </span><span class="c">! If maxmem is less than or equal to iwlen, then no compressions</span>
+<span class="w">    </span><span class="c">! occurred, and iw (maxmem+1 ... iwlen) was unused.  Otherwise</span>
+<span class="w">    </span><span class="c">! compressions did occur, and iwlen would have had to have been</span>
+<span class="w">    </span><span class="c">! greater than or equal to maxmem for no compressions to occur.</span>
+<span class="w">    </span><span class="c">! Return the value of maxmem in the pfree argument.</span>
+<span class="w">    </span><span class="n">pfree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">maxmem</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">contains</span>
+
+<span class="k">        subroutine </span><span class="n">reset_w</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="c">!! Resets the flags of the unabsorbed elements and variables, and `wflg`.</span>
+<span class="w">        </span><span class="kt">integer</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
+<span class="w">        </span><span class="k">do </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">w</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">w</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="k">end do</span>
+<span class="k">        </span><span class="n">wflg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="w">        </span><span class="k">end subroutine </span><span class="n">reset_w</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">end subroutine </span><span class="n">amd</span><span class="w"></span>
+</pre></div>
+
+    </section>
+    <br>
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              qdldl-fortran
+ was developed by Jacob Williams<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

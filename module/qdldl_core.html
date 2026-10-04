@@ -1,0 +1,2251 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="QDLDL, a sparse LDLT solver for quasi-definite matrices, in modern Fortran">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>qdldl_core &ndash; qdldl-fortran</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+      <script src="../js/MathJax-config/mathjax-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">qdldl-fortran </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>qdldl_core
+      <small>Module</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title="16.9% of total for modules and submodules.">289 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/qdldl_core.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/qdldl_core.f90.html'>qdldl_core.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">qdldl_core</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#vars-0"
+         aria-expanded="false" aria-controls="vars-0">
+         <h4 class="card-header bg-primary text-white">Variables</h4>
+      </a>
+      <div id="vars-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/qdldl_core.html#variable-qdldl_unknown">qdldl_unknown</a>
+            <a class="list-group-item" href="../module/qdldl_core.html#variable-qdldl_success">qdldl_success</a>
+            <a class="list-group-item" href="../module/qdldl_core.html#variable-qdldl_error_not_upper">qdldl_error_not_upper</a>
+            <a class="list-group-item" href="../module/qdldl_core.html#variable-qdldl_error_overflow">qdldl_error_overflow</a>
+            <a class="list-group-item" href="../module/qdldl_core.html#variable-qdldl_error_empty_column">qdldl_error_empty_column</a>
+            <a class="list-group-item" href="../module/qdldl_core.html#variable-qdldl_error_zero_pivot">qdldl_error_zero_pivot</a>
+            <a class="list-group-item" href="../module/qdldl_core.html#variable-qdldl_error_invalid_input">qdldl_error_invalid_input</a>
+            <a class="list-group-item" href="../module/qdldl_core.html#variable-qdldl_error_not_analyzed">qdldl_error_not_analyzed</a>
+            <a class="list-group-item" href="../module/qdldl_core.html#variable-qdldl_error_not_factored">qdldl_error_not_factored</a>
+            <a class="list-group-item" href="../module/qdldl_core.html#variable-qdldl_error_out_of_memory">qdldl_error_out_of_memory</a>
+            <a class="list-group-item" href="../module/qdldl_core.html#variable-qdldl_error_not_finite">qdldl_error_not_finite</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#funcs-0"
+         aria-expanded="false" aria-controls="funcs-0">
+         <h4 class="card-header bg-primary text-white">Functions</h4>
+      </a>
+      <div id="funcs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/qdldl_core.html#proc-qdldl_etree">qdldl_etree</a>
+            <a class="list-group-item" href="../module/qdldl_core.html#proc-qdldl_factor">qdldl_factor</a>
+            <a class="list-group-item" href="../module/qdldl_core.html#proc-qdldl_factor_ext">qdldl_factor_ext</a>
+            <a class="list-group-item" href="../module/qdldl_core.html#proc-factor_kernel">factor_kernel</a>
+        </div>
+      </div>
+    </div>
+
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#subs-0"
+         aria-expanded="false" aria-controls="subs-0">
+         <h4 class="card-header bg-primary text-white">Subroutines</h4>
+      </a>
+      <div id="subs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/qdldl_core.html#proc-qdldl_lsolve">qdldl_lsolve</a>
+            <a class="list-group-item" href="../module/qdldl_core.html#proc-qdldl_ltsolve">qdldl_ltsolve</a>
+            <a class="list-group-item" href="../module/qdldl_core.html#proc-qdldl_solve">qdldl_solve</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+
+
+  </div>
+
+    </div>
+
+    <div class="col-md-9" id='text'>
+      <p>The one-to-one port of QDLDL's C routines: the elimination tree, the numeric
+  <script type="math/tex">LDL^T</script> factorization, and the triangular solves, for a quasi-definite matrix
+  given by its upper triangle in compressed sparse column (CSC) form.</p>
+<p>Changes from the C code (<code>qdldl.c</code>):</p>
+<ul>
+<li>Indexing is 1-based: column pointers <code>Ap(1:n+1)</code> with <code>Ap(1) = 1</code>, row indices
+    <code>1..n</code>. The "no parent" marker of the elimination tree is <code>0</code> (<code>qdldl_unknown</code>)
+    instead of <code>-1</code>.</li>
+<li>Return values are named constants (<code>qdldl_error_*</code>). An empty column now has its
+    own code (<code>qdldl_error_empty_column</code>); upstream returns <code>-1</code> for it too.</li>
+<li>The factorization loop starts from column 1 instead of treating the first
+    column separately (column 1 of an upper triangle holds only its diagonal, so the
+    general loop body does exactly what upstream's special case does).</li>
+<li><a href="../proc/qdldl_factor_ext.html">qdldl_factor_ext</a> adds a zero-pivot tolerance and dynamic regularization of
+    the pivots (as in the Rust port used by Clarabel). <a href="../proc/qdldl_factor.html">qdldl_factor</a> keeps
+    upstream's behaviour.</li>
+</ul>
+<h3>License</h3>
+<p>This file is a derivative of QDLDL (<a href="https://github.com/osqp/qdldl">https://github.com/osqp/qdldl</a>),
+  Copyright 2018, Paul Goulart, Bartolomeo Stellato, Goran Banjac, Ian McInerney,
+  The OSQP developers. Licensed under the Apache License, Version 2.0
+  (SPDX-License-Identifier: Apache-2.0). Changed from the original: translated to
+  Fortran, as described above.</p>
+<br>          <div class="card mb-4">
+      <h3 class="card-header card-title bg-light">Uses</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <ul class="list-inline">
+                  <li class="list-inline-item"><a href='qdldl_kinds.html'>qdldl_kinds</a></li>
+              </ul>
+            </li>
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: module~~qdldl_core~~UsesGraph Pages: 1 -->
+<svg id="moduleqdldl_coreUsesGraph" width="310pt" height="32pt"
+ viewBox="0.00 0.00 310.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~qdldl_core~~UsesGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>module~~qdldl_core~~UsesGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 306.31,-28.27 306.31,4 -4,4"/>
+<!-- module~qdldl_core -->
+<g id="module~~qdldl_core~~UsesGraph_node1" class="node">
+<title>module~qdldl_core</title>
+<polygon fill="none" stroke="black" points="302.31,-24.27 236.04,-24.27 236.04,0 302.31,0 302.31,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="269.18" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">qdldl_core</text>
+</g>
+<!-- module~qdldl_kinds -->
+<g id="module~~qdldl_core~~UsesGraph_node2" class="node">
+<title>module~qdldl_kinds</title>
+<g id="a_module~~qdldl_core~~UsesGraph_node2"><a xlink:href="../module/qdldl_kinds.html" xlink:title="qdldl_kinds">
+<polygon fill="#337ab7" stroke="#337ab7" points="200.04,-24.27 129.27,-24.27 129.27,0 200.04,0 200.04,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="164.66" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_kinds</text>
+</a>
+</g>
+</g>
+<!-- module~qdldl_core&#45;&gt;module~qdldl_kinds -->
+<g id="module~~qdldl_core~~UsesGraph_edge1" class="edge">
+<title>module~qdldl_core&#45;&gt;module~qdldl_kinds</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M235.74,-12.13C228.08,-12.13 219.78,-12.13 211.65,-12.13"/>
+<polygon fill="#000000" stroke="#000000" points="211.88,-8.64 201.88,-12.14 211.88,-15.64 211.88,-8.64"/>
+</g>
+<!-- iso_fortran_env -->
+<g id="module~~qdldl_core~~UsesGraph_node3" class="node">
+<title>iso_fortran_env</title>
+<g id="a_module~~qdldl_core~~UsesGraph_node3"><a xlink:href="http://fortranwiki.org/fortran/show/iso_fortran_env" xlink:title="iso_fortran_env">
+<polygon fill="#337ab7" stroke="#337ab7" points="93.27,-24.27 0,-24.27 0,0 93.27,0 93.27,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="46.63" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">iso_fortran_env</text>
+</a>
+</g>
+</g>
+<!-- module~qdldl_kinds&#45;&gt;iso_fortran_env -->
+<g id="module~~qdldl_core~~UsesGraph_edge2" class="edge">
+<title>module~qdldl_kinds&#45;&gt;iso_fortran_env</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M128.85,-12.13C121.31,-12.13 113.16,-12.13 105.02,-12.13"/>
+<polygon fill="#000000" stroke="#000000" points="105.1,-8.64 95.1,-12.14 105.1,-15.64 105.1,-8.64"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsesGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsesGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="511pt" height="32pt"
+ viewBox="0.00 0.00 511.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 506.88,-28.27 506.88,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24.27 0,-24.27 0,0 54,0 54,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="144.13,-24.27 71.87,-24.27 71.87,0 144.13,0 144.13,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="108" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="231.63,-24.27 162.37,-24.27 162.37,0 231.63,0 231.63,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="197" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="306.26,-24.27 249.74,-24.27 249.74,0 306.26,0 306.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="381.26,-24.27 324.74,-24.27 324.74,0 381.26,0 381.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="353" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="502.88,-24.27 399.12,-24.27 399.12,0 502.88,0 502.88,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="451" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+          <div class="card">
+      <h3 class="card-header card-title bg-light">Used by</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: module~~qdldl_core~~UsedByGraph Pages: 1 -->
+<svg id="moduleqdldl_coreUsedByGraph" width="319pt" height="52pt"
+ viewBox="0.00 0.00 319.00 52.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~qdldl_core~~UsedByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 48.27)">
+<title>module~~qdldl_core~~UsedByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-48.27 314.56,-48.27 314.56,4 -4,4"/>
+<!-- module~qdldl_core -->
+<g id="module~~qdldl_core~~UsedByGraph_node1" class="node">
+<title>module~qdldl_core</title>
+<polygon fill="none" stroke="black" points="66.27,-44.27 0,-44.27 0,-20 66.27,-20 66.27,-44.27"/>
+<text xml:space="preserve" text-anchor="middle" x="33.13" y="-28.53" font-family="Helvetica,sans-Serif" font-size="10.50">qdldl_core</text>
+</g>
+<!-- module~qdldl_module -->
+<g id="module~~qdldl_core~~UsedByGraph_node2" class="node">
+<title>module~qdldl_module</title>
+<g id="a_module~~qdldl_core~~UsedByGraph_node2"><a xlink:href="../module/qdldl_module.html" xlink:title="qdldl_module">
+<polygon fill="#337ab7" stroke="#337ab7" points="310.56,-44.27 227.04,-44.27 227.04,-20 310.56,-20 310.56,-44.27"/>
+<text xml:space="preserve" text-anchor="middle" x="268.8" y="-28.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_module</text>
+</a>
+</g>
+</g>
+<!-- module~qdldl_module&#45;&gt;module~qdldl_core -->
+<g id="module~~qdldl_core~~UsedByGraph_edge1" class="edge">
+<title>module~qdldl_module&#45;&gt;module~qdldl_core</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M226.77,-32.77C215.21,-32.92 202.63,-33.06 191.04,-33.13 151.59,-33.39 141.72,-33.42 102.27,-33.13 94.48,-33.08 86.19,-32.98 78.17,-32.88"/>
+<polygon fill="#000000" stroke="#000000" points="78.27,-29.38 68.23,-32.73 78.17,-36.38 78.27,-29.38"/>
+</g>
+<!-- module~qdldl_ordering -->
+<g id="module~~qdldl_core~~UsedByGraph_node3" class="node">
+<title>module~qdldl_ordering</title>
+<g id="a_module~~qdldl_core~~UsedByGraph_node3"><a xlink:href="../module/qdldl_ordering.html" xlink:title="qdldl_ordering">
+<polygon fill="#337ab7" stroke="#337ab7" points="191.04,-24.27 102.27,-24.27 102.27,0 191.04,0 191.04,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="146.66" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_ordering</text>
+</a>
+</g>
+</g>
+<!-- module~qdldl_module&#45;&gt;module~qdldl_ordering -->
+<g id="module~~qdldl_core~~UsedByGraph_edge3" class="edge">
+<title>module~qdldl_module&#45;&gt;module~qdldl_ordering</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M226.79,-25.31C219.03,-24.02 210.79,-22.64 202.68,-21.29"/>
+<polygon fill="#000000" stroke="#000000" points="203.29,-17.85 192.85,-19.66 202.14,-24.75 203.29,-17.85"/>
+</g>
+<!-- module~qdldl_ordering&#45;&gt;module~qdldl_core -->
+<g id="module~~qdldl_core~~UsedByGraph_edge2" class="edge">
+<title>module~qdldl_ordering&#45;&gt;module~qdldl_core</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M101.9,-19.98C94.03,-21.39 85.82,-22.87 77.95,-24.28"/>
+<polygon fill="#000000" stroke="#000000" points="77.44,-20.81 68.22,-26.02 78.68,-27.7 77.44,-20.81"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsedByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsedByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="511pt" height="32pt"
+ viewBox="0.00 0.00 511.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 506.88,-28.27 506.88,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24.27 0,-24.27 0,0 54,0 54,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="144.13,-24.27 71.87,-24.27 71.87,0 144.13,0 144.13,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="108" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="231.63,-24.27 162.37,-24.27 162.37,0 231.63,0 231.63,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="197" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="306.26,-24.27 249.74,-24.27 249.74,0 306.26,0 306.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="381.26,-24.27 324.74,-24.27 324.74,0 381.26,0 381.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="353" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="502.88,-24.27 399.12,-24.27 399.12,0 502.88,0 502.88,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="451" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+      <br>
+
+
+        <section>
+          <h2>Variables</h2>
+            <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-qdldl_unknown"></span>
+              integer(kind=ip),
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>qdldl_unknown</strong></td>
+<td> =</td>
+                <td>0_ip</td>
+            <td>
+                <p>"No parent" in the elimination tree (<code>QDLDL_UNKNOWN</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-qdldl_success"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>qdldl_success</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+                <p>Success</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-qdldl_error_not_upper"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>qdldl_error_not_upper</strong></td>
+<td> =</td>
+                <td>-1</td>
+            <td>
+                <p>An entry below the diagonal in input that must be upper triangular</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-qdldl_error_overflow"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>qdldl_error_overflow</strong></td>
+<td> =</td>
+                <td>-2</td>
+            <td>
+                <p>The nonzeros of <script type="math/tex">L</script> overflow the integer kind (build with <code>INT64</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-qdldl_error_empty_column"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>qdldl_error_empty_column</strong></td>
+<td> =</td>
+                <td>-3</td>
+            <td>
+                <p>A column of the matrix has no entries</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-qdldl_error_zero_pivot"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>qdldl_error_zero_pivot</strong></td>
+<td> =</td>
+                <td>-4</td>
+            <td>
+                <p>A pivot is zero (or within the zero-pivot tolerance)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-qdldl_error_invalid_input"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>qdldl_error_invalid_input</strong></td>
+<td> =</td>
+                <td>-5</td>
+            <td>
+                <p>Invalid input (an index out of range, <code>n &lt; 0</code>, wrong sizes, ...)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-qdldl_error_not_analyzed"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>qdldl_error_not_analyzed</strong></td>
+<td> =</td>
+                <td>-6</td>
+            <td>
+                <p>The pattern has not been analyzed</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-qdldl_error_not_factored"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>qdldl_error_not_factored</strong></td>
+<td> =</td>
+                <td>-7</td>
+            <td>
+                <p>The matrix has not been factored (successfully)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-qdldl_error_out_of_memory"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>qdldl_error_out_of_memory</strong></td>
+<td> =</td>
+                <td>-8</td>
+            <td>
+                <p>An allocation failed</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-qdldl_error_not_finite"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>qdldl_error_not_finite</strong></td>
+<td> =</td>
+                <td>-9</td>
+            <td>
+                <p>A value (matrix, right-hand side, or solution) is not finite</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+        </section>
+        <br>
+
+
+
+
+
+        <section>
+          <h2>Functions</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-qdldl_etree"></span> <h3>public  function <a href='../proc/qdldl_etree.html'>qdldl_etree</a>(n, Ap, Ai, work, Lnz, etree) result(sumLnz)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Computes the elimination tree of a quasi-definite matrix, and the number of
+nonzeros of each column of <script type="math/tex">L</script> (strictly below the diagonal), from the upper
+triangle of the matrix in CSC form, without duplicate entries.</p><a href="../proc/qdldl_etree.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~6"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+<p>number of columns of <code>A</code> (assumed square)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ap~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ap</strong>(n+1)</td>
+            <td>
+<p>column pointers of <code>A</code> (<code>Ap(1) = 1</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ai~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ai</strong>(Ap(n+1)-1)</td>
+            <td>
+<p>row indices of <code>A</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-work"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>work</strong>(n)</td>
+            <td>
+<p>work array (no meaning on return)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lnz"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Lnz</strong>(n)</td>
+            <td>
+<p>number of nonzeros of each column of <code>L</code> below the diagonal</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-etree"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>etree</strong>(n)</td>
+            <td>
+<p>the elimination tree: the parent of each column, or <code>qdldl_unknown</code></p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer(kind=ip)</small>
+    </h4>
+    <p>total nonzeros of <code>L</code> below the diagonal, or a negative error code:
+<code>qdldl_error_not_upper</code>, <code>qdldl_error_empty_column</code>,
+<code>qdldl_error_invalid_input</code> (a row index below 1),
+or <code>qdldl_error_overflow</code> (<code>sumLnz + 1</code> would overflow)</p>
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-qdldl_factor"></span> <h3>public  function <a href='../proc/qdldl_factor.html'>qdldl_factor</a>(n, Ap, Ai, Ax, Lp, Li, Lx, D, Dinv, Lnz, etree, bwork, iwork, fwork, zero_col) result(positiveValuesInD)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Computes the <script type="math/tex">LDL^T</script> factorization of a quasi-definite matrix from the upper
+triangle of the matrix in CSC form, without duplicate entries: <script type="math/tex">L</script> in CSC form
+(unit diagonal not stored), <script type="math/tex">D</script>, and <script type="math/tex">D^{-1}</script>.</p><a href="../proc/qdldl_factor.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~7"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+<p>number of columns of <code>L</code> and <code>A</code> (both square)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ap~3"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ap</strong>(n+1)</td>
+            <td>
+<p>column pointers of <code>A</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ai~3"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ai</strong>(Ap(n+1)-1)</td>
+            <td>
+<p>row indices of <code>A</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ax"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ax</strong>(Ap(n+1)-1)</td>
+            <td>
+<p>values of <code>A</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lp"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Lp</strong>(n+1)</td>
+            <td>
+<p>column pointers of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-li"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Li</strong>(sum(Lnz))</td>
+            <td>
+<p>row indices of <code>L</code> (size: the return value of <a href="../proc/qdldl_etree.html">qdldl_etree</a>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lx"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Lx</strong>(sum(Lnz))</td>
+            <td>
+<p>values of <code>L</code> (same size as <code>Li</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-d"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>D</strong>(n)</td>
+            <td>
+<p>the diagonal factor <code>D</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dinv"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Dinv</strong>(n)</td>
+            <td>
+<p><code>1/D</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lnz~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Lnz</strong>(n)</td>
+            <td>
+<p>nonzeros of each column of <code>L</code>, from <a href="../proc/qdldl_etree.html">qdldl_etree</a></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-etree~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>etree</strong>(n)</td>
+            <td>
+<p>the elimination tree, from <a href="../proc/qdldl_etree.html">qdldl_etree</a></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-bwork"></span>
+              logical,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>bwork</strong>(n)</td>
+            <td>
+<p>work array</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-iwork"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>iwork</strong>(3*n)</td>
+            <td>
+<p>work array</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-fwork"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>fwork</strong>(n)</td>
+            <td>
+<p>work array</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-zero_col"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>zero_col</strong></td>
+            <td>
+<p>the column of the zero pivot, if any (else 0)</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer(kind=ip)</small>
+    </h4>
+    <p>the number of positive entries of <code>D</code>, or
+<code>qdldl_error_zero_pivot</code> if a pivot is exactly zero</p>
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-qdldl_factor_ext"></span> <h3>public  function <a href='../proc/qdldl_factor_ext.html'>qdldl_factor_ext</a>(n, Ap, Ai, Ax, Lp, Li, Lx, D, Dinv, Lnz, etree, bwork, iwork, fwork, zero_tol, regularize, reg_eps, reg_delta, n_positive, n_negative, n_zero, n_regularized, zero_col, signs) result(status)  
+</h3></div>
+    <div class="card-body">
+          
+  <p><a href="../proc/qdldl_factor.html">qdldl_factor</a> with a zero-pivot tolerance, dynamic regularization, and the
+inertia of <code>D</code>.</p><a href="../proc/qdldl_factor_ext.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~8"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+<p>number of columns of <code>L</code> and <code>A</code> (both square)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ap~4"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ap</strong>(n+1)</td>
+            <td>
+<p>column pointers of <code>A</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ai~4"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ai</strong>(Ap(n+1)-1)</td>
+            <td>
+<p>row indices of <code>A</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ax~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ax</strong>(Ap(n+1)-1)</td>
+            <td>
+<p>values of <code>A</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lp~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Lp</strong>(n+1)</td>
+            <td>
+<p>column pointers of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-li~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Li</strong>(sum(Lnz))</td>
+            <td>
+<p>row indices of <code>L</code> (size: the return value of <a href="../proc/qdldl_etree.html">qdldl_etree</a>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lx~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Lx</strong>(sum(Lnz))</td>
+            <td>
+<p>values of <code>L</code> (same size as <code>Li</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-d~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>D</strong>(n)</td>
+            <td>
+<p>the diagonal factor <code>D</code> (after any regularization)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dinv~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Dinv</strong>(n)</td>
+            <td>
+<p><code>1/D</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lnz~3"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Lnz</strong>(n)</td>
+            <td>
+<p>nonzeros of each column of <code>L</code>, from <a href="../proc/qdldl_etree.html">qdldl_etree</a></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-etree~3"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>etree</strong>(n)</td>
+            <td>
+<p>the elimination tree, from <a href="../proc/qdldl_etree.html">qdldl_etree</a></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-bwork~2"></span>
+              logical,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>bwork</strong>(n)</td>
+            <td>
+<p>work array</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-iwork~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>iwork</strong>(3*n)</td>
+            <td>
+<p>work array</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-fwork~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>fwork</strong>(n)</td>
+            <td>
+<p>work array</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-zero_tol"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>zero_tol</strong></td>
+            <td>
+<p>a pivot with <code>abs(d) &lt;= zero_tol</code> is zero (<code>0</code>: exactly zero only)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-regularize"></span>
+              logical,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>regularize</strong></td>
+            <td>
+<p>replace small or wrong-signed pivots instead of stopping</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-reg_eps"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>reg_eps</strong></td>
+            <td>
+<p>a pivot with <code>s*d &lt; reg_eps</code> is regularized</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-reg_delta"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>reg_delta</strong></td>
+            <td>
+<p>the magnitude of a regularized pivot (must be positive)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n_positive"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n_positive</strong></td>
+            <td>
+<p>number of positive pivots (as computed)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n_negative"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n_negative</strong></td>
+            <td>
+<p>number of negative pivots (as computed)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n_zero"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n_zero</strong></td>
+            <td>
+<p>number of zero pivots (as computed: <code>abs(d) &lt;= zero_tol</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n_regularized"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n_regularized</strong></td>
+            <td>
+<p>number of pivots replaced by regularization</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-zero_col~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>zero_col</strong></td>
+            <td>
+<p>the column of the zero pivot that stopped the factorization (else 0)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-signs"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>signs</strong>(n)</td>
+            <td>
+<p>expected sign of each pivot (<code>+1</code>, <code>-1</code>, or <code>0</code> for unknown)</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer</small>
+    </h4>
+    <p><code>qdldl_success</code> or <code>qdldl_error_zero_pivot</code></p>
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-factor_kernel"></span> <h3>private  function <a href='../proc/factor_kernel.html'>factor_kernel</a>(n, Ap, Ai, Ax, Lp, Li, Lx, D, Dinv, Lnz, etree, yMarkers, yIdx, elimBuffer, LNextSpaceInCol, yVals, zero_tol, regularize, reg_eps, reg_delta, npos, nneg, nzero, nreg, zero_col, signs) result(status)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>The numeric factorization shared by <a href="../proc/qdldl_factor.html">qdldl_factor</a> and <a href="../proc/qdldl_factor_ext.html">qdldl_factor_ext</a>,
+with the integer work array already partitioned (as upstream does with pointers).</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~9"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+<p>number of columns</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ap~5"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ap</strong>(n+1)</td>
+            <td>
+<p>column pointers of <code>A</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ai~5"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ai</strong>(Ap(n+1)-1)</td>
+            <td>
+<p>row indices of <code>A</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ax~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ax</strong>(Ap(n+1)-1)</td>
+            <td>
+<p>values of <code>A</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lp~3"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Lp</strong>(n+1)</td>
+            <td>
+<p>column pointers of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-li~3"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Li</strong>(sum(Lnz))</td>
+            <td>
+<p>row indices of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lx~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Lx</strong>(sum(Lnz))</td>
+            <td>
+<p>values of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-d~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>D</strong>(n)</td>
+            <td>
+<p><code>D</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dinv~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Dinv</strong>(n)</td>
+            <td>
+<p><code>1/D</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lnz~4"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Lnz</strong>(n)</td>
+            <td>
+<p>nonzeros of each column of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-etree~4"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>etree</strong>(n)</td>
+            <td>
+<p>the elimination tree</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ymarkers"></span>
+              logical,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>yMarkers</strong>(n)</td>
+            <td>
+<p>which entries of <code>y</code> have been visited</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-yidx"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>yIdx</strong>(n)</td>
+            <td>
+<p>the nonzero pattern of <code>y</code> (the current row of <code>L</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-elimbuffer"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>elimBuffer</strong>(n)</td>
+            <td>
+<p>an elimination path, in reverse</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lnextspaceincol"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>LNextSpaceInCol</strong>(n)</td>
+            <td>
+<p>the next free position in each column of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-yvals"></span>
+              real(kind=wp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>yVals</strong>(n)</td>
+            <td>
+<p>the values of <code>y</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-zero_tol~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>zero_tol</strong></td>
+            <td>
+<p>zero-pivot tolerance</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-regularize~2"></span>
+              logical,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>regularize</strong></td>
+            <td>
+<p>regularize pivots instead of stopping</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-reg_eps~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>reg_eps</strong></td>
+            <td>
+<p>regularization threshold</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-reg_delta~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>reg_delta</strong></td>
+            <td>
+<p>regularized pivot magnitude</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-npos~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>npos</strong></td>
+            <td>
+<p>number of positive pivots</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nneg~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>nneg</strong></td>
+            <td>
+<p>number of negative pivots</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nzero~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>nzero</strong></td>
+            <td>
+<p>number of zero pivots</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nreg~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>nreg</strong></td>
+            <td>
+<p>number of regularized pivots</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-zero_col~3"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>zero_col</strong></td>
+            <td>
+<p>the column of a zero pivot that stopped the factorization</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-signs~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>signs</strong>(n)</td>
+            <td>
+<p>expected signs of the pivots</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer</small>
+    </h4>
+    <p><code>qdldl_success</code> or <code>qdldl_error_zero_pivot</code></p>
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+        <section>
+          <h2>Subroutines</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-qdldl_lsolve"></span> <h3>public pure subroutine <a href='../proc/qdldl_lsolve.html'>qdldl_lsolve</a>(n, Lp, Li, Lx, x)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Solves <script type="math/tex">(L+I)x = b</script> in place.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~10"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+<p>number of columns of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lp~4"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Lp</strong>(n+1)</td>
+            <td>
+<p>column pointers of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-li~4"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Li</strong>(Lp(n+1)-1)</td>
+            <td>
+<p>row indices of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lx~4"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Lx</strong>(Lp(n+1)-1)</td>
+            <td>
+<p>values of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x"></span>
+              real(kind=wp),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x</strong>(n)</td>
+            <td>
+<p>on entry <code>b</code>, on exit <code>x</code></p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-qdldl_ltsolve"></span> <h3>public pure subroutine <a href='../proc/qdldl_ltsolve.html'>qdldl_ltsolve</a>(n, Lp, Li, Lx, x)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Solves <script type="math/tex">(L+I)^T x = b</script> in place.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~11"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+<p>number of columns of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lp~5"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Lp</strong>(n+1)</td>
+            <td>
+<p>column pointers of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-li~5"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Li</strong>(Lp(n+1)-1)</td>
+            <td>
+<p>row indices of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lx~5"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Lx</strong>(Lp(n+1)-1)</td>
+            <td>
+<p>values of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x~2"></span>
+              real(kind=wp),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x</strong>(n)</td>
+            <td>
+<p>on entry <code>b</code>, on exit <code>x</code></p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-qdldl_solve"></span> <h3>public pure subroutine <a href='../proc/qdldl_solve.html'>qdldl_solve</a>(n, Lp, Li, Lx, Dinv, x)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Solves <script type="math/tex">LDL^Tx = b</script> in place, given the factors from <a href="../proc/qdldl_factor.html">qdldl_factor</a>.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~12"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+<p>number of columns of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lp~6"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Lp</strong>(n+1)</td>
+            <td>
+<p>column pointers of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-li~6"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Li</strong>(Lp(n+1)-1)</td>
+            <td>
+<p>row indices of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-lx~6"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Lx</strong>(Lp(n+1)-1)</td>
+            <td>
+<p>values of <code>L</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-dinv~4"></span>
+              real(kind=wp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Dinv</strong>(n)</td>
+            <td>
+<p><code>1/D</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x~3"></span>
+              real(kind=wp),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>x</strong>(n)</td>
+            <td>
+<p>on entry <code>b</code>, on exit <code>x</code></p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+
+
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              qdldl-fortran
+ was developed by Jacob Williams<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

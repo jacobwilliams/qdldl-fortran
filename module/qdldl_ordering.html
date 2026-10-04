@@ -1,0 +1,1078 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="QDLDL, a sparse LDLT solver for quasi-definite matrices, in modern Fortran">
+    <meta name="author" content="Jacob Williams" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>qdldl_ordering &ndash; qdldl-fortran</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+      <script src="../js/MathJax-config/mathjax-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">qdldl-fortran </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>qdldl_ordering
+      <small>Module</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title="17.6% of total for modules and submodules.">302 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/qdldl_ordering.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/qdldl_ordering.f90.html'>qdldl_ordering.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">qdldl_ordering</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#vars-0"
+         aria-expanded="false" aria-controls="vars-0">
+         <h4 class="card-header bg-primary text-white">Variables</h4>
+      </a>
+      <div id="vars-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/qdldl_ordering.html#variable-qdldl_order_natural">qdldl_order_natural</a>
+            <a class="list-group-item" href="../module/qdldl_ordering.html#variable-qdldl_order_user">qdldl_order_user</a>
+            <a class="list-group-item" href="../module/qdldl_ordering.html#variable-qdldl_order_rcm">qdldl_order_rcm</a>
+            <a class="list-group-item" href="../module/qdldl_ordering.html#variable-qdldl_order_amd">qdldl_order_amd</a>
+            <a class="list-group-item" href="../module/qdldl_ordering.html#variable-qdldl_order_default">qdldl_order_default</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#funcs-0"
+         aria-expanded="false" aria-controls="funcs-0">
+         <h4 class="card-header bg-primary text-white">Functions</h4>
+      </a>
+      <div id="funcs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/qdldl_ordering.html#proc-qdldl_is_permutation">qdldl_is_permutation</a>
+        </div>
+      </div>
+    </div>
+
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#subs-0"
+         aria-expanded="false" aria-controls="subs-0">
+         <h4 class="card-header bg-primary text-white">Subroutines</h4>
+      </a>
+      <div id="subs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/qdldl_ordering.html#proc-qdldl_symmetric_pattern">qdldl_symmetric_pattern</a>
+            <a class="list-group-item" href="../module/qdldl_ordering.html#proc-qdldl_order_natural_perm">qdldl_order_natural_perm</a>
+            <a class="list-group-item" href="../module/qdldl_ordering.html#proc-qdldl_rcm">qdldl_rcm</a>
+            <a class="list-group-item" href="../module/qdldl_ordering.html#proc-qdldl_amd_order">qdldl_amd_order</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+
+
+  </div>
+
+    </div>
+
+    <div class="col-md-9" id='text'>
+      <p>Fill-reducing orderings for the <script type="math/tex">LDL^T</script> factorization: natural (none),
+user-given, reverse Cuthill-McKee (RCM), and approximate minimum degree (AMD,
+through the modernized SuiteSparse routine in <a href="../module/qdldl_amd.html">qdldl_amd</a>).</p>
+<p>A permutation <code>perm</code> lists the original indices in pivot order: row <code>perm(k)</code>
+of <script type="math/tex">A</script> is row <code>k</code> of <script type="math/tex">PAP^T</script>. Its inverse <code>iperm</code> gives the position of
+each original index: <code>iperm(perm(k)) = k</code>.</p>
+<p>The orderings work on the full symmetric adjacency structure of the matrix
+(both triangles, no diagonal, no duplicates), which <a href="../proc/qdldl_symmetric_pattern.html">qdldl_symmetric_pattern</a>
+builds from the upper triangle in CSC form. They allocate their own work
+arrays (they run once per pattern, in the analysis).</p>
+<br>          <div class="card mb-4">
+      <h3 class="card-header card-title bg-light">Uses</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <ul class="list-inline">
+                  <li class="list-inline-item"><a href='qdldl_core.html'>qdldl_core</a></li>
+                  <li class="list-inline-item"><a href='qdldl_amd.html'>qdldl_amd</a></li>
+                  <li class="list-inline-item"><a href='qdldl_kinds.html'>qdldl_kinds</a></li>
+              </ul>
+            </li>
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: module~~qdldl_ordering~~UsesGraph Pages: 1 -->
+<svg id="moduleqdldl_orderingUsesGraph" width="436pt" height="86pt"
+ viewBox="0.00 0.00 436.00 86.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~qdldl_ordering~~UsesGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 82.25)">
+<title>module~~qdldl_ordering~~UsesGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-82.25 431.83,-82.25 431.83,4 -4,4"/>
+<!-- module~qdldl_ordering -->
+<g id="module~~qdldl_ordering~~UsesGraph_node1" class="node">
+<title>module~qdldl_ordering</title>
+<polygon fill="none" stroke="black" points="427.83,-36.25 339.06,-36.25 339.06,-11.98 427.83,-11.98 427.83,-36.25"/>
+<text xml:space="preserve" text-anchor="middle" x="383.44" y="-20.51" font-family="Helvetica,sans-Serif" font-size="10.50">qdldl_ordering</text>
+</g>
+<!-- module~qdldl_amd -->
+<g id="module~~qdldl_ordering~~UsesGraph_node2" class="node">
+<title>module~qdldl_amd</title>
+<g id="a_module~~qdldl_ordering~~UsesGraph_node2"><a xlink:href="../module/qdldl_amd.html" xlink:title="qdldl_amd">
+<polygon fill="#337ab7" stroke="#337ab7" points="303.06,-78.25 236.04,-78.25 236.04,-53.98 303.06,-53.98 303.06,-78.25"/>
+<text xml:space="preserve" text-anchor="middle" x="269.55" y="-62.51" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_amd</text>
+</a>
+</g>
+</g>
+<!-- module~qdldl_ordering&#45;&gt;module~qdldl_amd -->
+<g id="module~~qdldl_ordering~~UsesGraph_edge1" class="edge">
+<title>module~qdldl_ordering&#45;&gt;module~qdldl_amd</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M348.87,-36.71C337.95,-40.81 325.65,-45.43 314.11,-49.76"/>
+<polygon fill="#000000" stroke="#000000" points="312.88,-46.49 304.75,-53.28 315.34,-53.04 312.88,-46.49"/>
+</g>
+<!-- module~qdldl_core -->
+<g id="module~~qdldl_ordering~~UsesGraph_node3" class="node">
+<title>module~qdldl_core</title>
+<g id="a_module~~qdldl_ordering~~UsesGraph_node3"><a xlink:href="../module/qdldl_core.html" xlink:title="qdldl_core">
+<polygon fill="#337ab7" stroke="#337ab7" points="302.69,-36.25 236.42,-36.25 236.42,-11.98 302.69,-11.98 302.69,-36.25"/>
+<text xml:space="preserve" text-anchor="middle" x="269.55" y="-20.51" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_core</text>
+</a>
+</g>
+</g>
+<!-- module~qdldl_ordering&#45;&gt;module~qdldl_core -->
+<g id="module~~qdldl_ordering~~UsesGraph_edge2" class="edge">
+<title>module~qdldl_ordering&#45;&gt;module~qdldl_core</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M338.86,-24.11C330.86,-24.11 322.51,-24.11 314.5,-24.11"/>
+<polygon fill="#000000" stroke="#000000" points="314.61,-20.61 304.61,-24.11 314.61,-27.61 314.61,-20.61"/>
+</g>
+<!-- module~qdldl_kinds -->
+<g id="module~~qdldl_ordering~~UsesGraph_node4" class="node">
+<title>module~qdldl_kinds</title>
+<g id="a_module~~qdldl_ordering~~UsesGraph_node4"><a xlink:href="../module/qdldl_kinds.html" xlink:title="qdldl_kinds">
+<polygon fill="#337ab7" stroke="#337ab7" points="200.04,-36.25 129.27,-36.25 129.27,-11.98 200.04,-11.98 200.04,-36.25"/>
+<text xml:space="preserve" text-anchor="middle" x="164.66" y="-20.51" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_kinds</text>
+</a>
+</g>
+</g>
+<!-- module~qdldl_ordering&#45;&gt;module~qdldl_kinds -->
+<g id="module~~qdldl_ordering~~UsesGraph_edge3" class="edge">
+<title>module~qdldl_ordering&#45;&gt;module~qdldl_kinds</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M342.87,-11.49C330.28,-8.06 316.21,-4.82 303.06,-3.11 273.52,0.73 265.51,1.19 236.04,-3.11 227.89,-4.3 219.36,-6.23 211.18,-8.45"/>
+<polygon fill="#000000" stroke="#000000" points="210.37,-5.04 201.74,-11.19 212.32,-11.76 210.37,-5.04"/>
+</g>
+<!-- module~qdldl_amd&#45;&gt;module~qdldl_kinds -->
+<g id="module~~qdldl_ordering~~UsesGraph_edge4" class="edge">
+<title>module~qdldl_amd&#45;&gt;module~qdldl_kinds</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M237.68,-53.51C228.01,-49.57 217.19,-45.15 206.92,-40.96"/>
+<polygon fill="#000000" stroke="#000000" points="208.49,-37.82 197.91,-37.28 205.84,-44.3 208.49,-37.82"/>
+</g>
+<!-- module~qdldl_core&#45;&gt;module~qdldl_kinds -->
+<g id="module~~qdldl_ordering~~UsesGraph_edge5" class="edge">
+<title>module~qdldl_core&#45;&gt;module~qdldl_kinds</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M235.99,-24.11C228.31,-24.11 219.97,-24.11 211.82,-24.11"/>
+<polygon fill="#000000" stroke="#000000" points="212,-20.61 202,-24.11 212,-27.61 212,-20.61"/>
+</g>
+<!-- iso_fortran_env -->
+<g id="module~~qdldl_ordering~~UsesGraph_node5" class="node">
+<title>iso_fortran_env</title>
+<g id="a_module~~qdldl_ordering~~UsesGraph_node5"><a xlink:href="http://fortranwiki.org/fortran/show/iso_fortran_env" xlink:title="iso_fortran_env">
+<polygon fill="#337ab7" stroke="#337ab7" points="93.27,-36.25 0,-36.25 0,-11.98 93.27,-11.98 93.27,-36.25"/>
+<text xml:space="preserve" text-anchor="middle" x="46.63" y="-20.51" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">iso_fortran_env</text>
+</a>
+</g>
+</g>
+<!-- module~qdldl_kinds&#45;&gt;iso_fortran_env -->
+<g id="module~~qdldl_ordering~~UsesGraph_edge6" class="edge">
+<title>module~qdldl_kinds&#45;&gt;iso_fortran_env</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M128.85,-24.11C121.31,-24.11 113.16,-24.11 105.02,-24.11"/>
+<polygon fill="#000000" stroke="#000000" points="105.1,-20.61 95.1,-24.11 105.1,-27.61 105.1,-20.61"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsesGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsesGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="511pt" height="32pt"
+ viewBox="0.00 0.00 511.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 506.88,-28.27 506.88,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24.27 0,-24.27 0,0 54,0 54,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="144.13,-24.27 71.87,-24.27 71.87,0 144.13,0 144.13,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="108" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="231.63,-24.27 162.37,-24.27 162.37,0 231.63,0 231.63,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="197" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="306.26,-24.27 249.74,-24.27 249.74,0 306.26,0 306.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="381.26,-24.27 324.74,-24.27 324.74,0 381.26,0 381.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="353" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="502.88,-24.27 399.12,-24.27 399.12,0 502.88,0 502.88,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="451" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+          <div class="card">
+      <h3 class="card-header card-title bg-light">Used by</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: module~~qdldl_ordering~~UsedByGraph Pages: 1 -->
+<svg id="moduleqdldl_orderingUsedByGraph" width="216pt" height="32pt"
+ viewBox="0.00 0.00 216.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~qdldl_ordering~~UsedByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>module~~qdldl_ordering~~UsedByGraph</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 212.29,-28.27 212.29,4 -4,4"/>
+<!-- module~qdldl_ordering -->
+<g id="module~~qdldl_ordering~~UsedByGraph_node1" class="node">
+<title>module~qdldl_ordering</title>
+<polygon fill="none" stroke="black" points="88.77,-24.27 0,-24.27 0,0 88.77,0 88.77,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="44.38" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">qdldl_ordering</text>
+</g>
+<!-- module~qdldl_module -->
+<g id="module~~qdldl_ordering~~UsedByGraph_node2" class="node">
+<title>module~qdldl_module</title>
+<g id="a_module~~qdldl_ordering~~UsedByGraph_node2"><a xlink:href="../module/qdldl_module.html" xlink:title="qdldl_module">
+<polygon fill="#337ab7" stroke="#337ab7" points="208.29,-24.27 124.77,-24.27 124.77,0 208.29,0 208.29,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="166.53" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qdldl_module</text>
+</a>
+</g>
+</g>
+<!-- module~qdldl_module&#45;&gt;module~qdldl_ordering -->
+<g id="module~~qdldl_ordering~~UsedByGraph_edge1" class="edge">
+<title>module~qdldl_module&#45;&gt;module~qdldl_ordering</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M124.52,-12.13C116.76,-12.13 108.52,-12.13 100.41,-12.13"/>
+<polygon fill="#000000" stroke="#000000" points="100.6,-8.64 90.6,-12.14 100.6,-15.64 100.6,-8.64"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsedByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsedByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.1.2 (20260126.1125)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="511pt" height="32pt"
+ viewBox="0.00 0.00 511.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28.27)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-28.27 506.88,-28.27 506.88,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24.27 0,-24.27 0,0 54,0 54,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="27" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="144.13,-24.27 71.87,-24.27 71.87,0 144.13,0 144.13,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="108" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="231.63,-24.27 162.37,-24.27 162.37,0 231.63,0 231.63,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="197" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="306.26,-24.27 249.74,-24.27 249.74,0 306.26,0 306.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="278" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="381.26,-24.27 324.74,-24.27 324.74,0 381.26,0 381.26,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="353" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="502.88,-24.27 399.12,-24.27 399.12,0 502.88,0 502.88,-24.27"/>
+<text xml:space="preserve" text-anchor="middle" x="451" y="-8.53" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+      <br>
+
+
+        <section>
+          <h2>Variables</h2>
+            <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-qdldl_order_natural"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>qdldl_order_natural</strong></td>
+<td> =</td>
+                <td>0</td>
+            <td>
+                <p>no permutation</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-qdldl_order_user"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>qdldl_order_user</strong></td>
+<td> =</td>
+                <td>1</td>
+            <td>
+                <p>a permutation given by the caller</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-qdldl_order_rcm"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>qdldl_order_rcm</strong></td>
+<td> =</td>
+                <td>2</td>
+            <td>
+                <p>reverse Cuthill-McKee</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-qdldl_order_amd"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>qdldl_order_amd</strong></td>
+<td> =</td>
+                <td>3</td>
+            <td>
+                <p>approximate minimum degree</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-qdldl_order_default"></span>
+              integer,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>qdldl_order_default</strong></td>
+<td> =</td>
+                <td>-1</td>
+            <td>
+                <p>the default: AMD</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+        </section>
+        <br>
+
+
+
+
+
+        <section>
+          <h2>Functions</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-qdldl_is_permutation"></span> <h3>public  function <a href='../proc/qdldl_is_permutation.html'>qdldl_is_permutation</a>(n, perm) result(ok)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Whether <code>perm</code> is a permutation of <code>1..n</code>.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~3"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+<p>matrix order</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-perm~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>perm</strong>(:)</td>
+            <td>
+<p>the candidate permutation</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>logical</small>
+    </h4>
+    <p>true if <code>perm</code> has size <code>n</code> and holds each of <code>1..n</code> once
+(false also if the work array can't be allocated)</p>
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+        <section>
+          <h2>Subroutines</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-qdldl_symmetric_pattern"></span> <h3>public  subroutine <a href='../proc/qdldl_symmetric_pattern.html'>qdldl_symmetric_pattern</a>(n, Ap, Ai, xadj, adj, istat)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>The full symmetric adjacency structure (both triangles, without the diagonal) of
+a matrix given by its upper triangle in CSC form without duplicates: the
+neighbours of node <code>i</code> are <code>adj(xadj(i):xadj(i+1)-1)</code>.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+<p>matrix order</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ap"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ap</strong>(n+1)</td>
+            <td>
+<p>column pointers of the upper triangle</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ai"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Ai</strong>(Ap(n+1)-1)</td>
+            <td>
+<p>row indices of the upper triangle</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-xadj"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>xadj</strong>(:)</td>
+            <td>
+<p>pointers into <code>adj</code> (size <code>n+1</code>)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-adj"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              allocatable
+            </td>
+            <td>::</td>
+            <td><strong>adj</strong>(:)</td>
+            <td>
+<p>the neighbours of each node</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-istat"></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>istat</strong></td>
+            <td>
+<p><code>qdldl_success</code>, <code>qdldl_error_out_of_memory</code>,
+or <code>qdldl_error_overflow</code></p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-qdldl_order_natural_perm"></span> <h3>public pure subroutine <a href='../proc/qdldl_order_natural_perm.html'>qdldl_order_natural_perm</a>(n, perm)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>The natural ordering: <code>perm(k) = k</code>.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+<p>matrix order</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-perm"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>perm</strong>(n)</td>
+            <td>
+<p>the permutation</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-qdldl_rcm"></span> <h3>public  subroutine <a href='../proc/qdldl_rcm.html'>qdldl_rcm</a>(n, xadj, adj, perm, istat)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>The reverse Cuthill-McKee ordering, which reduces the bandwidth (and the profile)
+of the matrix.</p><a href="../proc/qdldl_rcm.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~4"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+<p>matrix order</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-xadj~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>xadj</strong>(n+1)</td>
+            <td>
+<p>pointers into <code>adj</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-adj~2"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>adj</strong>(xadj(n+1)-1)</td>
+            <td>
+<p>the neighbours of each node (no diagonal, no duplicates)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-perm~3"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>perm</strong>(n)</td>
+            <td>
+<p>the permutation</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-istat~2"></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>istat</strong></td>
+            <td>
+<p><code>qdldl_success</code> or <code>qdldl_error_out_of_memory</code></p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-qdldl_amd_order"></span> <h3>public  subroutine <a href='../proc/qdldl_amd_order.html'>qdldl_amd_order</a>(n, xadj, adj, perm, istat)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>The approximate minimum degree ordering, by <a href="../proc/amd.html">amd</a>, with elbow room of 20% plus
+<code>n</code> in its work array (so that compressions are rare).</p><a href="../proc/qdldl_amd_order.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~5"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+<p>matrix order</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-xadj~3"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>xadj</strong>(n+1)</td>
+            <td>
+<p>pointers into <code>adj</code></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-adj~3"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>adj</strong>(xadj(n+1)-1)</td>
+            <td>
+<p>the neighbours of each node (no diagonal, no duplicates)</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-perm~4"></span>
+              integer(kind=ip),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>perm</strong>(n)</td>
+            <td>
+<p>the permutation</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-istat~3"></span>
+              integer,
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>istat</strong></td>
+            <td>
+<p><code>qdldl_success</code>, <code>qdldl_error_out_of_memory</code>,
+or <code>qdldl_error_overflow</code> (the work array's size)</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+
+
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              qdldl-fortran
+ was developed by Jacob Williams<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>
