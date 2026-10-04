@@ -14,7 +14,7 @@ cc -O3 -I"$root/tools/crosscheck" -I"$root/reference/qdldl/include" \
     -c "$here/benchmark_c.c" -o "$work/benchmark_c.o"
 cc -O3 -I"$root/tools/crosscheck" -I"$root/reference/qdldl/include" \
     -c "$root/reference/qdldl/src/qdldl.c" -o "$work/qdldl.o"
-gfortran -O3 -ffree-line-length-none -J"$work" -I"$work" \
+gfortran -funroll-loops -O3 -ffree-line-length-none -J"$work" -I"$work" \
     "$root/src/qdldl_kinds.F90" "$root/src/qdldl_core.f90" "$here/benchmark.f90" \
     "$work/benchmark_c.o" "$work/qdldl.o" -o "$work/benchmark"
 

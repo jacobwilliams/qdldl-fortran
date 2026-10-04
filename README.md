@@ -228,7 +228,8 @@ seconds):
 
 ### C and Fortran kernel comparison
 
-`pixi run benchmark` compiles both implementations with `-O3` and times their
+`pixi run benchmark` compiles both implementations with `-O3` (plus
+`-funroll-loops` for the Fortran) and times their
 matching low-level elimination-tree, factorization, and solve routines on the
 same 2-D five-point Laplacian matrices using natural ordering. The matrix is
 generated once; conversion between the C (0-based) and Fortran (1-based) CSC
@@ -241,15 +242,15 @@ Results on an Apple M5 (macOS 27.0), using GNU Fortran 15.3.0 and Clang 23.1.1:
 
 | Grid | n | nnz(A) | nnz(L) | Routine | Fortran (us) | C (us) | C / Fortran |
 |---|---:|---:|---:|---|---:|---:|---:|
-| 20 x 20 | 400 | 1,160 | 7,619 | elimination tree | 9.80 | 8.55 | 0.87 |
-| | | | | factorization | 44.40 | 44.40 | 1.00 |
-| | | | | solve | 9.81 | 9.69 | 0.99 |
-| 50 x 50 | 2,500 | 7,400 | 122,549 | elimination tree | 202.10 | 182.40 | 0.90 |
-| | | | | factorization | 1,300.80 | 1,222.60 | 0.94 |
-| | | | | solve | 152.31 | 141.00 | 0.93 |
-| 100 x 100 | 10,000 | 29,800 | 990,099 | elimination tree | 1,788.45 | 2,126.45 | 1.19 |
-| | | | | factorization | 20,319.20 | 18,508.00 | 0.91 |
-| | | | | solve | 1,154.61 | 1,102.17 | 0.95 |
+| 20 x 20 | 400 | 1,160 | 7,619 | elimination tree | 11.55 | 9.90 | 0.86 |
+| | | | | factorization | 52.00 | 53.00 | 1.02 |
+| | | | | solve | 9.51 | 11.05 | 1.16 |
+| 50 x 50 | 2,500 | 7,400 | 122,549 | elimination tree | 188.40 | 185.75 | 0.99 |
+| | | | | factorization | 1,212.40 | 1,099.40 | 0.91 |
+| | | | | solve | 120.31 | 127.18 | 1.06 |
+| 100 x 100 | 10,000 | 29,800 | 990,099 | elimination tree | 1,628.90 | 1,657.25 | 1.02 |
+| | | | | factorization | 16,510.80 | 17,009.00 | 1.03 |
+| | | | | solve | 963.77 | 993.20 | 1.03 |
 
 These figures compare the low-level kernels, not the complete public Fortran
 interface (which also supports ordering, coordinate input, and additional
